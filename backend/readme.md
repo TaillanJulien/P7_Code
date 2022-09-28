@@ -5,3 +5,7 @@
 5°) Install bcrypt
 6°) Install jsonwebtoken
 7°) Install multer
+8°) Install dotenv
+
+- "npm run serve" : frontend
+- "nodemon server" : backend

@@ -31,7 +31,7 @@
         </div>
       </div>
       <div class="user_comment_message">
-          <p>Super album !</p>
+          <p>Super album ! Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, fugit distinctio. Illum, enim quidem. Totam, possimus? Hic repellendus quisquam error autem rerum repudiandae natus in, expedita deleniti, culpa beatae veniam.</p>
         </div>
     </div>
   </section>
@@ -121,11 +121,13 @@ export default {
 }
 .user_comment{
   display: flex;
+  flex-wrap: nowrap;
   border-bottom: 1px lightgray solid;
   margin: 15px;
 }
 .user_comment_info{
   display: flex;
+  min-width: 25%;
 }
 .user_comment_info_img img{
   width: 50px;

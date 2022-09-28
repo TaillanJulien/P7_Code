@@ -23,7 +23,7 @@
         padding: 15px;
         margin-bottom: 50px;
         border-radius: 0 0 50px 50px;
-        width: 100%;
+        width: 95%;
     }
     .img{
         margin-left: 10px;

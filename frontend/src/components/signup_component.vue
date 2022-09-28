@@ -5,19 +5,27 @@
                 <img src="../assets/groupomania_logo_2.png" alt="main logo groupomania">
             </div>
             <div class="signup_logo_title">
-                <p>Pas encore de compte ? C'est ici que ça se passe ! <i class="fa-regular fa-hand-back-point-down"></i></p>
+                <p>Pas encore de compte ? Vous êtes au bon endroit ! </p>
             </div>
         </div>
         <div class="form_inscription">
-            <div class="form_inscription_complete_name">
-                <input type="text" placeholder="Veuillez saisir votre nom">
-                <input type="text" placeholder="Veuillez saisir votre prénom">
+            <div class="form_inscription_name">
+                <label for="name">Nom :
+                    <input type="text" placeholder="Veuillez saisir votre nom">
+                </label>
+                <label for="surname">Prénom :
+                    <input type="text" placeholder="Veuillez saisir votre prénom">
+                </label>
             </div>
-            <div class="form_inscription_pass">
-                <input type="text" placeholder="Veuillez saisir un mot de passe">
+            <div class="form_inscription_password">
+                <label for="password">Mot de passe :
+                    <input type="text" placeholder="Veuillez saisir un mot de passe">
+                </label>
             </div>
             <div class="form_inscription_mail">
-                <input type="text" placeholder="Veuillez saisir votre adresse mail">
+                <label for="mail">Adresse email :
+                    <input type="text" placeholder="Veuillez saisir votre adresse mail">
+                </label>
             </div>
         </div>
         <div class="redirection_link">
@@ -34,12 +42,10 @@
 
 <style lang="scss">
 .signup{
-    width: 50%;
+    width: 25%;
     border-radius: 30px;
     background-color: white;
-}
-.signup_logo_title{
-    width: 100%;
+    padding: 15px;
 }
 .signup_logo{
     width: auto;
@@ -47,5 +53,9 @@
 .signup_logo img{
     width: 100%;
     object-fit: contain;
+    border-radius: 30px;
+}
+.form_inscription_name label{
+    padding: 30px;
 }
 </style>

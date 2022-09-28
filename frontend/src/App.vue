@@ -24,7 +24,6 @@ export default {
 <style lang="scss">
 body{
   margin: 0;
-  padding: 0;
   background-color:  #FFD7D7;
   box-sizing: border-box;
   font-family: 'Inter Tight'
