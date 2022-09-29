@@ -31,11 +31,11 @@
         </div>
       </div>
       <div class="user_comment_message">
-          <p>Super album ! Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, fugit distinctio. Illum, enim quidem. Totam, possimus? Hic repellendus quisquam error autem rerum repudiandae natus in, expedita deleniti, culpa beatae veniam.</p>
+          <p>Super album ! Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, fugit distinctio. Illum, enim quidem. Totam, possimus? Hic repellendus quisquam error autem rerum repudiandae natus in, expedita deleniti, culpa beatae veniam. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam, in eum! Impedit provident deserunt quia. Atque quidem omnis repellat illo ea placeat fugiat eos saepe aliquam. Maiores beatae aut est?</p>
         </div>
     </div>
   </section>
-</template>
+</template> 
 
 <script>
 export default {
