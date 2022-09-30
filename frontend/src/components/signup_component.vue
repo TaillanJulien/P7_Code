@@ -5,7 +5,7 @@
                 <img src="../assets/groupomania_logo_2.png" alt="main logo groupomania">
             </div>
             <div class="signup_logo_title">
-                <p>- Pas encore de compte ? Vous êtes au bon endroit ! <i class="fa-regular fa-hand-back-point-down"></i> -</p>
+                <p>- Pas encore de compte ? Vous êtes au bon endroit ! <i class="fa-solid fa-hand-point-down"></i> -</p>
             </div>
         </div>
         <div class="form_inscription">
@@ -45,23 +45,22 @@
     }
 </script>
 
-<style lang="scss">
+<style>
 .signup{
     width: 30%;
     border-radius: 30px;
     background-color: white;
-    padding: 15px;
-    height: 600px;
-    border-radius: 30px;
+    padding: 20px;
     box-shadow: 7px 9px 7px 1px rgba(0,0,0,0.76);
     transform: scale(1);
     transition: transform 500ms;
+    margin: 30px;
 }
 .signup:hover{
     transform: scale(1.01);
 }
 .signup_logo{
-    width: auto;
+    width: 80%;
 }
 .signup_logo img{
     width: 100%;
@@ -81,7 +80,7 @@
 }
 .form_inscription input{
     border-radius: 30px;
-    width: 50%;
+    width: 60%;
     margin: 10px;
     padding: 5px;
 }

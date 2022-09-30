@@ -43,7 +43,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style>
 .user_post{
   background-color: white;
   margin: 35px;
@@ -56,7 +56,7 @@ export default {
   transition: transform 500ms;
 }
 .user_post:hover{
-  transform: scale(1.01);
+  transform: scale(1.02);
 }
 .user_post_info{
   display: flex;

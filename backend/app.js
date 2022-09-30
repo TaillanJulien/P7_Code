@@ -27,7 +27,7 @@ const mongo_pass = process.env.bdd_pass;
 const mongo_name = process.env.bdd_name;
 
 //Liaison à MONGODB
-mongoose.connect(`mongodb+srv://Julien:${mongo_pass}@${mongo_name}.mongodb.net/?retryWrites=true&w=majority`,
+mongoose.connect(`mongodb+srv://Julien_admin://${mongo_name}:${mongo_pass}@groupomania.a9h59nz.mongodb.net/?retryWrites=true&w=majority`,
 { useNewUrlParser: true,
   useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie.'))
@@ -49,6 +49,6 @@ app.use(express.json());
 // Utilisation des middlewares
 app.use('/assets', express.static(path.join(__dirname, 'images')));
 app.use('/api/auth', userRoutes);
-app.use('/api/sauces', postRoutes);
+app.use('/api/post', postRoutes);
   
 module.exports = app;

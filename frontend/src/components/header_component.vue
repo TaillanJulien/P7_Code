@@ -14,7 +14,7 @@
     }
 </script>
 
-<style lang="scss">
+<style>
     header{
         display: flex;
         justify-content: space-between;

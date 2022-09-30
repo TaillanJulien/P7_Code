@@ -3,13 +3,15 @@
     <header_component />
     <post_component />
     <signup_component />
-  </div>
+    <login_component />
+    </div>
 </template>
 
 <script>
 import post_component from './components/post_component.vue';
 import header_component from './components/header_component.vue';
 import signup_component from './components/signup_component.vue';
+import login_component from './components/login_component.vue';
 
 export default {
   name: 'App',
@@ -17,11 +19,12 @@ export default {
     header_component,
     post_component,
     signup_component,
+    login_component,
 }
 }
 </script>
 
-<style lang="scss">
+<style>
 body{
   margin: 0;
   background-color:  #FFD7D7;
