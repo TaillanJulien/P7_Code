@@ -17,11 +17,11 @@
                 </label>
             </div>
         </div>
-        <div class="buttons">
+        <div class="button_login">
             <button class="button_connect">Se connecter</button>
             <button class="button_create_account">Créer un nouveau compte</button>
         </div>
-        <div class="logo_end">
+        <div class="logo_end_login">
             <img src="../assets/groupomania_graphic_logo.png" alt="logo">
         </div>
     </section>
@@ -35,7 +35,7 @@
 
 <style>
 .login{
-    width: 30%;
+    width: 25%;
     border-radius: 30px;
     background-color: white;
     padding: 20px;
@@ -45,7 +45,7 @@
     margin: 20px;
 }
 .login:hover{
-    transform: scale(1.02);
+    transform: scale(1.01);
 }
 .login_logo{
     width: 80%;
@@ -67,29 +67,32 @@
     font-style: i;
 }
 .form_login input{
+    display: flex;
     border-radius: 30px;
     width: 60%;
     margin: 10px;
     padding: 5px;
 }
-.redirection_link a{
-    text-decoration: none;
-    color: black;
-    font-style: italic;
-}
-.logo_end{
+.logo_end_login{
     width: 100%;
     display: flex;
     justify-content: center;
 }
-.logo_end img{
+.logo_end_login img{
     width: auto;
     object-fit: contain;
 }
-.buttons{
+.button_login{
     padding: 15px;
+    display: flex;
+    justify-content: center;
 }
 .button_create_account, .button_connect{
-    width: 40%;
+    width: 30%;
+    margin: 10px;
+    box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px;
 }
 </style>

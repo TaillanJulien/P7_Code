@@ -5,19 +5,19 @@
         <img src="../assets/photo_profil.jpg" alt="photo_moi">
       </div>
       <div class="user_post_info_name_timer">
-        <p class="user_name">Julien Taillan</p>
+        <p class="user_name">Julien Taillan </p>
         <p class="user_timer">Il y a "ici : timer"</p>
       </div>
     </div>
     <div class="user_posted_message">
-      <p>There is dopesmoker</p>
+      <p>There is dopesmoker Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus dolore natus aut minima. Perferendis, quo perspiciatis exercitationem officiis repellat temporibus veniam blanditiis dignissimos impedit quibusdam expedita itaque reprehenderit dolores culpa!</p>
       <div class="user_posted_message_img"><img src="../assets/imgimg.png" alt=""></div>
     </div>
-    <div class="buttons">
+    <div class="button_post">
       <button><i class="fa-regular fa-thumbs-up"></i> J'aime</button>
       <button><i class="fa-regular fa-comment"></i> Commenter</button>
     </div>
-    <div class="form">
+    <div class="form_post">
       <input type="text" placeholder="Veuillez saisir votre commentaire">
     </div>
     <div class="user_comment">
@@ -47,16 +47,16 @@ export default {
 .user_post{
   background-color: white;
   margin: 35px;
-  width: 60%;
+  width: 70%;
   display: flex;
   flex-direction: column;
   border-radius: 30px;
   box-shadow: 7px 9px 7px 1px rgba(0,0,0,0.76);
   transform: scale(1);
-  transition: transform 500ms;
+  transition: transform 600ms;
 }
 .user_post:hover{
-  transform: scale(1.02);
+  transform: scale(1.01);
 }
 .user_post_info{
   display: flex;
@@ -84,6 +84,9 @@ export default {
   border-bottom: 1px lightgray solid;
   padding-bottom: 15px;
 }
+.user_posted_message p{
+  margin: 5px 0 15px 0
+}
 .user_posted_message_img{
   width: auto;
 }
@@ -91,20 +94,20 @@ export default {
   width: 100%;
   object-fit: contain;
 }
-.buttons{
+.button_post{
   display: flex;
   justify-content: center;
-  margin: 0 0 5px 0;
 }
-.buttons button{
+.button_post button{
   font-size: 15px;
   margin: 5px;
   padding: 10px;
-  border-radius: 50px;
+  border-radius: 15px;
   background-color: white;
   font-weight: bold;
+  box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
 }
-.form{
+.form_post{
   display: flex;
   justify-content: center;
   height: 40px;
@@ -112,11 +115,11 @@ export default {
   padding-bottom: 15px;
   border-bottom: 1px lightgray solid;
 }
-.form input{
-  outline: none;
-  border: 1px solid black;
-  border-radius: 40px;
-  width: 25%;
+.form_post input{
+  border: 1px solid rgba(0,0,0,0.35);
+  box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
+  border-radius: 13px;
+  width: 30%;
   padding: 10px;
 }
 .user_comment{
@@ -152,6 +155,8 @@ export default {
   margin: 0;
   border-radius: 15px;
   background-color: lightgrey;
+}
+@media (max-width: 768px){
 
 }
 </style>

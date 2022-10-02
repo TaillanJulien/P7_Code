@@ -27,7 +27,7 @@ const mongo_pass = process.env.bdd_pass;
 const mongo_name = process.env.bdd_name;
 
 //Liaison à MONGODB
-mongoose.connect(`mongodb+srv://Julien_admin://${mongo_name}:${mongo_pass}@groupomania.a9h59nz.mongodb.net/?retryWrites=true&w=majority`,
+mongoose.connect(`mongodb+srv://Julien_admin:azerty@groupomania.a9h59nz.mongodb.net/?retryWrites=true&w=majority`,
 { useNewUrlParser: true,
   useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie.'))
