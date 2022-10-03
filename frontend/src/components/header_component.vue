@@ -20,10 +20,10 @@
         justify-content: space-between;
         flex-wrap: wrap;
         background-color: #FD2D01;
-        padding: 15px;
-        margin-bottom: 50px;
+        padding: 20px;
+        margin-bottom: 20px;
         border-radius: 0 0 50px 50px;
-        width: 95%;
+        width: 90%;
     }
     .img{
         margin-left: 10px;
@@ -34,12 +34,23 @@
     nav{
         display: flex;
         justify-content: center;
-        margin-right: 10px;
     }
     nav a {
         color: white;
         text-decoration: none;
         margin: 10px;
         font-size: 20px;
+    }
+    @media (max-width: 992px){
+        header{
+            width: 90%;
+            flex-direction: column;
+            align-content: center;
+        }
+    }
+    @media (max-width: 768px){
+        header{
+            width: 89%
+        }
     }
 </style>

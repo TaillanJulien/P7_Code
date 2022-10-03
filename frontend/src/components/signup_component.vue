@@ -26,7 +26,7 @@
             </div>
             <div class="form_inscription_input">
                 <label for="mail">Adresse email :
-                    <input type="text" placeholder="Veuillez saisir votre adresse mail">
+                    <input type="text" placeholder="Veuillez saisir votre email">
                 </label>
             </div>
         </div>
@@ -47,14 +47,14 @@
 
 <style>
 .signup{
-    width: 25%;
+    width: 30%;
     border-radius: 30px;
     background-color: white;
     padding: 20px;
     box-shadow: 7px 9px 7px 1px rgba(0,0,0,0.76);
     transform: scale(1);
     transition: transform 500ms;
-    margin: 30px;
+    margin: 20px 30px 30px 30px;
 }
 .signup:hover{
     transform: scale(1.01);
@@ -80,7 +80,7 @@
 .form_inscription input{
     display: flex;
     border-radius: 30px;
-    width: 60%;
+    width: 70%;
     margin: 10px;
     padding: 5px;
 }
@@ -105,5 +105,10 @@
 .logo_end img{
     width: auto;
     object-fit: contain;
+}
+@media (max-width: 992px){
+    .signup{
+        width: auto;
+    }
 }
 </style>

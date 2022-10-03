@@ -5,6 +5,7 @@
                 <img src="../assets/groupomania_logo_2.png" alt="main logo groupomania">
             </div>
         </div>
+        <p class="information_login">- Veuillez compléter les informations pour vous connecter -</p>
         <div class="form_login">
             <div class="form_login_mail">
                 <label for="mail">Adresse email :
@@ -35,20 +36,24 @@
 
 <style>
 .login{
-    width: 25%;
+    width: 30%;
     border-radius: 30px;
     background-color: white;
     padding: 20px;
     box-shadow: 7px 9px 7px 1px rgba(0,0,0,0.76);
     transform: scale(1);
     transition: transform 500ms;
-    margin: 20px;
+    margin: 5px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .login:hover{
     transform: scale(1.01);
 }
 .login_logo{
     width: 80%;
+    margin: 10px;
 }
 .login_logo img{
     width: 100%;
@@ -64,14 +69,29 @@
     color: red;
     width: 30%;
     font-weight: bold;
-    font-style: i;
+}
+.form_login{
+    width: 80%;
 }
 .form_login input{
     display: flex;
     border-radius: 30px;
-    width: 60%;
+    width: 80%;
     margin: 10px;
     padding: 5px;
+}
+.button_login{
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+}
+.button_create_account, .button_connect{
+    width: 50%;
+    margin: 10px;
+    box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
+    background-color: white;
+    border-radius: 10px;
+    padding: 8px;
 }
 .logo_end_login{
     width: 100%;
@@ -82,17 +102,9 @@
     width: auto;
     object-fit: contain;
 }
-.button_login{
-    padding: 15px;
-    display: flex;
-    justify-content: center;
-}
-.button_create_account, .button_connect{
-    width: 30%;
-    margin: 10px;
-    box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
-    background-color: white;
-    border-radius: 10px;
-    padding: 5px;
+@media (max-width: 992px){
+    .login{
+        width: auto;
+    }
 }
 </style>

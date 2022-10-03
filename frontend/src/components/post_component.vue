@@ -46,7 +46,7 @@ export default {
 <style>
 .user_post{
   background-color: white;
-  margin: 35px;
+  margin: 15px 35px 35px 35px;
   width: 70%;
   display: flex;
   flex-direction: column;
@@ -156,7 +156,20 @@ export default {
   border-radius: 15px;
   background-color: lightgrey;
 }
+@media (max-width: 992px){
+  .user_post{
+    width: auto;
+  }
+  .form_post input{
+  width: auto;
+  }
+}
 @media (max-width: 768px){
-
+  .user_comment{
+    flex-direction: column;
+  }
+  .user_comment_message{
+    margin: 15px;
+  }
 }
 </style>
