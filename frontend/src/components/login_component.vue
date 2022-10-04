@@ -58,7 +58,6 @@
 .login_logo img{
     width: 100%;
     object-fit: contain;
-    border-radius: 30px;
 }
 .login_logo_title{
     display: flex;

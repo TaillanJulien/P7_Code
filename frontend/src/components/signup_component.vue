@@ -89,7 +89,7 @@
     justify-content: center;
 }
 .redirection_link p{
-    font-size: 15px;
+    font-size: 100%;
 }
 .redirection_link a{
     text-decoration: none;

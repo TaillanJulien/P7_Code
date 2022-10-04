@@ -1,11 +1,11 @@
 <template>
-  <div id="app">
+  <main id="app">
     <header_component />
     <post_component />
     <signup_component />
     <login_component />
     <footer_component />
-    </div>
+  </main>
 </template>
 
 <script>

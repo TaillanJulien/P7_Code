@@ -20,7 +20,7 @@
         justify-content: space-between;
         flex-wrap: wrap;
         background-color: #FD2D01;
-        padding: 20px;
+        padding: 18px;
         margin-bottom: 20px;
         border-radius: 0 0 50px 50px;
         width: 90%;

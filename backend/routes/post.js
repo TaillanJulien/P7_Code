@@ -11,14 +11,14 @@ const auth = require('../middleware/auth');
 const multer = require('../middleware/multer-config');
 
 // Controleur sauces
-const sauceCtrl = require('../controllers/post');
+const postCtrl = require('../controllers/post');
 
 // Routes disponibles
-router.get('/', auth, sauceCtrl.getAllPost);
-router.post('/', auth, multer, sauceCtrl.createPost);
-router.get('/:id', auth, sauceCtrl.getOnePost);
-router.put('/:id', auth, multer, sauceCtrl.modifyPost);
-router.delete('/:id', auth, sauceCtrl.deletePost);
-router.post('/:id/like', auth, sauceCtrl.userLikeDislike);
+router.get('/', auth, postCtrl.getAllPost);
+router.post('/', auth, multer, postCtrl.createPost);
+router.get('/:id', auth, postCtrl.getOnePost);
+router.put('/:id', auth, multer, postCtrl.modifyPost);
+router.delete('/:id', auth, postCtrl.deletePost);
+router.post('/:id/like', auth, postCtrl.userLikeDislike);
 
 module.exports = router;
