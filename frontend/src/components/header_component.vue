@@ -3,6 +3,7 @@
         <div class="img"><img src="../assets/groupomania_logo.png" alt="main logo groupomania"></div>
         <nav>
             <a href="#">Accueil</a>
+            <a href="#">Nouveau post</a>
             <a href="#">Logout</a>
         </nav>
     </header>

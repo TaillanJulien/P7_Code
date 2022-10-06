@@ -2,7 +2,7 @@
     <section class="signup">
         <div class="signup_logo_title">
             <div class="signup_logo">
-                <img src="../assets/groupomania_logo_2.png" alt="main logo groupomania">
+                <img src="../../assets/groupomania_logo_2.png" alt="main logo groupomania">
             </div>
             <div class="signup_logo_title">
                 <p>- Pas encore de compte ? Vous êtes au bon endroit ! -</p>
@@ -34,14 +34,14 @@
             <p>- Vous avez déjà un compte ? <a href="#">Rendez-vous sur cette page.</a> -</p>
         </div>
         <div class="logo_end">
-            <img src="../assets/groupomania_graphic_logo.png" alt="logo">
+            <img src="../../assets/groupomania_graphic_logo.png" alt="logo">
         </div>
     </section>
 </template>
 
 <script>
     export default {
-        name: 'signup_component'
+        name: 'user_signup'
     }
 </script>
 

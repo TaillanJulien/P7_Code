@@ -7,6 +7,7 @@ try{
     const token = req.headers.authorization.split(' ')[1];
     const verifyToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
     const userId = verifyToken.userId;
+    console.log(userId);
     if (req.body.userId && req.body.userId !== userId) {
         throw 'Utilisateur non valide.';
     } else {

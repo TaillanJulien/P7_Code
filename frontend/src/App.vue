@@ -1,27 +1,21 @@
 <template>
   <main id="app">
     <header_component />
-    <post_component />
-    <signup_component />
-    <login_component />
+    <router-view></router-view>
     <footer_component />
   </main>
 </template>
 
 <script>
-import post_component from './components/post_component.vue';
 import header_component from './components/header_component.vue';
-import signup_component from './components/signup_component.vue';
-import login_component from './components/login_component.vue';
 import footer_component from './components/footer_component.vue';
+
+
 
 export default {
   name: 'App',
   components: {
     header_component,
-    post_component,
-    signup_component,
-    login_component,
     footer_component,
 }
 }

@@ -2,7 +2,7 @@
   <section class="user_post">
     <div class="user_post_info">
       <div class="user_post_info_img">
-        <img src="../assets/photo_profil.jpg" alt="photo_moi">
+        <img src="../../assets/photo_profil.jpg" alt="photo_moi">
       </div>
       <div class="user_post_info_name_timer">
         <p class="user_name">Julien Taillan </p>
@@ -11,7 +11,7 @@
     </div>
     <div class="user_posted_message">
       <p>There is dopesmoker Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus dolore natus aut minima. Perferendis, quo perspiciatis exercitationem officiis repellat temporibus veniam blanditiis dignissimos impedit quibusdam expedita itaque reprehenderit dolores culpa!</p>
-      <div class="user_posted_message_img"><img src="../assets/imgimg.png" alt=""></div>
+      <div class="user_posted_message_img"><img src="../../assets/imgimg.png" alt=""></div>
     </div>
     <div class="button_post">
       <button><i class="fa-regular fa-thumbs-up"></i> J'aime</button>
@@ -23,7 +23,7 @@
     <div class="user_comment">
       <div class="user_comment_info">
         <div class="user_comment_info_img">
-          <img src="../assets/photo_profil_2.jpg" alt="photo moi 2">
+          <img src="../../assets/photo_profil_2.jpg" alt="photo moi 2">
         </div>
         <div class="user_comment_info_name_timer">
           <p class="user_comment_name">Tulien Jaillan</p>
@@ -39,7 +39,7 @@
 
 <script>
 export default {
-  name: 'post_component',
+  name: 'all_post',
 }
 </script>
 
@@ -47,7 +47,7 @@ export default {
 .user_post{
   background-color: white;
   margin: 15px 35px 35px 35px;
-  width: 70%;
+  width: 60%;
   display: flex;
   flex-direction: column;
   border-radius: 30px;
@@ -88,11 +88,14 @@ export default {
   margin: 5px 0 15px 0
 }
 .user_posted_message_img{
-  width: auto;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 .user_posted_message_img img{
-  width: 100%;
+  width: 70%;
   object-fit: contain;
+  border-radius: 10px;
 }
 .button_post{
   display: flex;

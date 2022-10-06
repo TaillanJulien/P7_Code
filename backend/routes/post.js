@@ -13,12 +13,11 @@ const multer = require('../middleware/multer-config');
 // Controleur sauces
 const postCtrl = require('../controllers/post');
 
-// Routes disponibles
+// Routes pour les POST
 router.get('/', auth, postCtrl.getAllPost);
 router.post('/', auth, multer, postCtrl.createPost);
 router.get('/:id', auth, postCtrl.getOnePost);
 router.put('/:id', auth, multer, postCtrl.modifyPost);
 router.delete('/:id', auth, postCtrl.deletePost);
-router.post('/:id/like', auth, postCtrl.userLikeDislike);
 
 module.exports = router;

@@ -2,7 +2,7 @@
     <section class="login">
         <div class="login_logo_title">
             <div class="login_logo">
-                <img src="../assets/groupomania_logo_2.png" alt="main logo groupomania">
+                <img src="../../assets/groupomania_logo_2.png" alt="main logo groupomania">
             </div>
         </div>
         <p class="information_login">- Veuillez compléter les informations pour vous connecter -</p>
@@ -23,14 +23,14 @@
             <button class="button_create_account">Créer un nouveau compte</button>
         </div>
         <div class="logo_end_login">
-            <img src="../assets/groupomania_graphic_logo.png" alt="logo">
+            <img src="../../assets/groupomania_graphic_logo.png" alt="logo">
         </div>
     </section>
 </template>
 
 <script>
     export default {
-        name: 'login_component'
+        name: 'user_login'
     }
 </script>
 
