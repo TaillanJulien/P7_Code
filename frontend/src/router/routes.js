@@ -1,8 +1,11 @@
 // ----- Importation des composants pour routage ----- //
 
+// Composant page accueil
+import homepage_component from '../components/homepage_component';
+
 // Composants pour les post
 import all_post from '../views/posts/all_post.vue';
-import create_post from '../views/posts/create_post.vue'
+import create_post from '../views/posts/create_post.vue';
 
 // Composants pour les users
 import user_signup from '../views/user_actions/user_signup.vue';
@@ -11,6 +14,9 @@ import user_login from '../views/user_actions/user_login.vue';
 // Definition des routes
 
 const routes = [
+  // Page accueil route
+  {path: '/', name: 'homepage', component: homepage_component},
+
   // Post routes
   {path: '/post', name: 'all_post', component: all_post},
   {path: '/create_post', name: 'create_post', component: create_post},
