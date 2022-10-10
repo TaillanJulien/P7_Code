@@ -31,6 +31,7 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        margin: 100px 0 250px 0;
     }
     .homepage:hover{
         transform: scale(1.01);

@@ -19,7 +19,7 @@
 <style>
 .create_new_post{
     background-color: white;
-    margin: 15px;
+    margin: 100px 0 200px 0;
     padding: 10px 10px 10px 10px;
     width: 30%;
     border-radius: 30px;

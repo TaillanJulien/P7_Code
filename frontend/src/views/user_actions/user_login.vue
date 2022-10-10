@@ -43,7 +43,7 @@
     box-shadow: 7px 9px 7px 1px rgba(0,0,0,0.76);
     transform: scale(1);
     transition: transform 500ms;
-    margin: 5px 20px 20px 20px;
+    margin: 50px 20px 50px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -5,8 +5,8 @@ const express = require('express');
 const mongoose = require('mongoose'); 
 
 // Importation et utilisation des routes
-const postRoutes = require('./routes/post');
-const userRoutes = require('./routes/user')
+const postRoutes = require('./routes/post.routes');
+const userRoutes = require('./routes/user.routes')
 
 // Importation Helmet
 const helmet = require('helmet');
@@ -48,7 +48,7 @@ app.use(express.json());
   
 // Utilisation des middlewares
 app.use('/assets', express.static(path.join(__dirname, 'images')));
-app.use('/api/auth', userRoutes);
+app.use('/api/user', userRoutes);
 app.use('/api/post', postRoutes);
   
 module.exports = app;

@@ -1,5 +1,5 @@
 // Importation modèle user
-const User = require('../models/user');
+const User = require('../models/user.model');
 // Importation bcrypt pour hasher le mot de passe
 const bcrypt = require('bcrypt');
 // Importation de json web token pour authentifier un utilisateur
@@ -51,3 +51,19 @@ exports.login = (req, res, next) => {
     })
     .catch(error => res.status(401).json({error}))
 };
+
+// Récupération de tous les users
+exports.getAllUsers = (req, res, next) =>{
+    console.log("Récupération de tous les users");
+    User.find()
+    .then((post) => {res.status(200).json(post)})
+    .catch(error => res.status(400).json({error})); 
+};
+
+// Récupération d'une seul user
+exports.getOneUser = (req, res, next) => {
+    console.log("Récupération d'un seul user");
+    User.findOne({_id: req.params.id})
+    .then((post) => {res.status(200).json(post)})
+    .catch((error) => {res.status(404).json({error: error})})
+  };
