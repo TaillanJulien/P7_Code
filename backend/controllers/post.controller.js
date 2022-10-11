@@ -1,25 +1,13 @@
 // Importation schema post
-const Post = require('../models/post.model')
+const Post = require('../models/post.model');
 
 // Importation de fs (permet de supprimer des fichiers)
 const fs = require('fs');
 
-// Logique métier routes (CRUD) :
+// Logique métier routes posts (CRUD) :
 
-// Création d'un post
-// exports.createPost = (req, res, next) => {
-//   const postObject = req.body.post;
-//   // delete postObject._id;
-//   const post = new Post({
-//     ...postObject,
-//     imageUrl: `${req.protocol}://${req.get('host')}/assets/${req.file.filename}`
-//   });
-//   post.save()
-//     .then(() => res.status(201).json({ message: 'Objet enregistré.'}))
-//     .catch(error => res.status(400).json({message: "Impossible de créer un nouveau post", error}));
-// };
-
-exports.createPost = async (req, res, next) =>{
+//Créer un post
+exports.createPost = async (req, res, next) => {
   const newPost = new Post({
     userId: req.body.userId,
     message: req.body.message,
@@ -27,14 +15,12 @@ exports.createPost = async (req, res, next) =>{
     likes: req.body.likes,
     comments: []
   });
-  try{
-    const post = await newPost.save();
-    return res.status(201).json({ message: 'Objet enregistré.'});
-  } catch(err){
-    return res.status(400).json({message: "Impossible de créer un nouveau post", err})
-  }
+  Post.create(newPost)
+    .then(() => res.status(201).json({ message: 'Objet enregistré.'}))
+    .catch(error => res.status(400).json({message: "Impossible d'enregistrer le post", error }))
 }
 
+// Modifier un post
 exports.modifyPost = (req, res, next) => {
   const updatePost = new Post({
     _id: req.params.id,
@@ -47,17 +33,10 @@ exports.modifyPost = (req, res, next) => {
 };
 
 // Supprimer un post
-exports.deletePost = (req,res, next) => {
-  Post.findOne({_id: req.params.id})
-  .then(post => {
-    const filename = post.imageUrl.split('/assets/')[1];
-    fs.unlink(`assez/${filename}`, () => {
-      Post.deleteOne({_id: req.params.id})
-      .then(() => res.status(200).json({message: 'Objet supprimé.'}))
-      .catch(error => res.status(401).json({message: "Impossible de supprimer l'image", error}));
-    })  
-  })
-  .catch(error => res.status(401).json({message: "Impossible de supprimer le post", error}))
+exports.deletePost = (req, res, next) => {
+  Post.deleteOne({_id: req.params.id})
+  .then(() => res.status(200).json({message: 'Objet supprimé.'}))
+  .catch(error => res.status(401).json({message: "Impossible de supprimer le post", error}));
 };
 
 // Récupération d'un seul post
@@ -69,11 +48,18 @@ exports.getOnePost = (req, res, next) => {
 };
 
 // Récupération de tous les posts
-exports.getAllPost = (req, res, next) =>{
+exports.getAllPost = (req, res, next) => {
     console.log("Récupération de tous les post");
     Post.find()
     .then((post) => {res.status(200).json(post)})
     .catch(error => res.status(400).json({message: "Impossible de récupérer tous les posts", error}));
+};
+
+// Supression post par ADMIN
+exports.deletePostAdmin = (req, res, next) => {
+    Post.deleteOne({_id: req.params.id})
+    .then(() => res.status(200).json({message: 'Objet supprimé.'}))
+    .catch(error => res.status(401).json({message: "Impossible de supprimer le post", error}));
 };
 
 // Like & dislike

@@ -10,7 +10,7 @@ const multer = require('../middleware/multer-config');
 
 // Controleur posts & comments
 const postCtrl = require('../controllers/post.controller');
-// const commentCtrl = require ('../controllers/comment.controller'); <=====
+const commentCtrl = require ('../controllers/comment.controller');
 
 // Routes pour les POST !!!!!!!!!!!!!!!! AJOUTER AUTH + MULTER
 router.get('/', postCtrl.getAllPost);
@@ -18,13 +18,14 @@ router.get('/:id', postCtrl.getOnePost);
 router.post('/', postCtrl.createPost);
 router.put('/:id', postCtrl.modifyPost);
 router.delete('/:id', postCtrl.deletePost);
-// router.delete('/admin/:id', auth, postCtrl.deletePostAdmin);
+router.delete('/admin/:id', postCtrl.deletePostAdmin);
 
 // Routes pour les COMMENTS
-// router.post('/:postId/comments', auth, commentCtrl.createComment);
-// router.get('/:postId/comments', auth, commentCtrl.getAllComment);
-// router.get('/:postId/comments/:id', auth, commentCtrl.getOneComment);
-// router.put('/:postId/comments/:id', auth, commentCtrl.modifyComment);
-// router.delete('/:postId/comments/:id', auth, commentCtrl.deleteComment);
-// router.delete('/admin/:postId/comments/:id', auth, commentCtrl.deleteCommentAdmin);
+router.post('/:postId/comments', commentCtrl.createComment);
+router.get('/:postId/comments', commentCtrl.getAllComment);
+router.get('/:postId/comments/:id', commentCtrl.getOneComment);
+router.put('/:postId/comments/:id', commentCtrl.modifyComment);
+router.delete('/:postId/comments/:id', commentCtrl.deleteComment);
+router.delete('/admin/:postId/comments/:id', commentCtrl.deleteCommentAdmin);
+
 module.exports = router;
