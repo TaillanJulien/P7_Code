@@ -1,12 +1,14 @@
 <template>
     <section class="create_new_post">
+        <form action="#">
         <p class="information_new_post">Qu'avez-vous à partager ? <i class="fa-solid fa-marker"></i></p>
         <input id="text_input" type="text" placeholder="Veuillez saisir votre texte ici">
         <div class="new_post_img">
             <p class="information_new_post">Une image à partager ? Cliquez sur le bouton juste en dessous ! <i class="fa-regular fa-image"></i></p>
             <input type="file">
         </div>
-        <button class="valid_create_post">Partager <i class="fa-regular fa-circle-check"></i></button>
+        <button class="valid_create_post" onclick="alert('Données récup')">Partager <i class="fa-regular fa-circle-check"></i></button>
+        </form>
     </section>
 </template>
 
@@ -14,12 +16,12 @@
     export default {
       name: 'create_post',
     }
-    </script>
+</script>
 
 <style>
 .create_new_post{
     background-color: white;
-    margin: 100px 0 200px 0;
+    margin: 25px 0 25px 0;
     padding: 10px 10px 10px 10px;
     width: 30%;
     border-radius: 30px;

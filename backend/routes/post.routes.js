@@ -12,7 +12,7 @@ const multer = require('../middleware/multer-config');
 const postCtrl = require('../controllers/post.controller');
 const commentCtrl = require ('../controllers/comment.controller');
 
-// Routes pour les POST !!!!!!!!!!!!!!!! AJOUTER AUTH + MULTER
+// Routes pour les POST
 router.get('/', postCtrl.getAllPost);
 router.get('/:id', postCtrl.getOnePost);
 router.post('/', postCtrl.createPost);

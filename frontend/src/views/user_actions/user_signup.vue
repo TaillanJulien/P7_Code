@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="redirection_link">
-            <p>- Vous avez déjà un compte ? <a href="#">Rendez-vous sur cette page.</a> -</p>
+            <p>- Vous avez déjà un compte ? <a href="http://localhost:8080/login">Rendez-vous sur cette page.</a> -</p>
         </div>
         <div class="logo_end">
             <img src="../../assets/groupomania_graphic_logo.png" alt="logo">
@@ -54,7 +54,7 @@
     box-shadow: 7px 9px 7px 1px rgba(0,0,0,0.76);
     transform: scale(1);
     transition: transform 500ms;
-    margin: 20px 30px 30px 30px;
+    margin: 15px 30px 15px 30px;
 }
 .signup:hover{
     transform: scale(1.01);

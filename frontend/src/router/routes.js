@@ -18,7 +18,7 @@ const routes = [
   {path: '/', name: 'homepage', component: homepage_component},
 
   // Post routes
-  {path: '/post', name: 'all_post', component: all_post},
+  {path: '/all_post', name: 'all_post', component: all_post},
   {path: '/create_post', name: 'create_post', component: create_post},
 
   // Users routes

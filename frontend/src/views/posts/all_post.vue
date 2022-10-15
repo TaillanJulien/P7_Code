@@ -1,17 +1,18 @@
 <template>
-  <section class="user_post">
+<section class="post">
+  <div class="user_post" v-for="post in posts" :key="post.message">
     <div class="user_post_info">
       <div class="user_post_info_img">
         <img src="../../assets/photo_profil.jpg" alt="photo_moi">
       </div>
       <div class="user_post_info_name_timer">
-        <p class="user_name">Julien Taillan </p>
-        <p class="user_timer">Il y a "ici : timer"</p>
+        <p class="user_name">user name</p>
+        <p class="user_timer">Il y a "timer"</p>
       </div>
     </div>
-    <div class="user_posted_message">
-      <p>There is dopesmoker Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus dolore natus aut minima. Perferendis, quo perspiciatis exercitationem officiis repellat temporibus veniam blanditiis dignissimos impedit quibusdam expedita itaque reprehenderit dolores culpa!</p>
-      <div class="user_posted_message_img"><img src="../../assets/imgimg.png" alt=""></div>
+    <div class="user_posted_message" >
+      <p>{{post.message}}</p>
+      <div class="user_posted_message_img"><img src="" alt=""></div>
     </div>
     <div class="button_post">
       <button><i class="fa-regular fa-thumbs-up"></i> J'aime</button>
@@ -31,19 +32,43 @@
         </div>
       </div>
       <div class="user_comment_message">
-          <p>Super album ! Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, fugit distinctio. Illum, enim quidem. Totam, possimus? Hic repellendus quisquam error autem rerum repudiandae natus in, expedita deleniti, culpa beatae veniam. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam, in eum! Impedit provident deserunt quia. Atque quidem omnis repellat illo ea placeat fugiat eos saepe aliquam. Maiores beatae aut est?</p>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, fugit distinctio. Illum, enim quidem. Totam, possimus? Hic repellendus quisquam error autem rerum repudiandae natus in, expedita deleniti, culpa beatae veniam. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam, in eum! Impedit provident deserunt quia. Atque quidem omnis repellat illo ea placeat fugiat eos saepe aliquam. Maiores beatae aut est?</p>
         </div>
     </div>
-  </section>
+  </div>
+</section>
 </template> 
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'all_post',
+  data() {
+    return {
+      posts: [],
+      users: []
+    }
+  },
+  mounted () {
+    axios.get ('http://localhost:3000/api/post/')
+    .then(response => (this.posts = response.data))
+    .catch(err => console.log(err));
+    
+    axios.get ('http://localhost:3000/api/user/getAllUsers/')
+    .then(response => console.log(response))
+    // .then(response => (this.users = response.data))
+    .catch(err => console.log(err))
+  }
 }
 </script>
 
 <style>
+.post{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .user_post{
   background-color: white;
   margin: 15px 35px 35px 35px;

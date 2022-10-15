@@ -5,15 +5,23 @@
             <img src="../assets/groupomania_logo_4.png" alt="">
         </div>
         <div class="homepage_buttons">
-            <button>Cliquez ici pour vous identifier.</button>
-            <button>Cliquez ici pour créer un nouveau compte.</button>
+            <button @click="signup_page">Cliquez ici pour vous identifier.</button>
+            <button @click="login_page">Cliquez ici pour créer un nouveau compte.</button>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'homepage_component'
+        name: 'homepage_component',
+        methods: {
+            signup_page(){
+                window.location.href = "http://localhost:8080/signup"
+            },
+            login_page(){
+                window.location.href = "http://localhost:8080/login"
+            }
+        }
     }
 </script>
 
@@ -31,7 +39,7 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        margin: 100px 0 250px 0;
+        margin: 0;
     }
     .homepage:hover{
         transform: scale(1.01);
