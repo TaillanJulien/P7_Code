@@ -1,12 +1,12 @@
 <template>
 <section class="post">
-  <div class="user_post" v-for="post in posts" :key="post.message">
+  <div class="user_post" v-for="post in posts" :key="post._id">
     <div class="user_post_info">
       <div class="user_post_info_img">
         <img src="../../assets/photo_profil.jpg" alt="photo_moi">
       </div>
       <div class="user_post_info_name_timer">
-        <p class="user_name">user name</p>
+        <p class="user_name" v-for="user in users" :key="user._id">{{ user.firstName }} {{user.lastName}}</p>
         <p class="user_timer">Il y a "timer"</p>
       </div>
     </div>
@@ -56,8 +56,7 @@ export default {
     .catch(err => console.log(err));
     
     axios.get ('http://localhost:3000/api/user/getAllUsers/')
-    .then(response => console.log(response))
-    // .then(response => (this.users = response.data))
+    .then(response => (this.users = response.data))
     .catch(err => console.log(err))
   }
 }
