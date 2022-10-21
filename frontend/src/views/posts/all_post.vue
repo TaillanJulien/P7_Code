@@ -6,12 +6,14 @@
         <img src="../../assets/photo_profil.jpg" alt="photo_moi">
       </div>
       <div class="user_post_info_name_timer">
-        <p class="user_name" v-for="user in users" :key="user._id">{{ user.firstName }} {{user.lastName}}</p>
+        <div class="user_name" v-for="user in users" :key="user._id">
+          <p v-if="post.userId === user._id"> {{ user.firstName + ' ' + user.lastName }} </p>
+        </div>
         <p class="user_timer">Il y a "timer"</p>
       </div>
     </div>
     <div class="user_posted_message" >
-      <p>{{post.message}}</p>
+      <p>{{ post.message }}</p>
       <div class="user_posted_message_img"><img src="" alt=""></div>
     </div>
     <div class="button_post">
@@ -21,20 +23,20 @@
     <div class="form_post">
       <input type="text" placeholder="Veuillez saisir votre commentaire">
     </div>
-    <div class="user_comment">
+    <div class="user_comment" v-for="comment in comments" :key="comment._id">
       <div class="user_comment_info">
         <div class="user_comment_info_img">
           <img src="../../assets/photo_profil_2.jpg" alt="photo moi 2">
         </div>
         <div class="user_comment_info_name_timer">
-          <p class="user_comment_name">Tulien Jaillan</p>
-          <p class="user_comment_timer">Il y a "ici : timer"</p>
+          <div>
+            <div class="user_comment_name"></div>
+            <p class="user_comment_timer">Il y a "ici : timer"</p>
+          </div>
         </div>
       </div>
-      <div class="user_comment_message">
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, fugit distinctio. Illum, enim quidem. Totam, possimus? Hic repellendus quisquam error autem rerum repudiandae natus in, expedita deleniti, culpa beatae veniam. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Veniam, in eum! Impedit provident deserunt quia. Atque quidem omnis repellat illo ea placeat fugiat eos saepe aliquam. Maiores beatae aut est?</p>
-        </div>
-    </div>
+      <p class="user_comment_message" v-if="post._id === comment.postId">{{ comment.message }}</p>
+  </div>
   </div>
 </section>
 </template> 
@@ -47,18 +49,27 @@ export default {
   data() {
     return {
       posts: [],
-      users: []
+      users: [],
+      comments: []
     }
   },
+
   mounted () {
     axios.get ('http://localhost:3000/api/post/')
     .then(response => (this.posts = response.data))
+    .then(response => console.log(response))
     .catch(err => console.log(err));
     
     axios.get ('http://localhost:3000/api/user/getAllUsers/')
     .then(response => (this.users = response.data))
+    .then(response => console.log(response))
     .catch(err => console.log(err))
-  }
+
+    axios.get ('http://localhost:3000/api/post/63513446752814e6febb4f25/comments')
+    .then(response => (this.comments = response.data))
+    .then (response => console.log(response))
+    .catch(err => console.log(err))
+  },
 }
 </script>
 
@@ -67,6 +78,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 90%;
 }
 .user_post{
   background-color: white;
@@ -184,9 +196,6 @@ export default {
   background-color: lightgrey;
 }
 @media (max-width: 992px){
-  .user_post{
-    width: auto;
-  }
   .form_post input{
   width: auto;
   }

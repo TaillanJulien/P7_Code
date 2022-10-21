@@ -1,5 +1,5 @@
 // Importation schema comment
-const Comment = require('../models/post.model');
+const Comment = require('../models/comment.model');
 
 // Logique métier routes comments (CRUD)
 
@@ -10,7 +10,7 @@ exports.createComment = (req, res, next) =>{
         postId: req.params.postId,
         message: req.body.message,
     });
-    newComment.create(Comment)
+    Comment.create(newComment)
         .then (() => res.status(201).json({ message: 'Commentaire enregistré.'}))
         .catch(error => res.status(400).json({message: "Impossible d'enregistrer le commentaire", error }))
 }
