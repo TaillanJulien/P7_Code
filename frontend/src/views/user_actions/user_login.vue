@@ -7,20 +7,22 @@
         </div>
         <p class="information_login">- Veuillez compléter les informations pour vous connecter -</p>
         <div class="form_login">
-            <div class="form_login_mail">
-                <label for="mail">Adresse email :
-                    <input type="text" placeholder="Veuillez saisir votre adresse mail">
-                </label>
-            </div>
-            <div class="form_login_password">
-                <label for="password">Mot de passe :
-                    <input type="text" placeholder="Veuillez saisir un mot de passe">
-                </label>
-            </div>
+            <form>
+                <div class="form_login_mail">
+                    <label for="email">Adresse email :
+                        <input type="text" name="email" v-model="email" placeholder="Veuillez saisir votre adresse mail">
+                    </label>
+                </div>
+                <div class="form_login_password">
+                    <label for="password">Mot de passe :
+                        <input type="text" name="password" v-model="password" placeholder="Veuillez saisir un mot de passe">
+                    </label>
+                </div>
+            </form>
         </div>
         <div class="button_login">
-            <button class="button_connect">Se connecter</button>
-            <button class="button_create_account">Créer un nouveau compte</button>
+            <button class="button_connect" type="submit" @click="userLogin">Se connecter</button>
+            <button class="button_create_account" @click="signup_page">Créer un nouveau compte</button>
         </div>
         <div class="logo_end_login">
             <img src="../../assets/groupomania_graphic_logo.png" alt="logo">
@@ -29,8 +31,40 @@
 </template>
 
 <script>
-    export default {
-        name: 'user_login'
+import axios from 'axios'
+
+export default {
+    name: 'user_login',
+        data (){
+            return {
+                login: {
+                    email: "",
+                    password: "",
+                }
+            };
+        },
+
+    methods: {       
+        userLogin(){
+            let user = {
+                email: this.email,
+                password: this.password,
+            }
+            axios.post('http://localhost:3000/api/user/login', user)
+            .then(response => {
+                if (response.status === 200) {
+                    localStorage.setItem('token', response.data.token);
+                    this.$router.push('/all-post');
+                    console.log("Connexion réussie");
+                } else {
+                    err => {console.log("Ne fonctionne pas" + err)}
+                }
+            })
+        },
+        signup_page(){
+                window.location.href = "http://localhost:8080/signup"
+            },
+        },
     }
 </script>
 

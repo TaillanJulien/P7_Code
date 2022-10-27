@@ -14,7 +14,9 @@
     </div>
     <div class="user_posted_message" >
       <p>{{ post.message }}</p>
-      <div class="user_posted_message_img"><img src="" alt=""></div>
+      <div class="user_posted_message_img">
+        <img src="" alt="">
+      </div>
     </div>
     <div class="button_post">
       <button><i class="fa-regular fa-thumbs-up"></i> J'aime</button>
@@ -23,20 +25,26 @@
     <div class="form_post">
       <input type="text" placeholder="Veuillez saisir votre commentaire">
     </div>
-    <div class="user_comment" v-for="comment in comments" :key="comment._id">
-      <div class="user_comment_info">
-        <div class="user_comment_info_img">
-          <img src="../../assets/photo_profil_2.jpg" alt="photo moi 2">
-        </div>
-        <div class="user_comment_info_name_timer">
-          <div>
-            <div class="user_comment_name"></div>
+    <div v-for="comment in comments" :key="comment._id">
+      <div class="user_comment" v-if="post._id === comment.postId">
+        <div class="user_comment_info">
+          <div class="user_comment_info_img">
+            <img src="../../assets/photo_profil_2.jpg" alt="photo moi 2">
+          </div>
+          <div class="user_comment_info_name_timer">
+            <div v-for="user in users" :key="user._id">
+              <div class="user_comment_name">
+                <p v-if="comment.userId === user._id">{{ user.firstName + ' ' + user.lastName }}</p>
+              </div>
+            </div>
             <p class="user_comment_timer">Il y a "ici : timer"</p>
           </div>
         </div>
+        <div class="user_comment_message"  >
+          <p v-if="post._id === comment.postId" >{{ comment.message }}</p>
+        </div>
       </div>
-      <p class="user_comment_message" v-if="post._id === comment.postId">{{ comment.message }}</p>
-  </div>
+    </div>
   </div>
 </section>
 </template> 
@@ -53,7 +61,6 @@ export default {
       comments: []
     }
   },
-
   mounted () {
     axios.get ('http://localhost:3000/api/post/')
     .then(response => (this.posts = response.data))
@@ -65,7 +72,7 @@ export default {
     .then(response => console.log(response))
     .catch(err => console.log(err))
 
-    axios.get ('http://localhost:3000/api/post/63513446752814e6febb4f25/comments')
+    axios.get ('http://localhost:3000/api/comments/')
     .then(response => (this.comments = response.data))
     .then (response => console.log(response))
     .catch(err => console.log(err))
@@ -78,7 +85,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 90%;
+  width: 60%;
 }
 .user_post{
   background-color: white;
@@ -164,6 +171,7 @@ export default {
 .user_comment{
   display: flex;
   flex-wrap: nowrap;
+  flex-direction: column;
   border-bottom: 1px lightgray solid;
   margin: 15px;
 }
@@ -186,7 +194,7 @@ export default {
   font-style: italic;
 }
 .user_comment_message{
-  margin: 0 15px 15px 15px;
+  margin: 15px;
   padding-bottom: 15px;
 }
 .user_comment_message p{
@@ -194,6 +202,7 @@ export default {
   margin: 0;
   border-radius: 15px;
   background-color: lightgrey;
+  width: fit-content;
 }
 @media (max-width: 992px){
   .form_post input{

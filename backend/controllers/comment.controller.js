@@ -29,6 +29,7 @@ exports.modifyComment = (req, res, next) =>{
 
 //Récupérer un commentaire
 exports.getOneComment = (req, res, next) =>{
+    console.log("Récupération d'un seul commentaire");
     Comment.findOne({postId: req.params.postId})
         .then((post) => {res.status(200).json({post})})
         .catch((error) => {res.status(404).json({message: "Impossible de récupérer le commentaire ciblé", error})})
@@ -36,6 +37,7 @@ exports.getOneComment = (req, res, next) =>{
 
 //Récupérer tous les commentaires
 exports.getAllComment = (req, res, next) =>{
+    console.log("Récupération de tous les commentaires");
     Comment.find()
         .then((comment) => {res.status(200).json(comment)})
         .catch(error => res.status(400).json({message: "Impossible de récupérer tous les commentaires", error}));

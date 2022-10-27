@@ -1,9 +1,9 @@
 <template>
     <header>
-        <div class="img"><img src="../assets/groupomania_logo.png" alt="main logo groupomania"></div>
+        <div class="img"><a href="http://127.0.0.1:8080/all-post"><img src="../assets/groupomania_logo.png" alt="main logo groupomania"></a></div>
         <nav>
-            <a href="#">Accueil</a>
-            <a href="#">Nouveau post</a>
+            <a href="http://127.0.0.1:8080/all-post">Accueil</a>
+            <a href="http://127.0.0.1:8080/create_post">Nouveau post</a>
             <a href="#">Logout</a>
         </nav>
     </header>

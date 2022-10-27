@@ -6,7 +6,8 @@ const mongoose = require('mongoose');
 
 // Importation et utilisation des routes
 const postRoutes = require('./routes/post.routes');
-const userRoutes = require('./routes/user.routes')
+const userRoutes = require('./routes/user.routes');
+const commentRoutes = require('./routes/comment.routes')
 
 // Importation Helmet
 const helmet = require('helmet');
@@ -50,5 +51,6 @@ app.use(express.json());
 app.use('/assets', express.static(path.join(__dirname, 'images')));
 app.use('/api/user', userRoutes);
 app.use('/api/post', postRoutes);
+app.use('/api/comments', commentRoutes)
   
 module.exports = app;

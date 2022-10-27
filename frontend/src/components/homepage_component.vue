@@ -5,8 +5,8 @@
             <img src="../assets/groupomania_logo_4.png" alt="">
         </div>
         <div class="homepage_buttons">
-            <button @click="signup_page">Cliquez ici pour vous identifier.</button>
-            <button @click="login_page">Cliquez ici pour créer un nouveau compte.</button>
+            <button @click="login_page">Cliquez ici pour vous identifier.</button>
+            <button @click="signup_page">Cliquez ici pour créer un nouveau compte.</button>
         </div>
     </div>
 </template>
