@@ -82,8 +82,19 @@ export default {
     .then(response => (this.comments = response.data))
     .then (response => console.log(response))
     .catch(err => console.log(err))
+
+    axios.post ('http://localhost:3000/api/comments/:postId')
+    .then(response => this.comments = response.data)
+    .then (response => console.log(response))
+    .catch(err => console.log(err))
   },
 }
+
+// .then (response => {
+//       for (let i = 0; i < response.length; i++){
+//         console.log(response[i].message)
+//       }
+//     })
 </script>
 
 <style>
