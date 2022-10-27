@@ -10,12 +10,12 @@
             <form>
                 <div class="form_login_mail">
                     <label for="email">Adresse email :
-                        <input type="text" name="email" v-model="email" placeholder="Veuillez saisir votre adresse mail">
+                        <input type="email" name="email" v-model="email" placeholder="Veuillez saisir votre adresse mail">
                     </label>
                 </div>
                 <div class="form_login_password">
                     <label for="password">Mot de passe :
-                        <input type="text" name="password" v-model="password" placeholder="Veuillez saisir un mot de passe">
+                        <input type="password" name="password" v-model="password" placeholder="Veuillez saisir un mot de passe">
                     </label>
                 </div>
             </form>

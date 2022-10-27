@@ -20,10 +20,10 @@
     </div>
     <div class="button_post">
       <button><i class="fa-regular fa-thumbs-up"></i> J'aime</button>
-      <button><i class="fa-regular fa-comment"></i> Commenter</button>
+      <button @click="userComment"><i class="fa-regular fa-comment"></i> Commenter</button>
     </div>
     <div class="form_post">
-      <input type="text" placeholder="Veuillez saisir votre commentaire">
+      <input type="text" id="comment" name="comment" placeholder="Veuillez saisir votre commentaire">
     </div>
     <div v-for="comment in comments" :key="comment._id">
       <div class="user_comment" v-if="post._id === comment.postId">
@@ -59,6 +59,12 @@ export default {
       posts: [],
       users: [],
       comments: []
+    }
+  },
+  methods: {
+    userComment(){
+      let newComment = document.querySelector('#comment').value
+      console.log(newComment)
     }
   },
   mounted () {
