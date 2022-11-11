@@ -7,7 +7,7 @@ const fs = require('fs');
 // Logique métier routes posts (CRUD) :
 
 //Créer un post
-exports.createPost = async (req, res, next) => {
+exports.createPost = (req, res, next) => {
   const newPost = new Post({
     userId: req.body.userId,
     message: req.body.message,

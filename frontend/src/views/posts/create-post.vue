@@ -2,19 +2,41 @@
     <section class="create_new_post">
         <form action="#">
         <p class="information_new_post">Qu'avez-vous à partager ? <i class="fa-solid fa-marker"></i></p>
-        <input id="text_input" type="text" placeholder="Veuillez saisir votre texte ici">
+        <input id="post" type="text" v-model="message" placeholder="Veuillez saisir votre texte ici">
         <div class="new_post_img">
             <p class="information_new_post">Une image à partager ? Cliquez sur le bouton juste en dessous ! <i class="fa-regular fa-image"></i></p>
             <input type="file">
         </div>
-        <button class="valid_create_post" onclick="alert('Données récup')">Partager <i class="fa-regular fa-circle-check"></i></button>
+        <button class="valid_create_post" @click="newUserPost">Partager <i class="fa-regular fa-circle-check"></i></button>
         </form>
     </section>
 </template>
 
 <script>
+    import axios from 'axios';
+
     export default {
-      name: 'create_post',
+    name: 'create_post',
+    data () {
+        return {
+            message: ''
+        }
+    },
+    methods: {
+        newUserPost(){
+            let newPost = {
+                message: this.message
+            }
+            axios.post('http://localhost:3000/api/post/', newPost)
+            .then(res => {
+                if(res.status === 200){
+                    this.$router.push('/all-post')
+                } else {
+                    err => {console.log(err.response)}
+                }
+            })
+        }
+    }
     }
 </script>
 
@@ -40,7 +62,7 @@
     width: 80%;
     padding: 10px;
 }
-#text_input{
+#post{
     margin-bottom: 25px;
 }
 .new_post_img{

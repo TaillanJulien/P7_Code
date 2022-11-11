@@ -5,8 +5,8 @@
             <img src="../assets/groupomania_logo_4.png" alt="">
         </div>
         <div class="homepage_buttons">
-            <button @click="login_page">Cliquez ici pour vous identifier.</button>
-            <button @click="signup_page">Cliquez ici pour créer un nouveau compte.</button>
+            <button @click="loginPage">Cliquez ici pour vous identifier.</button>
+            <button @click="signupPage">Cliquez ici pour créer un nouveau compte.</button>
         </div>
     </div>
 </template>
@@ -15,11 +15,11 @@
     export default {
         name: 'homepage_component',
         methods: {
-            signup_page(){
-                window.location.href = "http://localhost:8080/signup"
+            signupPage(){
+                this.$router.push('/signup');
             },
-            login_page(){
-                window.location.href = "http://localhost:8080/login"
+            loginPage(){
+                this.$router.push('/login');
             }
         }
     }

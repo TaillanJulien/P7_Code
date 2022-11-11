@@ -7,6 +7,10 @@ const router = express.Router();
 // Controleur user
 const userCtrl = require('../controllers/user.controller');
 
+// Importation middleware MULTER pour photo de profil
+const multer = require('../middleware/multer-config');
+
+
 // Routes
 
 // Inscription - Connexion - Déconnexion

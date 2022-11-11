@@ -2,9 +2,9 @@
     <header>
         <div class="img"><a href="http://127.0.0.1:8080/all-post"><img src="../assets/groupomania_logo.png" alt="main logo groupomania"></a></div>
         <nav>
-            <a href="http://127.0.0.1:8080/all-post">Accueil</a>
-            <a href="http://127.0.0.1:8080/create_post">Nouveau post</a>
-            <a href="#">Logout</a>
+            <a href="#" @click="allPostPage">Accueil</a>
+            <a href="#" @click="newPostPage">Nouveau post</a>
+            <a href="#" @click="logout">Logout</a>
         </nav>
     </header>
 </template>
@@ -12,6 +12,21 @@
 <script>
     export default {
         name: 'header_component',
+        methods: {
+            logout(){
+                confirm('Voulez-vous vraiment vous déconnecter ?')
+                if(confirm) {
+                    localStorage.removeItem("user")
+                    this.$router.push('/');
+                }              
+            },
+            newPostPage(){
+                this.$router.push('/create-post');
+            },
+            allPostPage(){
+                this.$router.push('/all-post');
+            }
+        }
     }
 </script>
 

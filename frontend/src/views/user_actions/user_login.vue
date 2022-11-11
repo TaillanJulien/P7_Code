@@ -22,7 +22,7 @@
         </div>
         <div class="button_login">
             <button class="button_connect" type="submit" @click="userLogin">Se connecter</button>
-            <button class="button_create_account" @click="signup_page">Créer un nouveau compte</button>
+            <button class="button_create_account" @click="signupPage">Créer un nouveau compte</button>
         </div>
         <div class="logo_end_login">
             <img src="../../assets/groupomania_graphic_logo.png" alt="logo">
@@ -44,26 +44,26 @@ export default {
             };
         },
 
-    methods: {       
+    methods: {      
         userLogin(){
             let user = {
                 email: this.email,
                 password: this.password,
             }
             axios.post('http://localhost:3000/api/user/login', user)
-            .then(response => {
-                if (response.status === 200) {
-                    localStorage.setItem('token', response.data.token);
+            .then(res => {
+                if (res.status === 200) {
+                    localStorage.setItem('user', res.data.token);
                     this.$router.push('/all-post');
                     console.log("Connexion réussie");
                 } else {
-                    err => {console.log("Ne fonctionne pas" + err)}
+                    err => {console.log("Impossible de se connecter" + err)}
                 }
             })
         },
-        signup_page(){
-                window.location.href = "http://localhost:8080/signup"
-            },
+        signupPage(){
+            this.$router.push('/signup')
+            }
         },
     }
 </script>

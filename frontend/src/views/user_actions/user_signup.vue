@@ -31,13 +31,13 @@
             </div>
             <div class="form_inscription_input">
                 <label for="picture"> Veuillez choisir une photo de profil :
-                    <input type="file">
+                    <input type="file" name="picture">
                 </label>
             </div>
         </div>
         <button class="user_signup" @click="userSignup">Cliquez ici pour vous enregistrer</button>
         <div class="redirection_link">
-            <p>- Vous avez déjà un compte ? <a href="http://localhost:8080/login">Rendez-vous sur cette page.</a> -</p>
+            <p>- Vous avez déjà un compte ? <a href="#" @click="loginPage">Rendez-vous sur cette page.</a> -</p>
         </div>
         <div class="logo_end">
             <img src="../../assets/groupomania_graphic_logo.png" alt="logo">
@@ -55,7 +55,7 @@
                 lastName: '',
                 firstName: '',
                 email: '',
-                password: ''
+                password: '',
             }
         },
         methods: {
@@ -67,8 +67,10 @@
                     password: this.password
                 }
                 axios.post ('http://localhost:3000/api/user/signup', newUser)
-                .then(this.$router.push('/login'), err => {console.log(err.response)
-                })
+                .then(this.$router.push('/login'), err => {console.log(err.response)})
+            },
+            loginPage(){
+                this.$router.push('/login')
             }
         }
     }
