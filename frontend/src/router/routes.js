@@ -11,6 +11,9 @@ import create_post from '../views/posts/create-post.vue';
 import user_signup from '../views/user_actions/user_signup.vue';
 import user_login from '../views/user_actions/user_login.vue';
 
+// Composant 404
+import not_found from '../components/not_found_component.vue';
+
 // Definition des routes
 
 const routes = [
@@ -24,6 +27,9 @@ const routes = [
   // Users routes
   {path: '/login', name: 'user_login', component: user_login,},
   {path: '/signup', name: 'user_signup', component: user_signup,},
+
+  // Page inexistante
+  {path: '*', name: 'not_found', component: not_found}
 ]
 
 // Exportation des routes vers main.js

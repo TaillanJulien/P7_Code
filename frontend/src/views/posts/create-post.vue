@@ -1,13 +1,13 @@
 <template>
     <section class="create_new_post">
-        <form action="#">
+        <form action="post">
         <p class="information_new_post">Qu'avez-vous à partager ? <i class="fa-solid fa-marker"></i></p>
-        <input id="post" type="text" v-model="message" placeholder="Veuillez saisir votre texte ici">
+        <input id="message" type="text" v-model="message" placeholder="Veuillez saisir votre texte ici">
         <div class="new_post_img">
             <p class="information_new_post">Une image à partager ? Cliquez sur le bouton juste en dessous ! <i class="fa-regular fa-image"></i></p>
             <input type="file">
         </div>
-        <button class="valid_create_post" @click="newUserPost">Partager <i class="fa-regular fa-circle-check"></i></button>
+        <button class="valid_create_post" type="submit" @click="newUserPost">Partager <i class="fa-regular fa-circle-check"></i></button>
         </form>
     </section>
 </template>
@@ -24,18 +24,29 @@
     },
     methods: {
         newUserPost(){
-            let newPost = {
+            let userPost = {
                 message: this.message
             }
-            axios.post('http://localhost:3000/api/post/', newPost)
+            axios.post('http://localhost:3000/api/post/', userPost)
             .then(res => {
-                if(res.status === 200){
+                if(res.status === 201){
                     this.$router.push('/all-post')
                 } else {
                     err => {console.log(err.response)}
                 }
             })
         }
+        // newUserPost(){
+        //     const data = new FormData();
+        //     data.append("userId", this.userId);
+        //     data.append("message", this.message)
+
+        //     axios.post('/api/post/', data)
+        //     .then(() => {
+        //         console.log("ça marche mec");
+        //     })
+        //     .catch(error => console.log(error))
+        // }
     }
     }
 </script>
