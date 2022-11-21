@@ -25,9 +25,9 @@
     }
 </script>
 
-<style>
+<style scoped>
     .homepage{
-        width: 30%;
+        width: 50%;
         border-radius: 30px;
         background-color: white;
         padding: 20px;
@@ -45,11 +45,13 @@
         transform: scale(1.01);
     }
     h1{
-        font-size: 25px;
+        margin: 13px;
+        font-size: 23px;
+        white-space: nowrap;
         color: #FD2D01;
     }
     .homepage_img{
-        width: auto;
+        width: 50%;
     }
     .homepage_img img{
         width: 100%;
@@ -69,9 +71,25 @@
         border-radius: 10px;
         padding: 10px;
     }
+    @media (max-width: 992px){
+        h1{
+            font-size: 21px;
+        }
+        .homepage_img{
+        width: 75%;
+    }
+    }
     @media (max-width: 768px){
         .homepage{
-            width: 60%;
+            width: 80%;
+            margin: 20px;
+        }
+        .homepage_img{
+        width: 65%;
+    }
+        h1{
+            font-size: 20px;
+            white-space: normal;
         }
     }
 </style>

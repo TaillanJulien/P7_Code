@@ -5,7 +5,7 @@
                 <img src="../../assets/groupomania_logo_2.png" alt="main logo groupomania">
             </div>
             <div class="signup_logo_title">
-                <p>- Pas encore de compte ? Vous êtes au bon endroit ! -</p>
+                <p>Pas encore de compte ? Vous êtes au bon endroit !</p>
             </div>
         </div>
         <div class="form_inscription">
@@ -34,10 +34,12 @@
                     <input type="file" name="picture">
                 </label>
             </div>
+            <div class="signup_button">
+                <button class="user_signup" @click="userSignup">Cliquez ici pour vous enregistrer</button>
+            </div>
         </div>
-        <button class="user_signup" @click="userSignup">Cliquez ici pour vous enregistrer</button>
         <div class="redirection_link">
-            <p>- Vous avez déjà un compte ? <a href="#" @click="loginPage">Rendez-vous sur cette page.</a> -</p>
+            <p>Vous avez déjà un compte ? <a href="#" @click="loginPage">Rendez-vous sur cette page.</a></p>
         </div>
         <div class="logo_end">
             <img src="../../assets/groupomania_graphic_logo.png" alt="logo">
@@ -76,7 +78,7 @@
     }
 </script>
 
-<style>
+<style scoped>
 .signup{
     width: 30%;
     border-radius: 30px;
@@ -114,6 +116,20 @@
     width: 70%;
     margin: 10px;
     padding: 5px;
+}
+.user_signup{
+    width: 50%;
+    margin: 10px;
+    box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
+    background-color: white;
+    border-radius: 10px;
+    padding: 8px;
+}
+.signup_button{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .redirection_link{
     display: flex;

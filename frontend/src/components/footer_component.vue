@@ -6,7 +6,11 @@
             <li><i class="fa-solid fa-arrow-right"></i> Merci de contacter l'administrateur à cette <a href="mailto:#">adresse</a>.</li>
         </ul>
         <div class="external_link">
-            <i class="fa-brands fa-twitter"></i><i class="fa-brands fa-instagram"></i><i class="fa-brands fa-linkedin"></i><i class="fa-brands fa-youtube"></i><i class="fa-brands fa-facebook"></i>
+            <a href="https://twitter.com/?lang=fr" target="_blank"><i class="fa-brands fa-twitter"></i></a>
+            <a href="https://www.instagram.com/?hl=fr" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://fr.linkedin.com/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://www.youtube.com/" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
         </div>
     </footer>
 </template>
@@ -23,7 +27,7 @@
         width: 90%;
         background-color: #4E5166;
         border-radius: 50px 50px 0 0;
-        margin-top: 10px;
+        margin-top: 20px;
     }
     ul{
         width: 70%;
@@ -59,10 +63,15 @@
         footer{
             flex-direction: column;
             align-items: center;
+            width: 100%;
         }
         ul{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             padding: 0;
-            width: 90%;
+            width: 100%;
         }
     }
 </style>

@@ -1,10 +1,10 @@
 <template>
     <header>
-        <div class="img"><a href="http://127.0.0.1:8080/all-post"><img src="../assets/groupomania_logo.png" alt="main logo groupomania"></a></div>
+        <div class="img"><img src="../assets/groupomania_logo.png" alt="main logo groupomania"></div>
         <nav>
-            <a href="#" @click="allPostPage">Accueil</a>
-            <a href="#" @click="newPostPage">Nouveau post</a>
-            <a href="#" @click="logout">Logout</a>
+            <a href="" @click="allPostPage">Accueil</a>
+            <a href="" @click="newPostPage">Nouveau post</a>
+            <a href="" @click="logout">Logout</a>
         </nav>
     </header>
 </template>
@@ -30,7 +30,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     header{
         display: flex;
         justify-content: space-between;
@@ -39,7 +39,7 @@
         padding: 18px;
         margin-bottom: 20px;
         border-radius: 0 0 50px 50px;
-        width: 90%;
+        width: 89%;
     }
     .img{
         margin-left: 10px;
@@ -59,14 +59,9 @@
     }
     @media (max-width: 992px){
         header{
-            width: 90%;
+            
             flex-direction: column;
             align-content: center;
-        }
-    }
-    @media (max-width: 768px){
-        header{
-            width: 89%
         }
     }
 </style>

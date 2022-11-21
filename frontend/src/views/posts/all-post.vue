@@ -97,7 +97,7 @@ export default {
 .user_post{
   background-color: white;
   margin: 15px 35px 35px 35px;
-  width: 60%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   border-radius: 30px;

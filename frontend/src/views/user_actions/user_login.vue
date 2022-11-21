@@ -5,7 +5,7 @@
                 <img src="../../assets/groupomania_logo_2.png" alt="main logo groupomania">
             </div>
         </div>
-        <p class="information_login">- Veuillez compléter les informations pour vous connecter -</p>
+        <p class="information_login">Veuillez compléter les informations pour vous connecter :</p>
         <div class="form_login">
             <form>
                 <div class="form_login_mail">
@@ -68,7 +68,7 @@ export default {
     }
 </script>
 
-<style>
+<style scoped>
 .login{
     width: 30%;
     border-radius: 30px;
