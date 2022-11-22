@@ -1,36 +1,49 @@
-// ----- Importation des composants pour routage ----- //
+//Importation de vue router et utilisation dans l'application
+import VueRouter from 'vue-router'
+import Vue from 'vue'
+Vue.use(VueRouter)
 
 // Composant page accueil
-import homepage_component from '../components/homepage_component';
+import HomeComponent from '../components/HomeComponent';
 
 // Composants pour les post
-import all_post from '../views/posts/all-post.vue';
-import create_post from '../views/posts/create-post.vue';
+import AllPosts from '../views/posts/AllPosts.vue';
+import CreatePost from '../views/posts/CreatePost.vue';
 
 // Composants pour les users
-import user_signup from '../views/user_actions/user_signup.vue';
-import user_login from '../views/user_actions/user_login.vue';
+import UserSignup from '../views/user_actions/UserSignup.vue';
+import UserLogin from '../views/user_actions/UserLogin.vue';
 
 // Composant 404
-import not_found from '../components/not_found_component.vue';
+import PageError from '../components/PageError.vue';
 
 // Definition des routes
 
 const routes = [
   // Page accueil route
-  {path: '/', name: 'homepage', component: homepage_component},
+  {path: '/', name: 'HomeComponent', component: HomeComponent},
 
   // Post routes
-  {path: '/all-post', name: 'all_post', component: all_post},
-  {path: '/create-post', name: 'create_post', component: create_post},
+  {path: '/all-posts', name: 'AllPosts', component: AllPosts},
+  {path: '/create-post', name: 'CreatePost', component: CreatePost},
 
   // Users routes
-  {path: '/login', name: 'user_login', component: user_login,},
-  {path: '/signup', name: 'user_signup', component: user_signup,},
+  {path: '/login', name: 'UserLogin', component: UserLogin,},
+  {path: '/signup', name: 'UserSignup', component: UserSignup,},
 
   // Page inexistante
-  {path: '*', name: 'not_found', component: not_found}
+  {path: '*', name: 'PageError', component: PageError}
 ]
 
+// Utilisation vue router
+const router = new VueRouter({
+  routes: routes,
+  mode: 'history'
+})
+
 // Exportation des routes vers main.js
-export default routes
+export default router
+
+
+
+

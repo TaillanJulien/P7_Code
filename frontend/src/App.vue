@@ -1,20 +1,20 @@
 <template>
   <main id="app">
-    <header_component />
+    <NavBar />
     <router-view></router-view>
-    <footer_component />
+    <FooterCredits />
   </main>
 </template>
 
 <script>
-import header_component from './components/header_component.vue';
-import footer_component from './components/footer_component.vue';
+import NavBar from './components/NavBar.vue';
+import FooterCredits from './components/FooterCredits.vue';
 
 export default {
   name: 'App',
   components: {
-    header_component,
-    footer_component,
+    NavBar,
+    FooterCredits,
   }
 }
 </script>

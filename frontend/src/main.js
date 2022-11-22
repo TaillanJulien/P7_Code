@@ -5,19 +5,14 @@ Vue.config.productionTip = false
 // Importation de l'application app
 import App from './App.vue'
 
-//Importation de vue router et utilisation dans l'application
-import VueRouter from 'vue-router'
-Vue.use(VueRouter)
-
 // Importation des routes
-import routes from './router/routes'
+import router from './router/routes'
 
-const router = new VueRouter({
-  routes: routes,
-  mode: 'history'
-})
+// Importation store
+import store from './store'
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')
