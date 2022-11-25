@@ -20,10 +20,10 @@
     </div>
     <div class="button_post">
       <button><i class="fa-regular fa-thumbs-up"></i> J'aime</button>
-      <button @click="userComment"><i class="fa-regular fa-comment"></i> Commenter</button>
+      <button><i class="fa-regular fa-comment"></i> Commenter</button>
     </div>
     <div class="form_post">
-      <input type="text" id="comment" name="comment" v-model="panpan" placeholder="Veuillez saisir votre commentaire">
+      <input type="text" id="comment" name="comment" placeholder="Veuillez saisir votre commentaire">
     </div>
     <div v-for="comment in comments" :key="comment._id">
       <div class="user_comment" v-if="post._id === comment.postId">
@@ -64,13 +64,8 @@ export default {
   },
   computed:{
     ...mapGetters({
-      panpan: 'getPanpan'
+      user: 'getUser'
     })
-  },
-  methods: {
-    userComment(){
-      this.$store.commit('SET_PANPAN', 'Zizi')
-    }
   },
   mounted () {
     axios.get ('http://localhost:3000/api/post/')

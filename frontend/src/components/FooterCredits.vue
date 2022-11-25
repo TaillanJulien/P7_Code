@@ -1,5 +1,5 @@
 <template>
-    <footer>
+    <footer v-if="user != null">
         <ul>
             <li><i class="fa-solid fa-ban"></i> Un problème lié à un utilisateur (contenu offensant ou inaproprié) ?</li>
             <li><i class="fa-solid fa-screwdriver-wrench"></i> Un problème lié au site ?</li>
@@ -16,12 +16,19 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
+
     export default {
-        name: 'FooterCredits'
+        name: 'FooterCredits',
+        computed: {
+            ...mapGetters({
+                user: 'getUser'
+            })
+        }
     }
 </script>
 
-<style>
+<style scoped>
     footer{
         display: flex;
         width: 90%;

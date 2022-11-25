@@ -34,12 +34,11 @@
         box-shadow: 7px 9px 7px 1px rgba(0,0,0,0.76);
         transform: scale(1);
         transition: transform 500ms;
-        margin: 5px 20px 20px 20px;
+        margin: 200px;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        margin: 0;
     }
     .homepage:hover{
         transform: scale(1.01);

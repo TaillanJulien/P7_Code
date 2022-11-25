@@ -1,6 +1,9 @@
 <template>
-    <header>
+    <header v-if="user != null">
         <div class="img"><img src="../assets/groupomania_logo.png" alt="main logo groupomania"></div>
+        <div class="initials_container">
+            <p>Bienvenue {{ user.firstName.charAt(0) + user.lastName.charAt(0)}} !</p>
+        </div>
         <nav>
             <a href="" @click="allPostPage">Accueil</a>
             <a href="" @click="newPostPage">Nouveau post</a>
@@ -10,13 +13,21 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
+
     export default {
         name: 'NavBar',
+        computed:{
+            ...mapGetters({
+            user: 'getUser'
+            })
+        },
         methods: {
             logout(){
                 confirm('Voulez-vous vraiment vous déconnecter ?')
                 if(confirm) {
                     localStorage.removeItem("user")
+                    this.$store.commit("SET_USER", null) 
                     this.$router.push('/');
                 }              
             },
@@ -48,14 +59,22 @@
         width: 250px;
     }
     nav{
-        display: flex;
-        justify-content: center;
+        display: flex; 
     }
-    nav a {
+    nav a{
         color: white;
         text-decoration: none;
         margin: 10px;
         font-size: 20px;
+    }
+    .initials_container{
+        background-color: white;
+        padding: 5px;
+        border-radius: 40%;
+        font-size: 20px;
+    }
+    .initials_container p{
+        color: #FD2D01;
     }
     @media (max-width: 992px){
         header{

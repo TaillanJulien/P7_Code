@@ -10,12 +10,12 @@
             <form>
                 <div class="form_login_mail">
                     <label for="email">Adresse email :
-                        <input type="email" name="email" v-model="email" placeholder="Veuillez saisir votre adresse mail">
+                        <input type="email" name="email" v-model="login.email" placeholder="Veuillez saisir votre adresse mail">
                     </label>
                 </div>
                 <div class="form_login_password">
                     <label for="password">Mot de passe :
-                        <input type="password" name="password" v-model="password" placeholder="Veuillez saisir un mot de passe">
+                        <input type="password" name="password" v-model="login.password" placeholder="Veuillez saisir un mot de passe">
                     </label>
                 </div>
             </form>
@@ -43,19 +43,19 @@ export default {
                 }
             };
         },
-
     methods: {      
         userLogin(){
             let user = {
-                email: this.email,
-                password: this.password,
+                email: this.login.email,
+                password: this.login.password,
             }
             axios.post('http://localhost:3000/api/user/login', user)
             .then(res => {
                 if (res.status === 200) {
                     localStorage.setItem('user', res.data.token);
+                    this.$store.commit('SET_USER', res.data.user)
                     this.$router.push('/all-posts');
-                    console.log("Connexion réussie");
+                    console.log(res);
                 } else {
                     err => {console.log("Impossible de se connecter" + err)}
                 }
@@ -77,7 +77,7 @@ export default {
     box-shadow: 7px 9px 7px 1px rgba(0,0,0,0.76);
     transform: scale(1);
     transition: transform 500ms;
-    margin: 20px 20px 40px 20px;
+    margin: 100px 20px 40px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
