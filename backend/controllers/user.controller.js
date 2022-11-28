@@ -38,6 +38,7 @@ exports.login = (req, res, next) => {
                 } else {
                     res.status(200).json({
                         user: {
+                            userId: user._id,
                             firstName: user.firstName,
                             lastName: user.lastName,
                             email: user.email

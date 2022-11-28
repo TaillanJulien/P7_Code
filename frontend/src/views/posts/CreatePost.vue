@@ -1,30 +1,40 @@
 <template>
-    <section class="create_new_post">
-        <form action="post">
+    <div>
+        <button @click="open = true"> + </button>
+    <section v-if="open" class="create_new_post">
+        <button @click="open = false"> - </button>
         <p class="information_new_post">Qu'avez-vous à partager ? <i class="fa-solid fa-marker"></i></p>
-        <input id="message" type="text" v-model="message" placeholder="Veuillez saisir votre texte ici">
+        <input type="text" v-model="message" placeholder="Veuillez saisir votre texte ici">
         <div class="new_post_img">
             <p class="information_new_post">Une image à partager ? Cliquez sur le bouton juste en dessous ! <i class="fa-regular fa-image"></i></p>
             <input type="file">
         </div>
         <button class="valid_create_post" type="submit" @click="newUserPost">Partager <i class="fa-regular fa-circle-check"></i></button>
-        </form>
     </section>
+    </div>
 </template>
 
 <script>
     import axios from 'axios';
+    import { mapGetters } from 'vuex';
 
     export default {
     name: 'CreatePost',
     data () {
         return {
-            message: ''
+            message: '',
+            open: false
         }
+    },
+    computed: {
+        ...mapGetters({
+            user: 'getUser'
+        })
     },
     methods: {
         newUserPost(){
             let userPost = {
+                userId: this.user.userId,
                 message: this.message
             }
             axios.post('http://localhost:3000/api/post/', userPost)

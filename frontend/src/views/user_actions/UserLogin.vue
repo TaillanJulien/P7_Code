@@ -15,7 +15,7 @@
                 </div>
                 <div class="form_login_password">
                     <label for="password">Mot de passe :
-                        <input type="password" name="password" v-model="login.password" placeholder="Veuillez saisir un mot de passe">
+                        <input type="password" :submit="userLogin" name="password" v-model="login.password" placeholder="Veuillez saisir un mot de passe">
                     </label>
                 </div>
             </form>

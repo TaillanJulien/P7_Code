@@ -1,5 +1,6 @@
 <template>
 <section class="post">
+  <CreatePost></CreatePost>
   <div class="user_post" v-for="post in posts" :key="post._id">
     <div class="user_post_info">
       <div class="user_post_info_img">
@@ -9,7 +10,7 @@
         <div class="user_name" v-for="user in users" :key="user._id">
           <p v-if="post.userId === user._id"> {{ user.firstName + ' ' + user.lastName }} </p>
         </div>
-        <p class="user_timer">Il y a "timer"</p>
+        <p class="user_timer">{{ post.date | formatDate }}</p>
       </div>
     </div>
     <div class="user_posted_message" >
@@ -23,7 +24,7 @@
       <button><i class="fa-regular fa-comment"></i> Commenter</button>
     </div>
     <div class="form_post">
-      <input type="text" id="comment" name="comment" placeholder="Veuillez saisir votre commentaire">
+      <input type="text" name="comments" placeholder="Veuillez saisir votre commentaire">
     </div>
     <div v-for="comment in comments" :key="comment._id">
       <div class="user_comment" v-if="post._id === comment.postId">
@@ -37,7 +38,7 @@
                 <p v-if="comment.userId === user._id">{{ user.firstName + ' ' + user.lastName }}</p>
               </div>
             </div>
-            <p class="user_comment_timer">Il y a "ici : timer"</p>
+            <p class="user_comment_timer">{{ comment.date | formatDate }}</p>
           </div>
         </div>
         <div class="user_comment_message"  >
@@ -51,38 +52,38 @@
 
 <script>
 import axios from 'axios'
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
+import CreatePost from './CreatePost.vue';
 
 export default {
-  name: 'AllPosts',
-  data() {
-    return {
-      posts: [],
-      users: [],
-      comments: []
-    }
-  },
-  computed:{
-    ...mapGetters({
-      user: 'getUser'
-    })
-  },
-  mounted () {
-    axios.get ('http://localhost:3000/api/post/')
-    .then(response => (this.posts = response.data))
-    .then(response => console.log(response))
-    .catch(err => console.log(err));
-    
-    axios.get ('http://localhost:3000/api/user/getAllUsers/')
-    .then(response => (this.users = response.data))
-    .then(response => console.log(response))
-    .catch(err => console.log(err))
-
-    axios.get ('http://localhost:3000/api/comments/')
-    .then(response => (this.comments = response.data))
-    .then (response => console.log(response))
-    .catch(err => console.log(err))
-  },
+    name: "AllPosts",
+    components: {CreatePost},
+    data() {
+        return {
+            posts: "",
+            users: "",
+            comments: ""
+        };
+    },
+    computed: {
+        ...mapGetters({
+            user: "getUser"
+        })
+    },
+    mounted() {
+        axios.get("http://localhost:3000/api/post/")
+            .then(response => (this.posts = response.data))
+            .then(response => console.log(response))
+            .catch(err => console.log(err));
+        axios.get("http://localhost:3000/api/user/getAllUsers/")
+            .then(response => (this.users = response.data))
+            .then(response => console.log(response))
+            .catch(err => console.log(err));
+        axios.get("http://localhost:3000/api/comments/")
+            .then(response => (this.comments = response.data))
+            .then(response => console.log(response))
+            .catch(err => console.log(err));
+    },
 }
 
 </script>

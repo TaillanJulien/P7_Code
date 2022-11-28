@@ -12,12 +12,15 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        user: {}
+        user: {},
     },
     getters: {
         getUser: state => {
             return state.user
-        }
+        },
+        isAuth: state => {
+            return !!state.user 
+        },
     },
     mutations: {
         SET_USER(state, user){
