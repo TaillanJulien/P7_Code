@@ -1,6 +1,9 @@
 // Importation de EXPRESS
 const express = require('express');
 
+// Importation authentification
+const auth = require('./middleware/auth')
+
 // Importation mongoose
 const mongoose = require('mongoose'); 
 
@@ -37,6 +40,7 @@ mongoose.connect(`mongodb+srv://Julien_admin:azerty@groupomania.a9h59nz.mongodb.
   
 // Ajout headers pour éviter erreurs CORS
 app.use((req, res, next) => {
+  console.log(req.headers);
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
@@ -50,7 +54,7 @@ app.use(express.json());
 // Utilisation des middlewares
 app.use('/assets', express.static(path.join(__dirname, 'images')));
 app.use('/api/user', userRoutes);
-app.use('/api/post', postRoutes);
-app.use('/api/comments', commentRoutes)
+app.use('/api/post', auth, postRoutes);
+app.use('/api/comments', auth, commentRoutes)
   
 module.exports = app;

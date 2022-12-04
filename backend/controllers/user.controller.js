@@ -72,3 +72,18 @@ exports.getOneUser = (req, res, next) => {
     .then((post) => {res.status(200).json(post)})
     .catch((error) => {res.status(404).json({error: error})})
 };
+
+// Modifier user
+
+// Modifier un post
+exports.modifyUser = (req, res, next) => {
+    const updateUser = new User({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.email,
+    userId: req.body.userId
+    });
+    User.updateOne({_id: req.params.id}, updateUser)
+    .then(() => res.status(200).json({ message: 'User modifié. '}))
+    .catch(error => res.status(400).json({message: "Impossible de modifier le profil", error }))
+};

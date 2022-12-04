@@ -8,11 +8,11 @@ import HomeComponent from '../components/HomeComponent';
 
 // Composants pour les post
 import AllPosts from '../views/posts/AllPosts.vue';
-import CreatePost from '../views/posts/CreatePost.vue';
 
 // Composants pour les users
 import UserSignup from '../views/user_actions/UserSignup.vue';
 import UserLogin from '../views/user_actions/UserLogin.vue';
+import ModifyProfil from '../views/user_actions/ModifyProfil';
 
 // Composant 404
 import PageError from '../components/PageError.vue';
@@ -45,13 +45,6 @@ const routes = [
     meta: {isAuth: true}
   },
 
-  {
-    path: '/create-post', 
-    name: 'CreatePost', 
-    component: CreatePost,
-    meta: {isAuth: true}
-  },
-
   // Users routes
   {
     path: '/login', 
@@ -77,6 +70,13 @@ const routes = [
         next()
       }
     }
+  },
+
+  {
+    path: '/modify-profil',
+    name: 'ModifyProfil',
+    component: ModifyProfil,
+    meta: {isAuth: true}
   },
 
   // Page inexistante

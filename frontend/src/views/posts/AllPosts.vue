@@ -1,6 +1,6 @@
 <template>
-<section class="post">
-  <CreatePost></CreatePost>
+<section class="post" @update-posts="update-posts">
+  <CreatePost @getPosts="getPosts"></CreatePost>
   <div class="user_post" v-for="post in posts" :key="post._id">
     <div class="user_post_info">
       <div class="user_post_info_img">
@@ -8,24 +8,30 @@
       </div>
       <div class="user_post_info_name_timer">
         <div class="user_name" v-for="user in users" :key="user._id">
-          <p v-if="post.userId === user._id"> {{ user.firstName + ' ' + user.lastName }} </p>
+          <p v-if="post.userId === user._id"> {{ user.firstName + ' ' + user.lastName }}
+            <i @click="modifyPost = post._id" class="fa-solid fa-ellipsis"></i>
+            <i class="fa-solid fa-xmark" @click="deletePost(post._id, post.userId)" ></i>
+          </p> 
         </div>
         <p class="user_timer">{{ post.date | formatDate }}</p>
       </div>
     </div>
     <div class="user_posted_message" >
-      <p>{{ post.message }}</p>
+      <div v-if="modifyPost === post._id">
+        <input type="text" v-model="post.message" >
+        <button @click="modifyPostCall(post)">Modifier</button>
+        <button @click="modifyPost = '' ">Annuler</button>
+      </div>
+      <p v-else>{{ post.message }}</p>
       <div class="user_posted_message_img">
         <img src="" alt="">
       </div>
     </div>
-    <div class="button_post">
-      <button><i class="fa-regular fa-thumbs-up"></i> J'aime</button>
-      <button><i class="fa-regular fa-comment"></i> Commenter</button>
+    <div v-if="(modifyPost != post._id)" class="button_post">
+      <button><i class="fa-regular fa-thumbs-up"></i> J'aime</button> 
+      <NewComment :postId = 'post._id' @getComments="getComments"></NewComment>
     </div>
-    <div class="form_post">
-      <input type="text" name="comments" placeholder="Veuillez saisir votre commentaire">
-    </div>
+    <div v-if="(modifyPost != post._id)">
     <div v-for="comment in comments" :key="comment._id">
       <div class="user_comment" v-if="post._id === comment.postId">
         <div class="user_comment_info">
@@ -34,18 +40,26 @@
           </div>
           <div class="user_comment_info_name_timer">
             <div v-for="user in users" :key="user._id">
-              <div class="user_comment_name">
-                <p v-if="comment.userId === user._id">{{ user.firstName + ' ' + user.lastName }}</p>
+              <div v-if="comment.userId === user._id" class="user_comment_name">
+                <p >{{ user.firstName + ' ' + user.lastName }}</p>
+                <i @click="modifyComment = comment._id" class="fa-solid fa-ellipsis"></i>
               </div>
             </div>
             <p class="user_comment_timer">{{ comment.date | formatDate }}</p>
           </div>
         </div>
-        <div class="user_comment_message"  >
-          <p v-if="post._id === comment.postId" >{{ comment.message }}</p>
+        <div class="user_comment_message">
+          <div v-if="modifyComment === comment._id">
+        <input type="text" v-model="comment.message" >
+        <button @click="modifyCommentCall(comment)">Modifier</button>
+        <button @click="modifyComment = '' ">Annuler</button>
+      </div>
+          <p v-else >{{ comment.message }}</p>
+          <i class="fa-solid fa-xmark" v-if="user.userId === comment.userId" @click="deleteComment(comment._id, comment.userId)" ></i>
         </div>
       </div>
     </div>
+  </div> 
   </div>
 </section>
 </template> 
@@ -54,15 +68,18 @@
 import axios from 'axios'
 import { mapGetters } from 'vuex'
 import CreatePost from './CreatePost.vue';
+import NewComment from '../comments/NewComment.vue'
 
 export default {
     name: "AllPosts",
-    components: {CreatePost},
+    components: {CreatePost, NewComment},
     data() {
         return {
             posts: "",
             users: "",
-            comments: ""
+            comments: "",
+            modifyPost: "",
+            modifyComment: ""
         };
     },
     computed: {
@@ -70,18 +87,84 @@ export default {
             user: "getUser"
         })
     },
+    methods: {
+      getComments(){
+        axios.get("http://localhost:3000/api/comments/", {headers: {'Authorization': `${localStorage.getItem('token')}`}})
+        .then((res => {
+              this.comments = []
+              const commentReverse = res.data.reverse()
+              this.comments = commentReverse
+            }))
+            .catch(err => console.log(err));
+      },
+      deleteComment(_id, userId){
+        if(this.user.userId === userId){
+          axios.delete(`http://localhost:3000/api/comments/${_id}`, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
+          .then(res => {
+            if(res.status === 201){
+              this.getComments()
+            } else {
+              err => {console.log(err.response)}
+            }
+          })
+        }
+      },
+      modifyCommentCall(comment){
+        console.log(comment.message.length);
+        if(comment.message.length === 0){
+          this.deleteComment(comment._id, comment.userId)
+        }
+        axios.put(`http://localhost:3000/api/comments/${comment._id}`, comment, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
+        .then(res => {
+          if(res.status === 201){
+            this.getComments()
+            this.modifyComment = ''
+          } else {
+            err => {console.log(err.res)}
+          }
+        })
+      },
+      getPosts(){
+        axios.get("http://localhost:3000/api/post/", {headers: {'Authorization': `token ${localStorage.getItem('token')}`}})
+            .then((res => {
+              const postReverse = res.data.reverse()
+              this.posts = postReverse
+            }))
+            .catch(err => console.log(err));
+      },
+      deletePost(_id, userId){
+        if(this.user.userId === userId){
+          axios.delete(`http://localhost:3000/api/post/${_id}`, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
+          .then(res => {
+            if(res.status === 201){
+              this.getPosts()
+            } else {
+              err => {console.log(err.res)}
+            }
+          })
+        }
+      },
+      modifyPostCall(post){
+        console.log(post.message.length);
+        if(post.message.length === 0){
+          this.deletePost(post._id, post.userId)
+        }
+        axios.put(`http://localhost:3000/api/post/${post._id}`, post, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
+        .then(res => {
+          if(res.status === 201){
+            this.getPosts()
+            this.modifyPost = ''
+          } else {
+            err => {console.log(err.res)}
+          }
+        })
+      }
+    },  
     mounted() {
-        axios.get("http://localhost:3000/api/post/")
-            .then(response => (this.posts = response.data))
-            .then(response => console.log(response))
-            .catch(err => console.log(err));
+      this.getPosts()
+      this.getComments()
         axios.get("http://localhost:3000/api/user/getAllUsers/")
-            .then(response => (this.users = response.data))
-            .then(response => console.log(response))
-            .catch(err => console.log(err));
-        axios.get("http://localhost:3000/api/comments/")
-            .then(response => (this.comments = response.data))
-            .then(response => console.log(response))
+            .then(res => (this.users = res.data))
             .catch(err => console.log(err));
     },
 }
@@ -118,7 +201,9 @@ export default {
 .user_post_info_name_timer p{
   margin: 0 0 0 15px;
 }
-.user_name{
+.user_name p{
+  display: flex;
+  justify-content: space-between;
   font-weight: bold;
 }
 .user_timer{

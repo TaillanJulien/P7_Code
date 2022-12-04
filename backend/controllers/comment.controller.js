@@ -17,13 +17,13 @@ exports.createComment = (req, res, next) =>{
 
 //Modifier un commentaire
 exports.modifyComment = (req, res, next) =>{
-    const updateComment = new Comment({
+    const updateComment = {
         userId: req.params.userId,
         postId: req.params.postId,
         message: req.body.message
-    });
+    };
     Comment.updateOne({_id: req.params.id}, updateComment)
-        .then(() => res.status(200).json({ message: 'Commentaire modifié. '}))
+        .then(() => res.status(201).json({ message: 'Commentaire modifié. '}))
         .catch(error => res.status(400).json({message: "Impossible de modifier le commentaire", error }))
 }
 
@@ -45,8 +45,8 @@ exports.getAllComment = (req, res, next) =>{
 
 //Supprimer un commentaire
 exports.deleteComment = (req, res, next) =>{
-    Comment.deleteOne({postId: req.params.postId})
-        .then(() => res.status(200).json({message: 'Commentaire supprimé.'}))
+    Comment.deleteOne({_id: req.params.id})
+        .then(() => res.status(201).json({message: 'Commentaire supprimé.'}))
         .catch(error => res.status(401).json({message: "Impossible de supprimer le commentaire", error}));
 }
 

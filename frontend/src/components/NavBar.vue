@@ -6,7 +6,7 @@
         </div>
         <nav>
             <a href="" @click="allPostPage">Accueil</a>
-            <a href="" @click="newPostPage">Nouveau post</a>
+            <a href="" @click="modifyProfil">Profil</a>
             <a href="" @click="logout">Logout</a>
         </nav>
     </header>
@@ -31,8 +31,8 @@
                     this.$router.push('/');
                 }              
             },
-            newPostPage(){
-                this.$router.push('/create-post');
+            modifyProfil(){
+                this.$router.push('/modify-profil');
             },
             allPostPage(){
                 this.$router.push('/all-posts');

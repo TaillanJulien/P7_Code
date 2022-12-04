@@ -1,5 +1,6 @@
 // Importation schema post
 const Post = require('../models/post.model');
+const Comment = require('../models/comment.model')
 
 // Importation de fs (permet de supprimer des fichiers)
 const fs = require('fs');
@@ -22,20 +23,22 @@ exports.createPost = (req, res, next) => {
 
 // Modifier un post
 exports.modifyPost = (req, res, next) => {
-  const updatePost = new Post({
+  const updatePost = {
     _id: req.params.id,
     message: req.body.message,
     userId: req.body.userId
-  });
+  };
   Post.updateOne({_id: req.params.id}, updatePost)
-  .then(() => res.status(200).json({ message: 'Objet modifié. '}))
+  .then(() => res.status(201).json({ message: 'Objet modifié. '}))
   .catch(error => res.status(400).json({message: "Impossible de modifier le post", error }))
 };
 
 // Supprimer un post
 exports.deletePost = (req, res, next) => {
+  Comment.remove({postId: req.params.id})
+  .catch(error => res.status(401).json({message: "Impossible de supprimer les commentaires du post", error}));
   Post.deleteOne({_id: req.params.id})
-  .then(() => res.status(200).json({message: 'Objet supprimé.'}))
+  .then(() => res.status(201).json({message: 'Objet supprimé.'}))
   .catch(error => res.status(401).json({message: "Impossible de supprimer le post", error}));
 };
 

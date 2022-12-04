@@ -49,10 +49,10 @@ export default {
                 email: this.login.email,
                 password: this.login.password,
             }
-            axios.post('http://localhost:3000/api/user/login', user)
-            .then(res => {
+                axios.post('http://localhost:3000/api/user/login', user)
+                .then(res => {
                 if (res.status === 200) {
-                    localStorage.setItem('user', res.data.token);
+                    localStorage.setItem('token', res.data.token);
                     this.$store.commit('SET_USER', res.data.user)
                     this.$router.push('/all-posts');
                     console.log(res);

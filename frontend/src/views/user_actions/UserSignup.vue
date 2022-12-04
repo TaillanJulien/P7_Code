@@ -68,7 +68,7 @@
                     email: this.email,
                     password: this.password
                 }
-                axios.post ('http://localhost:3000/api/user/signup', newUser)
+                axios.post ('http://localhost:3000/api/user/signup', newUser, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
                 .then(this.$router.push('/login'), err => {console.log(err.response)})
             },
             loginPage(){

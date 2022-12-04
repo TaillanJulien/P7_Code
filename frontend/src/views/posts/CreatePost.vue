@@ -37,10 +37,10 @@
                 userId: this.user.userId,
                 message: this.message
             }
-            axios.post('http://localhost:3000/api/post/', userPost)
+            axios.post('http://localhost:3000/api/post/', userPost, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
             .then(res => {
                 if(res.status === 201){
-                    this.$router.push('/all-posts')
+                    this.$emit('getPosts')
                 } else {
                     err => {console.log(err.response)}
                 }
