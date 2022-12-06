@@ -35,7 +35,7 @@
                         userId: this.user.userId,
                         message: this.message
                     }
-                    axios.post(`http://localhost:3000/api/comments/${this.postId}`, userComment, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
+                    axios.post(`http://localhost:3000/api/comments/${this.postId}`, userComment, {headers: {Authorization: localStorage.getItem('token')}})
                     .then(res => {
                         if(res.status === 201){
                             this.open = false

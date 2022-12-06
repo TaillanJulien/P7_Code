@@ -1,17 +1,19 @@
 <template>
-    <div>
-        <button @click="open = true"> + </button>
-    <section v-if="open" class="create_new_post">
-        <button @click="open = false"> - </button>
-        <p class="information_new_post">Qu'avez-vous à partager ? <i class="fa-solid fa-marker"></i></p>
-        <input type="text" v-model="message" placeholder="Veuillez saisir votre texte ici">
-        <div class="new_post_img">
-            <p class="information_new_post">Une image à partager ? Cliquez sur le bouton juste en dessous ! <i class="fa-regular fa-image"></i></p>
-            <input type="file">
+    <section class="create_new_post">
+        <div class="buttons">
+            <button tabindex="0" v-if="!open" class="open-close_button" @click="open = true">{{ user.firstName }}, quelque chose à partager ?</button>
+            <button tabindex="0" v-if="open" class="open-close_button" @click="open = false"> Cliquez-ici pour annuler </button>
         </div>
-        <button class="valid_create_post" type="submit" @click="newUserPost">Partager <i class="fa-regular fa-circle-check"></i></button>
+        <div v-if="open" class="new_post">
+            <p>Que souhaitez-vous partager ?</p>
+            <input tabindex="0" id="postText" type="text" v-model="message" placeholder="Veuillez saisir le contenu de votre post">
+            <div class="new_post_img">
+                <p class="information_new_post">Une image à partager ?   <i class="fa-regular fa-image"></i></p>
+                <input tabindex="0" id="postImg" type="file">
+            </div>
+            <button tabindex="0" v-if="this.message != ''" class="valid_create_post" type="submit" @click="newUserPost">Partager <i class="fa-regular fa-circle-check"></i></button>
+        </div>
     </section>
-    </div>
 </template>
 
 <script>
@@ -37,7 +39,7 @@
                 userId: this.user.userId,
                 message: this.message
             }
-            axios.post('http://localhost:3000/api/post/', userPost, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
+            axios.post('http://localhost:3000/api/post/', userPost, {headers: {Authorization: localStorage.getItem('token')}})
             .then(res => {
                 if(res.status === 201){
                     this.$emit('getPosts')
@@ -50,30 +52,54 @@
     }
 </script>
 
-<style>
+<style scoped>
+.buttons{
+    display: flex;
+    justify-content: center;
+    width: auto;
+}
+.open-close_button{
+    font-size: 15px;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: white;
+    font-weight: bold;
+    box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
+    transform: scale(1);
+    transition: transform 300ms ease-out;
+    cursor: pointer;
+}
+.open-close_button:hover{
+    transform: scale(1.04);
+}
 .create_new_post{
+    width: 40%;
+}
+.new_post{
     background-color: white;
     margin: 25px 0 25px 0;
     padding: 10px 10px 10px 10px;
-    width: 30%;
+    width: auto;
     border-radius: 30px;
     box-shadow: 7px 9px 7px 1px rgba(0,0,0,0.76);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.information_new_post{
-    padding: 15px;
+.new_post p {
+    margin: 10px 0 5px 0;
 }
-.create_new_post input{
+#postText{
     border: 1px solid rgba(0,0,0,0.35);
     box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
     border-radius: 13px;
     width: 80%;
     padding: 10px;
+    margin: 10px 0 20px 0;
 }
-#post{
-    margin-bottom: 25px;
+#postImg{
+    margin: 10px 0 5px 0;
 }
 .new_post_img{
     display: flex;
@@ -84,20 +110,31 @@
     padding-bottom: 25px;
 }
 .valid_create_post{
+    font-size: 15px;
     margin: 15px;
-    box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
+    padding: 10px;
+    border-radius: 15px;
     background-color: white;
-    border-radius: 10px;
-    padding: 8px;
+    font-weight: bold;
+    box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
+    transform: scale(1);
+    transition: transform 300ms ease-out;
+    cursor: pointer;
+}
+.valid_create_post:hover{
+    transform: scale(1.04);
+}
+.valid_create_post i{
+    color: green;
 }
 @media (max-width: 992px){
     .create_new_post{
         width: 60%;
     }
 }
-@media (max-width: 768px){
+@media(max-width: 768px){
     .create_new_post{
-        width: 70%;
+        width: auto;
     }
 }
 </style>

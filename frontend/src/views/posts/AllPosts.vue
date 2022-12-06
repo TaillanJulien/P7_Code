@@ -1,68 +1,78 @@
 <template>
-<section class="post" @update-posts="update-posts">
+  <section class="post">
   <CreatePost @getPosts="getPosts"></CreatePost>
-  <div class="user_post" v-for="post in posts" :key="post._id">
-    <div class="user_post_info">
-      <div class="user_post_info_img">
-        <img src="../../assets/photo_profil.jpg" alt="photo_moi">
-      </div>
-      <div class="user_post_info_name_timer">
-        <div class="user_name" v-for="user in users" :key="user._id">
-          <p v-if="post.userId === user._id"> {{ user.firstName + ' ' + user.lastName }}
-            <i @click="modifyPost = post._id" class="fa-solid fa-ellipsis"></i>
-            <i class="fa-solid fa-xmark" @click="deletePost(post._id, post.userId)" ></i>
-          </p> 
+    <div class="user_post" v-for="post in posts" :key="post._id">
+
+      <div class="user_post_info">
+        <div class="user_post_info_img">
+          <img src="../../assets/photo_profil.jpg" alt="photo_moi">
         </div>
-        <p class="user_timer">{{ post.date | formatDate }}</p>
-      </div>
-    </div>
-    <div class="user_posted_message" >
-      <div v-if="modifyPost === post._id">
-        <input type="text" v-model="post.message" >
-        <button @click="modifyPostCall(post)">Modifier</button>
-        <button @click="modifyPost = '' ">Annuler</button>
-      </div>
-      <p v-else>{{ post.message }}</p>
-      <div class="user_posted_message_img">
-        <img src="" alt="">
-      </div>
-    </div>
-    <div v-if="(modifyPost != post._id)" class="button_post">
-      <button><i class="fa-regular fa-thumbs-up"></i> J'aime</button> 
-      <NewComment :postId = 'post._id' @getComments="getComments"></NewComment>
-    </div>
-    <div v-if="(modifyPost != post._id)">
-    <div v-for="comment in comments" :key="comment._id">
-      <div class="user_comment" v-if="post._id === comment.postId">
-        <div class="user_comment_info">
-          <div class="user_comment_info_img">
-            <img src="../../assets/photo_profil_2.jpg" alt="photo moi 2">
+
+        <div class="user_post_info_name_timer">
+          <div class="user_name" v-for="user in users" :key="user._id">
+
+            <p v-if="post.userId === user._id"> {{ user.firstName + ' ' + user.lastName }}
+              <i @click="modifyPost = post._id" class="fa-solid fa-ellipsis"></i>
+              <i class="fa-solid fa-xmark" @click="deletePost(post._id, post.userId)" ></i>
+            </p> 
+
           </div>
-          <div class="user_comment_info_name_timer">
-            <div v-for="user in users" :key="user._id">
-              <div v-if="comment.userId === user._id" class="user_comment_name">
-                <p >{{ user.firstName + ' ' + user.lastName }}</p>
-                <i @click="modifyComment = comment._id" class="fa-solid fa-ellipsis"></i>
+          <p class="user_timer">{{ post.date | formatDate }}</p>
+        </div>
+      </div>
+
+      <div class="user_posted_message" >
+        <div v-if="modifyPost === post._id">
+          <input type="text" v-model="post.message" >
+          <button @click="modifyPostCall(post)">Modifier</button>
+          <button @click="modifyPost = '' ">Annuler</button>
+        </div>
+        <p v-else>{{ post.message }}</p>
+        <div class="user_posted_message_img">
+          <img src="" alt="">
+          </div>
+      </div>
+
+      <div v-if="(modifyPost != post._id)" class="button_post">
+        <button><i class="fa-regular fa-thumbs-up"></i> J'aime</button> 
+        <NewComment :postId = 'post._id' @getComments="getComments"></NewComment>
+      </div>
+
+      <div v-if="(modifyPost != post._id)">
+        <div v-for="comment in comments" :key="comment._id">
+          <div class="user_comment" v-if="post._id === comment.postId">
+
+            <div class="user_comment_info">
+              <div class="user_comment_info_img">
+                <img src="../../assets/photo_profil_2.jpg" alt="photo moi 2">
+              </div>
+              <div class="user_comment_info_name_timer">
+                <div v-for="user in users" :key="user._id">
+                  <div v-if="comment.userId === user._id" class="user_comment_name">
+                    <p >{{ user.firstName + ' ' + user.lastName }}</p>
+                    <i @click="modifyComment = comment._id" class="fa-solid fa-ellipsis"></i>
+                  </div>
+                </div>
+                <p class="user_comment_timer">{{ comment.date | formatDate }}</p>
               </div>
             </div>
-            <p class="user_comment_timer">{{ comment.date | formatDate }}</p>
+
+            <div class="user_comment_message">
+              <div v-if="modifyComment === comment._id">
+                <input type="text" v-model="comment.message" >
+                <button @click="modifyCommentCall(comment)">Modifier</button>
+                <button @click="modifyComment = '' ">Annuler</button>
+              </div>
+              <p v-else >{{ comment.message }}</p>
+              <i class="fa-solid fa-xmark" v-if="user.userId === comment.userId" @click="deleteComment(comment._id, comment.userId)" ></i>
+            </div>
+            
           </div>
         </div>
-        <div class="user_comment_message">
-          <div v-if="modifyComment === comment._id">
-        <input type="text" v-model="comment.message" >
-        <button @click="modifyCommentCall(comment)">Modifier</button>
-        <button @click="modifyComment = '' ">Annuler</button>
-      </div>
-          <p v-else >{{ comment.message }}</p>
-          <i class="fa-solid fa-xmark" v-if="user.userId === comment.userId" @click="deleteComment(comment._id, comment.userId)" ></i>
-        </div>
-      </div>
+      </div> 
     </div>
-  </div> 
-  </div>
-</section>
-</template> 
+  </section>
+</template>
 
 <script>
 import axios from 'axios'
@@ -89,7 +99,7 @@ export default {
     },
     methods: {
       getComments(){
-        axios.get("http://localhost:3000/api/comments/", {headers: {'Authorization': `${localStorage.getItem('token')}`}})
+        axios.get("http://localhost:3000/api/comments/", {headers: {Authorization: localStorage.getItem('token')}})
         .then((res => {
               this.comments = []
               const commentReverse = res.data.reverse()
@@ -99,7 +109,7 @@ export default {
       },
       deleteComment(_id, userId){
         if(this.user.userId === userId){
-          axios.delete(`http://localhost:3000/api/comments/${_id}`, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
+          axios.delete(`http://localhost:3000/api/comments/${_id}`, {headers: {Authorization: localStorage.getItem('token')}})
           .then(res => {
             if(res.status === 201){
               this.getComments()
@@ -114,7 +124,7 @@ export default {
         if(comment.message.length === 0){
           this.deleteComment(comment._id, comment.userId)
         }
-        axios.put(`http://localhost:3000/api/comments/${comment._id}`, comment, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
+        axios.put(`http://localhost:3000/api/comments/${comment._id}`, comment, {headers: {Authorization: localStorage.getItem('token')}})
         .then(res => {
           if(res.status === 201){
             this.getComments()
@@ -125,7 +135,7 @@ export default {
         })
       },
       getPosts(){
-        axios.get("http://localhost:3000/api/post/", {headers: {'Authorization': `token ${localStorage.getItem('token')}`}})
+        axios.get("http://localhost:3000/api/post/", {headers: {Authorization: localStorage.getItem('token')}})
             .then((res => {
               const postReverse = res.data.reverse()
               this.posts = postReverse
@@ -134,7 +144,7 @@ export default {
       },
       deletePost(_id, userId){
         if(this.user.userId === userId){
-          axios.delete(`http://localhost:3000/api/post/${_id}`, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
+          axios.delete(`http://localhost:3000/api/post/${_id}`, {headers: {Authorization: localStorage.getItem('token')}})
           .then(res => {
             if(res.status === 201){
               this.getPosts()
@@ -149,7 +159,7 @@ export default {
         if(post.message.length === 0){
           this.deletePost(post._id, post.userId)
         }
-        axios.put(`http://localhost:3000/api/post/${post._id}`, post, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
+        axios.put(`http://localhost:3000/api/post/${post._id}`, post, {headers: {Authorization: localStorage.getItem('token')}})
         .then(res => {
           if(res.status === 201){
             this.getPosts()
@@ -168,10 +178,9 @@ export default {
             .catch(err => console.log(err));
     },
 }
-
 </script>
 
-<style>
+<style scoped>
 .post{
   display: flex;
   flex-direction: column;
@@ -246,21 +255,6 @@ export default {
   font-weight: bold;
   box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
 }
-.form_post{
-  display: flex;
-  justify-content: center;
-  height: 40px;
-  margin: 15px;
-  padding-bottom: 15px;
-  border-bottom: 1px lightgray solid;
-}
-.form_post input{
-  border: 1px solid rgba(0,0,0,0.35);
-  box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
-  border-radius: 13px;
-  width: 30%;
-  padding: 10px;
-}
 .user_comment{
   display: flex;
   flex-wrap: nowrap;
@@ -296,11 +290,6 @@ export default {
   border-radius: 15px;
   background-color: lightgrey;
   width: fit-content;
-}
-@media (max-width: 992px){
-  .form_post input{
-  width: auto;
-  }
 }
 @media (max-width: 768px){
   .user_comment{

@@ -1,12 +1,11 @@
 <template>
     <header v-if="user != null">
-        <div class="img"><img src="../assets/groupomania_logo.png" alt="main logo groupomania"></div>
-        <div class="initials_container">
-            <p>Bienvenue {{ user.firstName.charAt(0) + user.lastName.charAt(0)}} !</p>
+        <div class="img">
+            <img src="../assets/groupomania_logo.png" alt="main logo groupomania">
         </div>
         <nav>
+            <a href="" class="initials" @click="modifyProfil">{{ user.firstName.charAt(0) + user.lastName.charAt(0)}}</a>
             <a href="" @click="allPostPage">Accueil</a>
-            <a href="" @click="modifyProfil">Profil</a>
             <a href="" @click="logout">Logout</a>
         </nav>
     </header>
@@ -26,7 +25,7 @@
             logout(){
                 confirm('Voulez-vous vraiment vous déconnecter ?')
                 if(confirm) {
-                    localStorage.removeItem("user")
+                    localStorage.removeItem("token")
                     this.$store.commit("SET_USER", null) 
                     this.$router.push('/');
                 }              
@@ -52,9 +51,6 @@
         border-radius: 0 0 50px 50px;
         width: 89%;
     }
-    .img{
-        margin-left: 10px;
-    }
     .img img{
         width: 250px;
     }
@@ -65,22 +61,31 @@
         color: white;
         text-decoration: none;
         margin: 10px;
-        font-size: 20px;
-    }
-    .initials_container{
-        background-color: white;
         padding: 5px;
-        border-radius: 40%;
         font-size: 20px;
+        transform: scale(1);
+        transition: transform 300ms ease-out;
     }
-    .initials_container p{
-        color: #FD2D01;
+    nav a:hover{
+        transform: scale(1.08);
+    }
+    .initials{
+        background-color: white;
+        color: red;
+        border-radius: 50px;
     }
     @media (max-width: 992px){
-        header{
-            
+        header{  
             flex-direction: column;
             align-content: center;
+        }
+    }
+    @media (max-width: 768px){
+        nav{
+            margin-left: 20px;
+        }
+        nav a {
+            margin: 5px;
         }
     }
 </style>

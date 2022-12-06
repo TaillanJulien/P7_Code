@@ -12,7 +12,12 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     state: {
-        user: {},
+        user: {
+            email: "",
+            firstName: "",
+            lastName: "",
+            token: ""
+        },
     },
     getters: {
         getUser: state => {

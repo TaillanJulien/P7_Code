@@ -2,7 +2,7 @@
     <section class="login">
         <div class="login_logo_title">
             <div class="login_logo">
-                <img src="../../assets/groupomania_logo_2.png" alt="main logo groupomania">
+                <img src="../../assets/groupomania_logo_2.png" alt="logo groupomania">
             </div>
         </div>
         <p class="information_login">Veuillez compléter les informations pour vous connecter :</p>
@@ -10,19 +10,21 @@
             <form>
                 <div class="form_login_mail">
                     <label for="email">Adresse email :
-                        <input type="email" name="email" v-model="login.email" placeholder="Veuillez saisir votre adresse mail">
+                        <input tabindex="0" type="email" name="email" v-model="login.email" placeholder="Veuillez saisir votre adresse mail">
                     </label>
                 </div>
+                <p class="regexMail"></p>
                 <div class="form_login_password">
                     <label for="password">Mot de passe :
-                        <input type="password" :submit="userLogin" name="password" v-model="login.password" placeholder="Veuillez saisir un mot de passe">
+                        <input tabindex="0" type="password" name="password" :submit="userLogin"  v-model="login.password" placeholder="Veuillez saisir un mot de passe">
                     </label>
                 </div>
+                <p class="regexPassword"></p>
             </form>
         </div>
         <div class="button_login">
-            <button class="button_connect" type="submit" @click="userLogin">Se connecter</button>
-            <button class="button_create_account" @click="signupPage">Créer un nouveau compte</button>
+            <button tabindex="0" class="button_connect" type="submit" @click="userLogin">Se connecter</button>
+            <button tabindex="0" class="button_create_account" @click="signupPage">Créer un nouveau compte</button>
         </div>
         <div class="logo_end_login">
             <img src="../../assets/groupomania_graphic_logo.png" alt="logo">
@@ -55,7 +57,6 @@ export default {
                     localStorage.setItem('token', res.data.token);
                     this.$store.commit('SET_USER', res.data.user)
                     this.$router.push('/all-posts');
-                    console.log(res);
                 } else {
                     err => {console.log("Impossible de se connecter" + err)}
                 }
@@ -70,14 +71,14 @@ export default {
 
 <style scoped>
 .login{
-    width: 30%;
+    width: auto;
     border-radius: 30px;
     background-color: white;
     padding: 20px;
     box-shadow: 7px 9px 7px 1px rgba(0,0,0,0.76);
     transform: scale(1);
     transition: transform 500ms;
-    margin: 100px 20px 40px 20px;
+    margin: 100px 50px 50px 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -91,12 +92,14 @@ export default {
 }
 .login_logo img{
     width: 100%;
-    object-fit: contain;
 }
 .login_logo_title{
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.information_login{
+    white-space: nowrap;
 }
 .form_login label{
     color: red;
@@ -125,6 +128,7 @@ export default {
     background-color: white;
     border-radius: 10px;
     padding: 8px;
+    cursor: pointer;
 }
 .logo_end_login{
     width: 100%;
@@ -133,11 +137,11 @@ export default {
 }
 .logo_end_login img{
     width: auto;
-    object-fit: contain;
 }
-@media (max-width: 992px){
-    .login{
-        width: auto;
-    }
+@media (max-width: 768px){
+    .information_login{
+    white-space: normal;
+}
+
 }
 </style>

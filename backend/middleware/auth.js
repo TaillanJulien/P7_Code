@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 // Middleware authentification
 module.exports = (req, res, next) => {
 try{
-    const token = req.headers.authorization.split(' ')[1];
+    const token = req.headers.authorization;
     const verifyToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
     const userId = verifyToken.userId;
     console.log(userId);

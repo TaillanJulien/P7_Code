@@ -4,6 +4,9 @@ const express = require('express');
 // Importation authentification
 const auth = require('./middleware/auth')
 
+//Importation multer
+// const multer = require('./middleware/multer-config')
+
 // Importation mongoose
 const mongoose = require('mongoose'); 
 
@@ -12,8 +15,9 @@ const postRoutes = require('./routes/post.routes');
 const userRoutes = require('./routes/user.routes');
 const commentRoutes = require('./routes/comment.routes')
 
-// Importation Helmet
+// Importation Helmet & CORS
 const helmet = require('helmet');
+const cors = require('cors');
 
 // Appel de la méthode EXPRESS pour pouvoir créer une application
 const app = express();
@@ -22,7 +26,8 @@ const app = express();
 const path = require('path');
 
 // Sécurisation avec helmet
-app.use(helmet.crossOriginResourcePolicy({policy: 'cross-origin'}));
+app.use(helmet());
+app.use(cors());
 
 // Importation "dotenv" (sécurisation BdD)
 require('dotenv').config();
@@ -36,17 +41,6 @@ mongoose.connect(`mongodb+srv://Julien_admin:azerty@groupomania.a9h59nz.mongodb.
   useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie.'))
   .catch(() => console.log('Connexion à MongoDB échouée.'));
-  
-  
-// Ajout headers pour éviter erreurs CORS
-app.use((req, res, next) => {
-  console.log(req.headers);
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
-  res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
-  next();
-  });
   
 // Intercepte corps requête (req.body)
 app.use(express.json());

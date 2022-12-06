@@ -42,8 +42,9 @@
     li{
         list-style: none;
         color: white;
-        margin: 10px;
+        margin: 10px 10px 10px 0;
         width: 50%;
+        white-space: nowrap;
     }
     li a {
         text-decoration: none;
@@ -66,7 +67,7 @@
         margin: 5px;
         color: white;
     }
-    @media (max-width: 768px){
+    @media (max-width: 992px){
         footer{
             flex-direction: column;
             align-items: center;
@@ -79,6 +80,9 @@
             justify-content: center;
             padding: 0;
             width: 100%;
+        }
+        li{
+            white-space: normal;
         }
     }
 </style>

@@ -2,7 +2,7 @@
     <section class="signup">
         <div class="signup_logo_title">
             <div class="signup_logo">
-                <img src="../../assets/groupomania_logo_2.png" alt="main logo groupomania">
+                <img src="../../assets/groupomania_logo_2.png" alt="logo groupomania">
             </div>
             <div class="signup_logo_title">
                 <p>Pas encore de compte ? Vous êtes au bon endroit !</p>
@@ -11,35 +11,35 @@
         <div class="form_inscription">
             <div class="form_inscription_input">
                 <label for="lastName">Nom :
-                    <input type="text" name="lastName" v-model="lastName" placeholder="Veuillez saisir votre nom">
+                    <input tabindex="0" type="text" name="lastName" v-model="lastName" placeholder="Veuillez saisir votre nom">
                 </label>
             </div>
             <div class="form_inscription_input">
                 <label for="firstName">Prénom :
-                    <input type="text" name="firstName" v-model="firstName" placeholder="Veuillez saisir votre prénom">
+                    <input tabindex="0" type="text" name="firstName" v-model="firstName" placeholder="Veuillez saisir votre prénom">
                 </label>
             </div>
             <div class="form_inscription_input">
                 <label for="password">Mot de passe :
-                    <input type="password" name="password" v-model="password" placeholder="Veuillez saisir un mot de passe">
+                    <input tabindex="0" type="password" name="password" v-model="password" placeholder="Veuillez saisir un mot de passe">
                 </label>
             </div>
             <div class="form_inscription_input">
                 <label for="mail">Adresse email :
-                    <input type="email" name="email" v-model="email" placeholder="Veuillez saisir votre email">
+                    <input tabindex="0" type="email" name="email" v-model="email" placeholder="Veuillez saisir votre email">
                 </label>
             </div>
             <div class="form_inscription_input">
                 <label for="picture"> Veuillez choisir une photo de profil :
-                    <input type="file" name="picture">
+                    <input tabindex="0" type="file" name="picture">
                 </label>
             </div>
             <div class="signup_button">
-                <button class="user_signup" @click="userSignup">Cliquez ici pour vous enregistrer</button>
+                <button tabindex="0" class="user_signup" @click="userSignup">Cliquez ici pour vous enregistrer</button>
             </div>
         </div>
         <div class="redirection_link">
-            <p>Vous avez déjà un compte ? <a href="" @click="loginPage">Rendez-vous sur cette page.</a></p>
+            <p>Vous avez déjà un compte ? <a href="" tabindex="0" @click="loginPage">Rendez-vous sur cette page.</a></p>
         </div>
         <div class="logo_end">
             <img src="../../assets/groupomania_graphic_logo.png" alt="logo">
@@ -80,14 +80,14 @@
 
 <style scoped>
 .signup{
-    width: 30%;
+    width: auto;
     border-radius: 30px;
     background-color: white;
     padding: 20px;
     box-shadow: 7px 9px 7px 1px rgba(0,0,0,0.76);
     transform: scale(1);
     transition: transform 500ms;
-    margin: 15px 30px 15px 30px;
+    margin: 50px 30px 15px 30px;
 }
 .signup:hover{
     transform: scale(1.01);
@@ -124,6 +124,7 @@
     background-color: white;
     border-radius: 10px;
     padding: 8px;
+    cursor: pointer;
 }
 .signup_button{
     width: 100%;
@@ -137,6 +138,7 @@
 }
 .redirection_link p{
     font-size: 100%;
+    white-space: none;
 }
 .redirection_link a{
     text-decoration: none;
@@ -153,9 +155,9 @@
     width: auto;
     object-fit: contain;
 }
-@media (max-width: 992px){
-    .signup{
-        width: auto;
+@media (max-width: 768px){
+    .redirection_link p{
+        white-space: normal;
     }
 }
 </style>
