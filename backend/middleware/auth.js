@@ -7,11 +7,14 @@ try{
     const token = req.headers.authorization;
     const verifyToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
     const userId = verifyToken.userId;
-    console.log(userId);
-    if (req.body.userId && req.body.userId !== userId) {
-        throw 'Utilisateur non valide.';
-    } else {
+    if(userId === process.env.idAdmin){
         next()
+    } else {
+        if (!verifyToken) {
+            throw 'Utilisateur non valide.';
+        } else {
+            next()
+        }
     }
 } catch {
     res.status(401).json({error: new Error('Invalid request - Authorisation problem')});

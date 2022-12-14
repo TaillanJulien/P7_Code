@@ -15,6 +15,7 @@ exports.signup = (req, res, next) => {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
+            url: req.body.file,
             password: hash
         });
         user.save()
@@ -75,15 +76,13 @@ exports.getOneUser = (req, res, next) => {
 
 // Modifier user
 
-// Modifier un post
+// Modifier un User
 exports.modifyUser = (req, res, next) => {
-    const updateUser = new User({
+    const user = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
-    email: req.body.email,
-    userId: req.body.userId
-    });
-    User.updateOne({_id: req.params.id}, updateUser)
-    .then(() => res.status(200).json({ message: 'User modifié. '}))
+    };
+    User.updateOne({_id: req.params.id}, user)
+    .then(() => res.status(201).json({ message: 'User modifié. '}))
     .catch(error => res.status(400).json({message: "Impossible de modifier le profil", error }))
 };

@@ -1,17 +1,18 @@
 <template>
     <section>
         <div>
-            <p>Prénom : {{ firstName }}</p><input v-model="firstName" type="text" placeholder="">
-            <p>Nom : {{ lastName }}</p><input v-model="lastName" type="text" placeholder="">
-            <p>Email : {{ email }}</p><input v-model="email" type="email" placeholder="">
-            <p>Password : </p><input v-model="password" type="password">
+            <p>{{user.userId}}</p>
+            <p>Prénom : {{ firstName }}</p><input v-model="firstName" type="text" name="firstName" placeholder="">
+            <p>Nom : {{ lastName }}</p><input v-model="lastName" type="text" name="lastName" placeholder="">
         </div>
+        <button @click="modifyProfil">Valider</button>
     </section>
 </template>
 
 <script>
 // import axios from 'axios';
 import { mapGetters } from 'vuex';
+import axios from 'axios';
 
 export default {
     name: 'ModifyProfil',
@@ -28,28 +29,23 @@ export default {
             user:"getUser"
         })
     },
-    // methods: {
-    //     profilUpdate(){
-    //         let newProfil = {
-    //             userId: this.userId,
-    //             firstName: '',
-    //             lastName: '',
-    //             email: '',
-    //             password: ''
-    //         }
-    //         axios.put(`http://localhost:3000/api/user/modifyUser/${userId}`, newProfil)
-    //         .then(res => {
-    //             if(res.status === 200){
-    //                 localStorage.setItem('newProfil', res.data.token)
-    //                 this.$store.commit('SET_USER', res.data.newProfil)
-    //                 this.$router.push('/all-posts');
-    //                 console.log(res);
-    //             } else {
-    //                 err => {console.log(err)}
-    //             }
-    //         })
-    //     }
-    // }
+    methods: {
+        modifyProfil(){
+                let userModified = {
+                    lastName: this.lastName,
+                    firstName: this.firstName,
+                }
+                axios.put(`http://localhost:3000/api/user/modifyUser/${this.user.userId}`, userModified, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
+                .then(res => {
+                    if(res.status === 201){
+                        this.$store.commit('SET_USER_FIRSTNAME', userModified.firstName)
+                        this.$store.commit('SET_USER_LASTNAME', userModified.lastName)                          
+                    } else {
+                        err => {console.log(err.response)}
+                    }
+                })
+            },
+    }
 }
 </script>
 

@@ -30,6 +30,12 @@ const store = new Vuex.Store({
     mutations: {
         SET_USER(state, user){
             state.user = user
+        },
+        SET_USER_LASTNAME(state, user){
+            state.user.lastName = user
+        },
+        SET_USER_FIRSTNAME(state, user){
+            state.user.firstName = user
         }
     },
     plugins: [createPersistedState()],

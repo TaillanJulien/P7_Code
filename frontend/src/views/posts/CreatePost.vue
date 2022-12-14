@@ -2,7 +2,7 @@
     <section class="create_new_post">
         <div class="buttons">
             <button tabindex="0" v-if="!open" class="open-close_button" @click="open = true">{{ user.firstName }}, quelque chose à partager ?</button>
-            <button tabindex="0" v-if="open" class="open-close_button" @click="open = false"> Cliquez-ici pour annuler </button>
+            <button tabindex="0" v-if="open" class="open-close_button" @click="(open = false, message = '')"> Cliquez-ici pour annuler </button>
         </div>
         <div v-if="open" class="new_post">
             <p>Que souhaitez-vous partager ?</p>
@@ -43,6 +43,8 @@
             .then(res => {
                 if(res.status === 201){
                     this.$emit('getPosts')
+                    this.open = false
+                    this.message = ''
                 } else {
                     err => {console.log(err.response)}
                 }
@@ -74,18 +76,26 @@
     transform: scale(1.04);
 }
 .create_new_post{
-    width: 40%;
+    width: 50%;
+}
+@keyframes opacityAnim{
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 .new_post{
     background-color: white;
     margin: 25px 0 25px 0;
     padding: 10px 10px 10px 10px;
-    width: auto;
     border-radius: 30px;
     box-shadow: 7px 9px 7px 1px rgba(0,0,0,0.76);
     display: flex;
     flex-direction: column;
     align-items: center;
+    animation: opacityAnim 1500ms;
 }
 .new_post p {
     margin: 10px 0 5px 0;
@@ -120,6 +130,7 @@
     transform: scale(1);
     transition: transform 300ms ease-out;
     cursor: pointer;
+    animation: opacityAnim 1000ms;
 }
 .valid_create_post:hover{
     transform: scale(1.04);

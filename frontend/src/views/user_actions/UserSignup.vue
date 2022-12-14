@@ -31,7 +31,7 @@
             </div>
             <div class="form_inscription_input">
                 <label for="picture"> Veuillez choisir une photo de profil :
-                    <input tabindex="0" type="file" name="picture">
+                    <input tabindex="0" type="image" name="avatar">
                 </label>
             </div>
             <div class="signup_button">
@@ -66,7 +66,8 @@
                     lastName: this.lastName,
                     firstName: this.firstName,
                     email: this.email,
-                    password: this.password
+                    password: this.password,
+                    url: this.url
                 }
                 axios.post ('http://localhost:3000/api/user/signup', newUser, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
                 .then(this.$router.push('/login'), err => {console.log(err.response)})

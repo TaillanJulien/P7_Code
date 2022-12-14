@@ -1,25 +1,34 @@
 <template>
   <section class="post">
-  <CreatePost @getPosts="getPosts"></CreatePost>
+    <CreatePost @getPosts="getPosts"></CreatePost>
     <div class="user_post" v-for="post in posts" :key="post._id">
+
+<!-- Informations utilisateur -->
 
       <div class="user_post_info">
         <div class="user_post_info_img">
           <img src="../../assets/photo_profil.jpg" alt="photo_moi">
         </div>
-
         <div class="user_post_info_name_timer">
-          <div class="user_name" v-for="user in users" :key="user._id">
-
-            <p v-if="post.userId === user._id"> {{ user.firstName + ' ' + user.lastName }}
-              <i @click="modifyPost = post._id" class="fa-solid fa-ellipsis"></i>
-              <i class="fa-solid fa-xmark" @click="deletePost(post._id, post.userId)" ></i>
-            </p> 
-
+          <div class="user_name">
+            <UserInfos :users = users :userId = post.userId></UserInfos>
+            <div class="menu" v-if="post.userId === user.userId || user.lastName === 'Strator'">
+              <ul>
+                <li>
+                  <a href="#"><i class="fa-solid fa-ellipsis"></i></a>
+                  <ul class="sous">
+                    <li class="buttonsPoints" @click="modifyPost = post._id">Modifier</li>
+                    <li class="buttonsPoints" @click="deletePost(post._id, post.userId)">Supression</li>
+                  </ul>
+                </li>
+              </ul>
+            </div>      
           </div>
           <p class="user_timer">{{ post.date | formatDate }}</p>
         </div>
       </div>
+
+<!-- Message et/ou photo partagé par l'utilisateur -->
 
       <div class="user_posted_message" >
         <div v-if="modifyPost === post._id">
@@ -30,32 +39,40 @@
         <p v-else>{{ post.message }}</p>
         <div class="user_posted_message_img">
           <img src="" alt="">
-          </div>
+        </div>
       </div>
 
+<!-- Partie likes + bouton pour commenter -->
+
       <div v-if="(modifyPost != post._id)" class="button_post">
-        <button><i class="fa-regular fa-thumbs-up"></i> J'aime</button> 
+        <button v-if="!post.likes.includes(user.userId)" @click="likePost(post)"><i class="fa-regular fa-thumbs-up"></i> J'aime</button>
+        <button v-else @click="likePost(post)">Ne plus aimer</button>
+        <i v-if="post.likes.length > 0" class="fa-regular fa-heart">{{ post.likes.length }}</i>
         <NewComment :postId = 'post._id' @getComments="getComments"></NewComment>
       </div>
+
+<!-- Partie commentaire  -->
 
       <div v-if="(modifyPost != post._id)">
         <div v-for="comment in comments" :key="comment._id">
           <div class="user_comment" v-if="post._id === comment.postId">
-
             <div class="user_comment_info">
               <div class="user_comment_info_img">
                 <img src="../../assets/photo_profil_2.jpg" alt="photo moi 2">
               </div>
+
+<!-- Partie info user qui commente -->
+
               <div class="user_comment_info_name_timer">
-                <div v-for="user in users" :key="user._id">
-                  <div v-if="comment.userId === user._id" class="user_comment_name">
-                    <p >{{ user.firstName + ' ' + user.lastName }}</p>
-                    <i @click="modifyComment = comment._id" class="fa-solid fa-ellipsis"></i>
-                  </div>
-                </div>
+                <UserInfos :users = users :userId = comment.userId></UserInfos>
+                <div v-if="comment.userId === user.userId || user.lastName === 'Strator'" class="user_comment_name">                    
+                  <i @click="modifyComment = comment._id" class="fa-solid fa-ellipsis"></i>
+                </div>            
                 <p class="user_comment_timer">{{ comment.date | formatDate }}</p>
               </div>
             </div>
+
+<!-- Partie contenu du commentaire -->
 
             <div class="user_comment_message">
               <div v-if="modifyComment === comment._id">
@@ -65,8 +82,7 @@
               </div>
               <p v-else >{{ comment.message }}</p>
               <i class="fa-solid fa-xmark" v-if="user.userId === comment.userId" @click="deleteComment(comment._id, comment.userId)" ></i>
-            </div>
-            
+            </div>           
           </div>
         </div>
       </div> 
@@ -79,10 +95,11 @@ import axios from 'axios'
 import { mapGetters } from 'vuex'
 import CreatePost from './CreatePost.vue';
 import NewComment from '../comments/NewComment.vue'
+import UserInfos from '../user_actions/UserInfos.vue'
 
 export default {
     name: "AllPosts",
-    components: {CreatePost, NewComment},
+    components: {CreatePost, NewComment, UserInfos},
     data() {
         return {
             posts: "",
@@ -107,8 +124,7 @@ export default {
             }))
             .catch(err => console.log(err));
       },
-      deleteComment(_id, userId){
-        if(this.user.userId === userId){
+      deleteComment(_id){
           axios.delete(`http://localhost:3000/api/comments/${_id}`, {headers: {Authorization: localStorage.getItem('token')}})
           .then(res => {
             if(res.status === 201){
@@ -116,11 +132,9 @@ export default {
             } else {
               err => {console.log(err.response)}
             }
-          })
-        }
+          })      
       },
       modifyCommentCall(comment){
-        console.log(comment.message.length);
         if(comment.message.length === 0){
           this.deleteComment(comment._id, comment.userId)
         }
@@ -142,8 +156,9 @@ export default {
             }))
             .catch(err => console.log(err));
       },
-      deletePost(_id, userId){
-        if(this.user.userId === userId){
+      deletePost(_id){
+        confirm('Etes-vous sûr de vouloir supprimer ce post ?')
+        if(confirm){
           axios.delete(`http://localhost:3000/api/post/${_id}`, {headers: {Authorization: localStorage.getItem('token')}})
           .then(res => {
             if(res.status === 201){
@@ -151,11 +166,10 @@ export default {
             } else {
               err => {console.log(err.res)}
             }
-          })
+          })     
         }
       },
       modifyPostCall(post){
-        console.log(post.message.length);
         if(post.message.length === 0){
           this.deletePost(post._id, post.userId)
         }
@@ -168,14 +182,38 @@ export default {
             err => {console.log(err.res)}
           }
         })
-      }
-    },  
+      },
+      likePost(post){
+          if(!post.likes.includes(this.user.userId)){
+            post.likes.push(this.user.userId)
+            axios.put(`http://localhost:3000/api/post/${post._id}`, post, {headers: {Authorization: localStorage.getItem('token')}})
+            .then(res => {
+              if(res.status === 201){
+                this.getPosts()
+              } else {
+                err => {console.log(err.res)}
+              }
+            })
+          } else {
+            const index = post.likes.indexOf(this.user.userId)
+            post.likes.splice(index, 1)
+            axios.put(`http://localhost:3000/api/post/${post._id}`, post, {headers: {Authorization: localStorage.getItem('token')}})
+            .then(res => {
+              if(res.status === 201){
+                this.getPosts()
+              } else {
+                err => {console.log(err.res)}
+              }
+            })
+          }
+      },  
+    },
     mounted() {
+      axios.get("http://localhost:3000/api/user/getAllUsers/")
+          .then(res => (this.users = res.data))
+          .catch(err => console.log(err));
       this.getPosts()
       this.getComments()
-        axios.get("http://localhost:3000/api/user/getAllUsers/")
-            .then(res => (this.users = res.data))
-            .catch(err => console.log(err));
     },
 }
 </script>
@@ -188,27 +226,83 @@ export default {
   width: 60%;
 }
 .user_post{
+  width: 60%;
+  overflow: hidden;
   background-color: white;
   margin: 15px 35px 35px 35px;
-  width: 100%;
   display: flex;
   flex-direction: column;
   border-radius: 30px;
   box-shadow: 7px 9px 7px 1px rgba(0,0,0,0.76);
   transform: scale(1);
   transition: transform 600ms;
+  padding: 15px;
+  transform-origin: 0% right;
+  animation: widthAnim 800ms ease-in-out;
+  animation-fill-mode: forwards;
+}
+li {
+  list-style:none;
+  color:black;
+  padding-right: 7px;
+  margin: 0 5px 5px 5px;
+  font-size:15px;
+  border-radius: 15px;
+  cursor: pointer;
+  text-decoration: none;
+  list-style:none;
+}
+.menu ul {
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  list-style:none;
+}
+.menu ul li a {
+  color: black;
+  padding: 5px;
+  font-size: 20px;
+}
+.menu ul li ul { 
+  display: none; 
+} 
+.menu ul li:hover ul { 
+  display: list-item;
+  position: absolute;
+  margin-top: -34px;
+  margin-left: 35px;
+}
+.buttonsPoints{
+  background-color: lightgray;
+  padding: 10px;
+}
+@keyframes widthAnim{
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: 70%;
+    }
 }
 .user_post:hover{
   transform: scale(1.02);
 }
 .user_post_info{
   display: flex;
+  flex-wrap: wrap;
   margin: 15px;
   border-bottom: 1px lightgray solid;
   padding-bottom: 15px;
+  overflow: hidden;
+  animation-delay: 10s;
+  animation: opacityAnim 100ms ease-in-out;
+  animation-fill-mode: forwards;
 }
-.user_post_info_name_timer p{
-  margin: 0 0 0 15px;
+.user_post_info_name_timer{
+  width: 75%;
+}
+.user_name{
+  display: flex;
 }
 .user_name p{
   display: flex;
@@ -217,17 +311,23 @@ export default {
 }
 .user_timer{
   font-style: italic;
+  margin: 0 0 15px 0;
 }
 .user_post_info_img img{
   border-radius: 30px;
   width: 50px;
   height: 50px;
+  margin-right: 10px;
 }
 .user_posted_message{
   width: auto;
   margin: 0 15px 15px 15px;
   border-bottom: 1px lightgray solid;
   padding-bottom: 15px;
+  overflow: hidden;
+  animation-delay: 10s;
+  animation: opacityAnim 100ms ease-in-out;
+  animation-fill-mode: forwards;
 }
 .user_posted_message p{
   margin: 5px 0 15px 0
@@ -242,9 +342,27 @@ export default {
   object-fit: contain;
   border-radius: 10px;
 }
+@keyframes opacityAnim{
+    0% {
+        opacity: 0;
+    }
+    50%{
+      opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 .button_post{
   display: flex;
-  justify-content: center;
+  align-self: center;
+  align-content: center;
+  flex-direction: column;
+  width: 35%;
+  overflow: hidden;
+  animation-delay: 10s;
+  animation: opacityAnim 800ms ease-in-out;
+  animation-fill-mode: forwards;
 }
 .button_post button{
   font-size: 15px;
@@ -261,6 +379,10 @@ export default {
   flex-direction: column;
   border-bottom: 1px lightgray solid;
   margin: 15px;
+  overflow: hidden;
+  animation-delay: 10s;
+  animation: opacityAnim 900ms ease-in-out;
+  animation-fill-mode: forwards;
 }
 .user_comment_info{
   display: flex;
@@ -271,6 +393,7 @@ export default {
   height: 50px;
   border-radius: 30px;
 }
+
 .user_comment_info_name_timer p{
   margin: 0 0 0 15px;
 }
@@ -291,7 +414,18 @@ export default {
   background-color: lightgrey;
   width: fit-content;
 }
+@media (max-width: 992px){
+    .user_post{
+      width: 100%;
+    }
+    .button_post{
+      width: 100%;
+    }
+  }
 @media (max-width: 768px){
+  .user_post_info{
+    flex-direction: column;
+  }
   .user_comment{
     flex-direction: column;
   }

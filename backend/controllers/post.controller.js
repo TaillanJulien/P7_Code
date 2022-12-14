@@ -26,7 +26,8 @@ exports.modifyPost = (req, res, next) => {
   const updatePost = {
     _id: req.params.id,
     message: req.body.message,
-    userId: req.body.userId
+    userId: req.body.userId,
+    likes: req.body.likes
   };
   Post.updateOne({_id: req.params.id}, updatePost)
   .then(() => res.status(201).json({ message: 'Objet modifié. '}))
@@ -35,7 +36,7 @@ exports.modifyPost = (req, res, next) => {
 
 // Supprimer un post
 exports.deletePost = (req, res, next) => {
-  Comment.remove({postId: req.params.id})
+  Comment.deleteOne({postId: req.params.id})
   .catch(error => res.status(401).json({message: "Impossible de supprimer les commentaires du post", error}));
   Post.deleteOne({_id: req.params.id})
   .then(() => res.status(201).json({message: 'Objet supprimé.'}))
