@@ -15,7 +15,7 @@
             <div class="menu" v-if="post.userId === user.userId || user.lastName === 'Strator'">
               <ul>
                 <li>
-                  <a href="#"><i class="fa-solid fa-ellipsis"></i></a>
+                  <a href=""><i class="fa-solid fa-ellipsis"></i></a>
                   <ul class="sous">
                     <li class="buttonsPoints" @click="modifyPost = post._id">Modifier</li>
                     <li class="buttonsPoints" @click="deletePost(post._id, post.userId)">Supression</li>
@@ -28,7 +28,7 @@
         </div>
       </div>
 
-<!-- Message et/ou photo partagé par l'utilisateur -->
+<!-- Message et/ou photo partagé par l'utilisateur qu'il modifie-->
 
       <div class="user_posted_message" >
         <div v-if="modifyPost === post._id">
@@ -45,10 +45,12 @@
 <!-- Partie likes + bouton pour commenter -->
 
       <div v-if="(modifyPost != post._id)" class="button_post">
-        <button v-if="!post.likes.includes(user.userId)" @click="likePost(post)"><i class="fa-regular fa-thumbs-up"></i> J'aime</button>
-        <button v-else @click="likePost(post)">Ne plus aimer</button>
-        <i v-if="post.likes.length > 0" class="fa-regular fa-heart">{{ post.likes.length }}</i>
         <NewComment :postId = 'post._id' @getComments="getComments"></NewComment>
+        <button v-if="!post.likes.includes(user.userId)" @click="likePost(post)"><i class="fa-regular fa-thumbs-up"></i> J'aime</button>
+        <div class="dislike" v-else @click="likePost(post)">
+          <i v-if="post.likes.length > 0" class="fa-solid fa-heart"> {{ post.likes.length }}</i>
+          <button><i class="fa-regular fa-thumbs-down"></i></button>
+        </div>
       </div>
 
 <!-- Partie commentaire  -->
@@ -157,8 +159,7 @@ export default {
             .catch(err => console.log(err));
       },
       deletePost(_id){
-        confirm('Etes-vous sûr de vouloir supprimer ce post ?')
-        if(confirm){
+        if(confirm('Etes-vous sûr de vouloir supprimer ce post ?') == true){
           axios.delete(`http://localhost:3000/api/post/${_id}`, {headers: {Authorization: localStorage.getItem('token')}})
           .then(res => {
             if(res.status === 201){
@@ -166,7 +167,7 @@ export default {
             } else {
               err => {console.log(err.res)}
             }
-          })     
+          })
         }
       },
       modifyPostCall(post){
@@ -330,7 +331,8 @@ li {
   animation-fill-mode: forwards;
 }
 .user_posted_message p{
-  margin: 5px 0 15px 0
+  margin: 5px 0 15px 0;
+  align-self: flex-start;
 }
 .user_posted_message_img{
   width: 100%;
@@ -341,6 +343,22 @@ li {
   width: 70%;
   object-fit: contain;
   border-radius: 10px;
+}
+.user_posted_message button{
+    font-size: 15px;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 15px;
+    background-color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+.user_posted_message input {
+    border: 1px solid rgba(0,0,0,0.35);
+    box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
+    border-radius: 13px;
+    padding: 10px;
 }
 @keyframes opacityAnim{
     0% {
@@ -364,7 +382,7 @@ li {
   animation: opacityAnim 800ms ease-in-out;
   animation-fill-mode: forwards;
 }
-.button_post button{
+.button_post > button{
   font-size: 15px;
   margin: 5px;
   padding: 10px;
@@ -372,6 +390,30 @@ li {
   background-color: white;
   font-weight: bold;
   box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
+  animation: opacityAnim 400ms ease-in-out;
+  animation-fill-mode: forwards;
+}
+.dislike{
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  font-size: 25px;
+}
+.dislike > button {
+  font-size: 25px;
+  border-radius: 15px;
+  background-color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  animation: opacityAnim 400ms ease-in-out;
+  animation-fill-mode: forwards;
+}
+.dislike > i{
+  margin: 5px;
+  color: darkred;
+  animation: opacityAnim 400ms ease-in-out;
+  animation-fill-mode: forwards;
 }
 .user_comment{
   display: flex;

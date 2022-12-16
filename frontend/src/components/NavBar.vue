@@ -23,8 +23,8 @@
         },
         methods: {
             logout(){
-                confirm('Voulez-vous vraiment vous déconnecter ?')
-                if(confirm) {
+                
+                if(window.confirm('Voulez-vous vraiment vous déconnecter ?')) {
                     localStorage.removeItem("token")
                     this.$store.commit("SET_USER", null) 
                     this.$router.push('/');

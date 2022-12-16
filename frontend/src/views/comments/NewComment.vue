@@ -70,7 +70,7 @@
 }
 .animButton{
     overflow: hidden;
-    animation: opacityAnim 1000ms ease-in-out;
+    animation: opacityAnim 500ms ease-in-out;
     animation-fill-mode: forwards;
 }
 button{
