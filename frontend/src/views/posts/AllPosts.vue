@@ -12,12 +12,12 @@
         <div class="user_post_info_name_timer">
           <div class="user_name">
             <UserInfos :users = users :userId = post.userId></UserInfos>
-            <div class="menu" v-if="post.userId === user.userId || user.lastName === 'Strator'">
+            <div class="menu" v-if="post.userId === user.userId || user.email === 'admin@gmail.com'">
               <ul>
                 <li>
                   <a href=""><i class="fa-solid fa-ellipsis"></i></a>
                   <ul class="sous">
-                    <li class="buttonsPoints" @click="modifyPost = post._id">Modifier</li>
+                    <li class="buttonsPoints" @click="modifyPost.id = post._id, modifyPost.message = post.message">Modifier</li>
                     <li class="buttonsPoints" @click="deletePost(post._id, post.userId)">Supression</li>
                   </ul>
                 </li>
@@ -28,17 +28,17 @@
         </div>
       </div>
 
-<!-- Message et/ou photo partagé par l'utilisateur qu'il modifie-->
+<!-- Message et/ou photo partagé par l'utilisateur qu'il modifie + modification + suppression -->
 
       <div class="user_posted_message" >
-        <div v-if="modifyPost === post._id">
-          <input type="text" v-model="post.message" >
+        <div v-if="modifyPost.id === post._id">
+          <input type="text" v-model="modifyPost.message" >
           <button @click="modifyPostCall(post)">Modifier</button>
-          <button @click="modifyPost = '' ">Annuler</button>
+          <button @click="modifyPost.id = '', modifyPost.message = ''">Annuler</button>
         </div>
-        <p v-else>{{ post.message }}</p>
-        <div class="user_posted_message_img">
-          <img src="" alt="">
+        <div v-else>
+          <p>{{ post.message }}</p>
+          <img v-if="post.imageUrl != ''" :src="`${post.imageUrl}`" alt="">
         </div>
       </div>
 
@@ -46,11 +46,11 @@
 
       <div v-if="(modifyPost != post._id)" class="button_post">
         <NewComment :postId = 'post._id' @getComments="getComments"></NewComment>
-        <button v-if="!post.likes.includes(user.userId)" @click="likePost(post)"><i class="fa-regular fa-thumbs-up"></i> J'aime</button>
-        <div class="dislike" v-else @click="likePost(post)">
-          <i v-if="post.likes.length > 0" class="fa-solid fa-heart"> {{ post.likes.length }}</i>
-          <button><i class="fa-regular fa-thumbs-down"></i></button>
+        <button v-if="!post.likes.includes(user.userId)" @click="likePost(post)"><i class="fa-regular fa-thumbs-up"></i></button>
+        <div class="dislike" v-else >
+          <button><i class="fa-regular fa-thumbs-down" @click="likePost(post)"></i></button>
         </div>
+        <i v-if="post.likes.length > 0" class="fa-solid fa-heart"> {{ post.likes.length }}</i>
       </div>
 
 <!-- Partie commentaire  -->
@@ -58,32 +58,39 @@
       <div v-if="(modifyPost != post._id)">
         <div v-for="comment in comments" :key="comment._id">
           <div class="user_comment" v-if="post._id === comment.postId">
+            
+            <!-- Partie info user qui commente + modification + suppression -->
+            
             <div class="user_comment_info">
-              <div class="user_comment_info_img">
-                <img src="../../assets/photo_profil_2.jpg" alt="photo moi 2">
-              </div>
-
-<!-- Partie info user qui commente -->
-
               <div class="user_comment_info_name_timer">
+                <div class="user_comment_info_img">
+                  <img src="../../assets/photo_profil_2.jpg" alt="photo moi 2">
+                </div>
                 <UserInfos :users = users :userId = comment.userId></UserInfos>
-                <div v-if="comment.userId === user.userId || user.lastName === 'Strator'" class="user_comment_name">                    
-                  <i @click="modifyComment = comment._id" class="fa-solid fa-ellipsis"></i>
-                </div>            
-                <p class="user_comment_timer">{{ comment.date | formatDate }}</p>
+                <div class="menu" v-if="comment.userId === user.userId || user.email === 'admin@gmail.com'">
+                  <ul>
+                    <li>
+                      <a href=""><i class="fa-solid fa-ellipsis"></i></a>
+                      <ul class="sous">
+                        <li class="buttonsPoints" @click="modifyComment.id = comment._id, modifyComment.message = comment.message">Modifier</li>
+                        <li class="buttonsPoints" v-if="user.userId === comment.userId" @click="deleteComment(comment._id, comment.userId)">Supression</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+                <p class="user_comment_timer">{{ comment.date | formatDate }}</p> 
               </div>
             </div>
 
-<!-- Partie contenu du commentaire -->
+              <!-- Partie contenu du commentaire -->
 
             <div class="user_comment_message">
-              <div v-if="modifyComment === comment._id">
-                <input type="text" v-model="comment.message" >
+              <div v-if="modifyComment.id === comment._id">
+                <input type="text" v-model="modifyComment.message">
                 <button @click="modifyCommentCall(comment)">Modifier</button>
-                <button @click="modifyComment = '' ">Annuler</button>
+                <button @click="modifyComment.id = '', modifyComment.message = ''">Annuler</button>
               </div>
               <p v-else >{{ comment.message }}</p>
-              <i class="fa-solid fa-xmark" v-if="user.userId === comment.userId" @click="deleteComment(comment._id, comment.userId)" ></i>
             </div>           
           </div>
         </div>
@@ -107,8 +114,14 @@ export default {
             posts: "",
             users: "",
             comments: "",
-            modifyPost: "",
-            modifyComment: ""
+            modifyPost: {
+              id: "",
+              message: ""
+            },
+            modifyComment: {
+              id: "",
+              message: ""
+            }
         };
     },
     computed: {
@@ -127,6 +140,7 @@ export default {
             .catch(err => console.log(err));
       },
       deleteComment(_id){
+        if(confirm('Etes-vous sûr de vouloir supprimer ce commentaire ?') === true){
           axios.delete(`http://localhost:3000/api/comments/${_id}`, {headers: {Authorization: localStorage.getItem('token')}})
           .then(res => {
             if(res.status === 201){
@@ -135,20 +149,25 @@ export default {
               err => {console.log(err.response)}
             }
           })      
+        }
       },
       modifyCommentCall(comment){
-        if(comment.message.length === 0){
+        if(this.modifyComment.message.length <= 0){
           this.deleteComment(comment._id, comment.userId)
         }
-        axios.put(`http://localhost:3000/api/comments/${comment._id}`, comment, {headers: {Authorization: localStorage.getItem('token')}})
-        .then(res => {
-          if(res.status === 201){
-            this.getComments()
-            this.modifyComment = ''
-          } else {
-            err => {console.log(err.res)}
-          }
-        })
+        if(comment.message != this.modifyComment.message){
+          comment.message = this.modifyComment.message
+          axios.put(`http://localhost:3000/api/comments/${comment._id}`, comment, {headers: {Authorization: localStorage.getItem('token')}})
+          .then(res => {
+            if(res.status === 201){
+              this.getComments()
+              this.modifyComment.id = ''
+              this.modifyComment.message = ''
+            } else {
+              err => {console.log(err.res)}
+            }
+          })
+        }
       },
       getPosts(){
         axios.get("http://localhost:3000/api/post/", {headers: {Authorization: localStorage.getItem('token')}})
@@ -159,7 +178,7 @@ export default {
             .catch(err => console.log(err));
       },
       deletePost(_id){
-        if(confirm('Etes-vous sûr de vouloir supprimer ce post ?') == true){
+        if(confirm('Etes-vous sûr de vouloir supprimer ce post ?') === true){
           axios.delete(`http://localhost:3000/api/post/${_id}`, {headers: {Authorization: localStorage.getItem('token')}})
           .then(res => {
             if(res.status === 201){
@@ -171,18 +190,22 @@ export default {
         }
       },
       modifyPostCall(post){
-        if(post.message.length === 0){
+        if(this.modifyPost.message.length <= 0){
           this.deletePost(post._id, post.userId)
         }
-        axios.put(`http://localhost:3000/api/post/${post._id}`, post, {headers: {Authorization: localStorage.getItem('token')}})
-        .then(res => {
-          if(res.status === 201){
-            this.getPosts()
-            this.modifyPost = ''
-          } else {
-            err => {console.log(err.res)}
-          }
-        })
+        if(post.message != this.modifyPost.message){
+          post.message = this.modifyPost.message
+          axios.put(`http://localhost:3000/api/post/${post._id}`, post, {headers: {Authorization: localStorage.getItem('token')}})
+          .then(res => {
+            if(res.status === 201){
+              this.getPosts()
+              this.modifyPost.id = ''
+              this.modifyPost.message = ''
+            } else {
+              err => {console.log(err.res)}
+            }
+          })
+        }
       },
       likePost(post){
           if(!post.likes.includes(this.user.userId)){
@@ -213,13 +236,32 @@ export default {
       axios.get("http://localhost:3000/api/user/getAllUsers/")
           .then(res => (this.users = res.data))
           .catch(err => console.log(err));
-      this.getPosts()
-      this.getComments()
-    },
-}
-</script>
+          this.getPosts()
+          this.getComments()
+        },
+      }
+    </script>
 
 <style scoped>
+@keyframes widthAnim{
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: 70%;
+    }
+}
+@keyframes opacityAnim{
+    0% {
+        opacity: 0;
+    }
+    50%{
+      opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 .post{
   display: flex;
   flex-direction: column;
@@ -277,14 +319,6 @@ li {
   background-color: lightgray;
   padding: 10px;
 }
-@keyframes widthAnim{
-    0% {
-        width: 0%;
-    }
-    100% {
-        width: 70%;
-    }
-}
 .user_post:hover{
   transform: scale(1.02);
 }
@@ -299,16 +333,8 @@ li {
   animation: opacityAnim 100ms ease-in-out;
   animation-fill-mode: forwards;
 }
-.user_post_info_name_timer{
-  width: 75%;
-}
 .user_name{
   display: flex;
-}
-.user_name p{
-  display: flex;
-  justify-content: space-between;
-  font-weight: bold;
 }
 .user_timer{
   font-style: italic;
@@ -360,22 +386,10 @@ li {
     border-radius: 13px;
     padding: 10px;
 }
-@keyframes opacityAnim{
-    0% {
-        opacity: 0;
-    }
-    50%{
-      opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
 .button_post{
   display: flex;
   align-self: center;
-  align-content: center;
-  flex-direction: column;
+  flex-direction: column-reverse;
   width: 35%;
   overflow: hidden;
   animation-delay: 10s;
@@ -383,7 +397,7 @@ li {
   animation-fill-mode: forwards;
 }
 .button_post > button{
-  font-size: 15px;
+  font-size: 20px;
   margin: 5px;
   padding: 10px;
   border-radius: 15px;
@@ -393,13 +407,21 @@ li {
   animation: opacityAnim 400ms ease-in-out;
   animation-fill-mode: forwards;
 }
+.button_post > i {
+  margin: 5px;
+  color: darkred;
+  animation: opacityAnim 400ms ease-in-out;
+  animation-fill-mode: forwards;
+  font-size: 25px;
+  align-self: center;
+}
 .dislike{
   display: flex;
   justify-content: center;
   padding: 10px;
-  font-size: 25px;
 }
 .dislike > button {
+  font-size: 25px;
   font-size: 25px;
   border-radius: 15px;
   background-color: white;
@@ -409,33 +431,27 @@ li {
   animation: opacityAnim 400ms ease-in-out;
   animation-fill-mode: forwards;
 }
-.dislike > i{
-  margin: 5px;
-  color: darkred;
-  animation: opacityAnim 400ms ease-in-out;
-  animation-fill-mode: forwards;
-}
 .user_comment{
   display: flex;
-  flex-wrap: nowrap;
   flex-direction: column;
   border-bottom: 1px lightgray solid;
   margin: 15px;
-  overflow: hidden;
   animation-delay: 10s;
   animation: opacityAnim 900ms ease-in-out;
   animation-fill-mode: forwards;
 }
-.user_comment_info{
-  display: flex;
-  min-width: 25%;
+.user_comment_info_img {
+  margin-right: 10px;
 }
 .user_comment_info_img img{
   width: 50px;
   height: 50px;
   border-radius: 30px;
 }
-
+.user_comment_info_name_timer{
+  display: flex;
+  flex-wrap: wrap;
+}
 .user_comment_info_name_timer p{
   margin: 0 0 0 15px;
 }

@@ -1,5 +1,6 @@
 <template>
     <div>{{ user.firstName + ' ' + user.lastName }}</div>
+    
 </template>
 
 <script>

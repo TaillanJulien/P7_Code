@@ -15,7 +15,7 @@ exports.signup = (req, res, next) => {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             email: req.body.email,
-            url: req.body.file,
+            image: req.body.file,
             password: hash
         });
         user.save()
@@ -81,6 +81,7 @@ exports.modifyUser = (req, res, next) => {
     const user = {
     firstName: req.body.firstName,
     lastName: req.body.lastName,
+    email: req.body.email
     };
     User.updateOne({_id: req.params.id}, user)
     .then(() => res.status(201).json({ message: 'User modifié. '}))

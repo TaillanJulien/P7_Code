@@ -9,11 +9,11 @@ const fs = require('fs');
 
 //Créer un post
 exports.createPost = (req, res, next) => {
-  const newPost = new Post({
+  const newPost = Post({
     userId: req.body.userId,
     message: req.body.message,
-    imageUrl: req.body.imageUrl,
     likes: req.body.likes,
+    imageUrl: req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : '',
     comments: []
   });
   Post.create(newPost)
@@ -38,8 +38,15 @@ exports.modifyPost = (req, res, next) => {
 exports.deletePost = (req, res, next) => {
   Comment.deleteOne({postId: req.params.id})
   .catch(error => res.status(401).json({message: "Impossible de supprimer les commentaires du post", error}));
-  Post.deleteOne({_id: req.params.id})
-  .then(() => res.status(201).json({message: 'Objet supprimé.'}))
+  Post.findOne({_id: req.params.id})
+  .then(post => {
+    const filename = post.imageUrl.split('/images/')[1];
+    fs.unlink(`images/${filename}`, () => {
+      Post.deleteOne({_id: req.params.id})
+        .then(() => res.status(201).json({message: 'Objet supprimé.'}))
+        .catch(error => res.status(401).json({error}));
+    })
+  })
   .catch(error => res.status(401).json({message: "Impossible de supprimer le post", error}));
 };
 

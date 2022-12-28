@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <button tabindex="0" @click="open = true" v-if="!open"><i class="fa-regular fa-comment"></i> Commenter</button>
+        <button tabindex="0" @click="open = true" v-if="!open"><i class="fa-regular fa-comment"></i></button>
         <input tabindex="0" v-if="open" v-model="message" type="text" placeholder="Veuillez saisir votre commentaire">
             <button class="animButton" tabindex="0" @click="newUserComment" v-if="(message.length > 0 && open)">Publier <i class="fa-regular fa-circle-check" id="icon_colored"></i></button>
             <button tabindex="0" @click="open = false" v-if="open">Annuler</button>
@@ -91,5 +91,8 @@ input{
 }
 #icon_colored{
     color: green;
+}
+i {
+    font-size: 20px;
 }
 </style>

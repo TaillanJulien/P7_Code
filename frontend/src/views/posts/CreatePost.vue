@@ -5,13 +5,19 @@
             <button tabindex="0" v-if="open" class="open-close_button" @click="(open = false, message = '')"> Cliquez-ici pour annuler </button>
         </div>
         <div v-if="open" class="new_post">
-            <p>Que souhaitez-vous partager ?</p>
-            <input tabindex="0" id="postText" type="text" v-model="message" placeholder="Veuillez saisir le contenu de votre post">
-            <div class="new_post_img">
-                <p class="information_new_post">Une image à partager ?   <i class="fa-regular fa-image"></i></p>
-                <input tabindex="0" id="postImg" type="file">
-            </div>
-            <button tabindex="0" v-if="this.message != ''" class="valid_create_post" type="submit" @click="newUserPost">Partager <i class="fa-regular fa-circle-check"></i></button>
+                <p>Que souhaitez-vous partager ?</p>
+                <input tabindex="0" id="postText" type="text" v-model="message" placeholder="Veuillez saisir le contenu de votre post">
+                
+                
+                    <div class="new_post_img">
+                        <form @submit.prevent="submit" enctype="multipart/form-data">
+                            <label for="file">Veuillez sélectionner une photo !</label>
+                            <input ref="image" type="file" name="uploaded_file" id="file">
+                        </form>
+                    </div>
+                
+
+                <button tabindex="0" v-if="this.message != ''" @click="newUserPost" class="valid_create_post" type="submit">Partager <i class="fa-regular fa-circle-check"></i></button>
         </div>
     </section>
 </template>
@@ -24,8 +30,10 @@
     name: 'CreatePost',
     data () {
         return {
+            image: null,
             message: '',
-            open: false
+            open: false,
+            imageUrl: null || '',   
         }
     },
     computed: {
@@ -35,21 +43,25 @@
     },
     methods: {
         newUserPost(){
-            let userPost = {
-                userId: this.user.userId,
-                message: this.message
+            this.image = this.$refs.image.files[0];
+            const formData = new FormData();
+            formData.append('message', this.message)
+            formData.append('userId', this.user.userId)
+            if(this.image != null) {
+                formData.append('image', this.image, this.image.filename)
             }
-            axios.post('http://localhost:3000/api/post/', userPost, {headers: {Authorization: localStorage.getItem('token')}})
+            axios.post('http://localhost:3000/api/post/', formData, {headers: {Authorization: localStorage.getItem('token')}})
             .then(res => {
                 if(res.status === 201){
                     this.$emit('getPosts')
                     this.open = false
                     this.message = ''
+                    this.imageUrl = ''
                 } else {
                     err => {console.log(err.response)}
                 }
             })
-        }
+        },
     }
     }
 </script>

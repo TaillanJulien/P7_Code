@@ -2,8 +2,9 @@
     <section>
         <div>
             <p class="title">Que souhaitez-vous modifier ? <i class="fa-solid fa-pencil"></i></p>
-            <p class="field">Prénom : {{ firstName }}</p><input v-model="firstName" type="text" name="firstName" placeholder="">
-            <p class="field">Nom : {{ lastName }}</p><input v-model="lastName" type="text" name="lastName" placeholder="">
+            <p class="field">Prénom : {{ user.firstName }}</p><input v-model="firstName" type="text" name="firstName" placeholder="">
+            <p class="field">Nom : {{ user.lastName }}</p><input v-model="lastName" type="text" name="lastName" placeholder="">
+            <p class="field">Email : {{ user.email }}</p><input v-model="email" type="email" name="email" placeholder="">
             <button @click="modifyProfil">Valider</button>
         </div>
     </section>
@@ -33,12 +34,15 @@ export default {
                 let userModified = {
                     lastName: this.lastName,
                     firstName: this.firstName,
+                    email: this.email
                 }
                 axios.put(`http://localhost:3000/api/user/modifyUser/${this.user.userId}`, userModified, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
                 .then(res => {
                     if(res.status === 201){
                         this.$store.commit('SET_USER_FIRSTNAME', userModified.firstName)
                         this.$store.commit('SET_USER_LASTNAME', userModified.lastName)
+                        this.$store.commit('SET_USER_EMAIL', userModified.email)
+                        this.$router.push('/all-posts')
                     } else {
                         err => {console.log(err.response)}
                     }

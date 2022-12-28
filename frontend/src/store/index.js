@@ -36,6 +36,9 @@ const store = new Vuex.Store({
         },
         SET_USER_FIRSTNAME(state, user){
             state.user.firstName = user
+        },
+        SET_USER_EMAIL(state, user){
+            state.user.email = user
         }
     },
     plugins: [createPersistedState()],
