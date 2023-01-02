@@ -39,7 +39,7 @@ const store = new Vuex.Store({
         },
         SET_USER_EMAIL(state, user){
             state.user.email = user
-        }
+        },
     },
     plugins: [createPersistedState()],
 })

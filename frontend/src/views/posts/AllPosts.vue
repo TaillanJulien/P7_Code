@@ -3,51 +3,54 @@
     <CreatePost @getPosts="getPosts"></CreatePost>
     <div class="user_post" v-for="post in posts" :key="post._id">
 
-<!-- Informations utilisateur -->
+<!-- Informations utilisateur + menu-->
 
-      <div class="user_post_info">
-        <div class="user_post_info_img">
-          <img src="../../assets/photo_profil.jpg" alt="photo_moi">
-        </div>
-        <div class="user_post_info_name_timer">
-          <div class="user_name">
+        <div class="user_infos">
             <UserInfos :users = users :userId = post.userId></UserInfos>
-            <div class="menu" v-if="post.userId === user.userId || user.email === 'admin@gmail.com'">
+            <div class="user_infos_menu" v-if="post.userId === user.userId || user.email === 'admin@gmail.com'">
               <ul>
                 <li>
-                  <a href=""><i class="fa-solid fa-ellipsis"></i></a>
-                  <ul class="sous">
-                    <li class="buttonsPoints" @click="modifyPost.id = post._id, modifyPost.message = post.message">Modifier</li>
-                    <li class="buttonsPoints" @click="deletePost(post._id, post.userId)">Supression</li>
+                  <a href="" tabindex="0"><i class="fa-solid fa-ellipsis"></i></a>
+                  <ul class="sous" tabindex="0">
+                    <li class="user_infos_menu_buttons" @click="modifyPost.id = post._id, modifyPost.message = post.message" tabindex="0">Modifier</li>
+                    <li class="user_infos_menu_buttons" @click="deletePost(post._id, post.userId)" tabindex="0">Supression</li>
                   </ul>
                 </li>
               </ul>
-            </div>      
-          </div>
-          <p class="user_timer">{{ post.date | formatDate }}</p>
+            </div>  
         </div>
-      </div>
-
-<!-- Message et/ou photo partagé par l'utilisateur qu'il modifie + modification + suppression -->
+      
+<!-- Contenu post + modifier + supprimer  -->
 
       <div class="user_posted_message" >
-        <div v-if="modifyPost.id === post._id">
-          <input type="text" v-model="modifyPost.message" >
-          <button @click="modifyPostCall(post)">Modifier</button>
-          <button @click="modifyPost.id = '', modifyPost.message = ''">Annuler</button>
+        <div class="container_modify_delete" v-if="modifyPost.id === post._id">
+          <input type="text" v-model="modifyPost.message" class="form_modify_content">
+          <div class="container_form_modify_button">
+            <button class="form_modify_button" @click="modifyPostCall(post)">Modifier</button>
+            <button class="form_modify_button" @click="modifyPost.id = '', modifyPost.message = ''">Annuler</button>
+          </div>
+          <div v-if="post.imageUrl != ''" class="img_container">
+            <button>Supprimer l'image</button>
+            <img :src="`${post.imageUrl}`" alt="">
+          </div>
         </div>
         <div v-else>
           <p>{{ post.message }}</p>
-          <img v-if="post.imageUrl != ''" :src="`${post.imageUrl}`" alt="">
+          <div v-if="post.imageUrl != ''" class="img_container">
+            <img :src="`${post.imageUrl}`" alt="">
+          </div>
+        </div>
+        <div class="user_timer">
+          <p>Posté {{ post.date | formatDate }}</p>
         </div>
       </div>
 
-<!-- Partie likes + bouton pour commenter -->
+<!-- Likes + bouton pour commenter -->
 
-      <div v-if="(modifyPost != post._id)" class="button_post">
-        <NewComment :postId = 'post._id' @getComments="getComments"></NewComment>
+      <div v-if="(modifyPost != post._id)" class="button_like_comment">
+          <NewComment :postId = 'post._id' @getComments="getComments"></NewComment>
         <button v-if="!post.likes.includes(user.userId)" @click="likePost(post)"><i class="fa-regular fa-thumbs-up"></i></button>
-        <div class="dislike" v-else >
+        <div v-else class="dislike"  >
           <button><i class="fa-regular fa-thumbs-down" @click="likePost(post)"></i></button>
         </div>
         <i v-if="post.likes.length > 0" class="fa-solid fa-heart"> {{ post.likes.length }}</i>
@@ -59,38 +62,39 @@
         <div v-for="comment in comments" :key="comment._id">
           <div class="user_comment" v-if="post._id === comment.postId">
             
-            <!-- Partie info user qui commente + modification + suppression -->
+            <!-- Informations user + menu -->
             
-            <div class="user_comment_info">
-              <div class="user_comment_info_name_timer">
-                <div class="user_comment_info_img">
-                  <img src="../../assets/photo_profil_2.jpg" alt="photo moi 2">
-                </div>
+            <div class="user_infos" id="user_infos_comment">
                 <UserInfos :users = users :userId = comment.userId></UserInfos>
-                <div class="menu" v-if="comment.userId === user.userId || user.email === 'admin@gmail.com'">
+                <div  class="user_infos_menu" v-if="comment.userId === user.userId || user.email === 'admin@gmail.com'">
                   <ul>
                     <li>
                       <a href=""><i class="fa-solid fa-ellipsis"></i></a>
                       <ul class="sous">
-                        <li class="buttonsPoints" @click="modifyComment.id = comment._id, modifyComment.message = comment.message">Modifier</li>
-                        <li class="buttonsPoints" v-if="user.userId === comment.userId" @click="deleteComment(comment._id, comment.userId)">Supression</li>
+                        <li class="user_infos_menu_buttons" @click="modifyComment.id = comment._id, modifyComment.message = comment.message">Modifier</li>
+                        <li class="user_infos_menu_buttons" v-if="user.userId === comment.userId" @click="deleteComment(comment._id, comment.userId)">Supression</li>
                       </ul>
                     </li>
                   </ul>
                 </div>
-                <p class="user_comment_timer">{{ comment.date | formatDate }}</p> 
-              </div>
             </div>
 
-              <!-- Partie contenu du commentaire -->
+              <!-- Contenu du commentaire + modifier + supprimer -->
 
-            <div class="user_comment_message">
-              <div v-if="modifyComment.id === comment._id">
-                <input type="text" v-model="modifyComment.message">
-                <button @click="modifyCommentCall(comment)">Modifier</button>
-                <button @click="modifyComment.id = '', modifyComment.message = ''">Annuler</button>
+            <div class="user_comment_container">
+              <div v-if="modifyComment.id === comment._id" class="container_modify_delete">
+                <input class="form_modify_content" type="text" v-model="modifyComment.message">
+                <div class="container_form_modify_button">
+                  <button class="form_modify_button" @click="modifyCommentCall(comment)">Modifier</button>
+                  <button class="form_modify_button" @click="modifyComment.id = '', modifyComment.message = ''">Annuler</button>
+                </div>
               </div>
-              <p v-else >{{ comment.message }}</p>
+              <div v-else class="comment_container">
+                <p id="comment_message">{{ comment.message }}</p>
+              </div>
+              <div class="user_timer">
+                <p>Posté {{ post.date | formatDate }}</p>
+              </div>
             </div>           
           </div>
         </div>
@@ -243,6 +247,7 @@ export default {
     </script>
 
 <style scoped>
+/* keyframes pour animations */
 @keyframes widthAnim{
     0% {
         width: 0%;
@@ -262,6 +267,8 @@ export default {
         opacity: 1;
     }
 }
+
+/* Post global */
 .post{
   display: flex;
   flex-direction: column;
@@ -269,21 +276,33 @@ export default {
   width: 60%;
 }
 .user_post{
-  width: 60%;
-  overflow: hidden;
   background-color: white;
   margin: 15px 35px 35px 35px;
   display: flex;
   flex-direction: column;
   border-radius: 30px;
   box-shadow: 7px 9px 7px 1px rgba(0,0,0,0.76);
+  padding: 15px;
   transform: scale(1);
   transition: transform 600ms;
-  padding: 15px;
-  transform-origin: 0% right;
   animation: widthAnim 800ms ease-in-out;
   animation-fill-mode: forwards;
 }
+.user_post:hover{
+  transform: scale(1.01);
+}
+
+/* Informations utilisateur */
+.user_infos{
+  display: flex;
+  align-content: stretch;
+  flex-wrap: wrap;
+  transition: transform 600ms;
+  animation: opacityAnim 800ms ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+/* Menu déroulant */
 li {
   list-style:none;
   color:black;
@@ -295,108 +314,90 @@ li {
   text-decoration: none;
   list-style:none;
 }
-.menu ul {
+.user_infos_menu ul {
   padding: 0;
   margin: 0;
   text-decoration: none;
   list-style:none;
 }
-.menu ul li a {
+.user_infos_menu ul li a {
   color: black;
   padding: 5px;
   font-size: 20px;
 }
-.menu ul li ul { 
+.user_infos_menu ul li ul { 
   display: none; 
 } 
-.menu ul li:hover ul { 
+.user_infos_menu ul li:hover ul { 
   display: list-item;
   position: absolute;
   margin-top: -34px;
   margin-left: 35px;
 }
-.buttonsPoints{
+.user_infos_menu_buttons{
   background-color: lightgray;
   padding: 10px;
 }
-.user_post:hover{
-  transform: scale(1.02);
-}
-.user_post_info{
-  display: flex;
-  flex-wrap: wrap;
-  margin: 15px;
-  border-bottom: 1px lightgray solid;
-  padding-bottom: 15px;
-  overflow: hidden;
-  animation-delay: 10s;
-  animation: opacityAnim 100ms ease-in-out;
-  animation-fill-mode: forwards;
-}
-.user_name{
-  display: flex;
-}
-.user_timer{
-  font-style: italic;
-  margin: 0 0 15px 0;
-}
-.user_post_info_img img{
-  border-radius: 30px;
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-}
+
+/* Contenu principal (texte et/ou image) du post  */
 .user_posted_message{
   width: auto;
   margin: 0 15px 15px 15px;
   border-bottom: 1px lightgray solid;
   padding-bottom: 15px;
-  overflow: hidden;
-  animation-delay: 10s;
-  animation: opacityAnim 100ms ease-in-out;
-  animation-fill-mode: forwards;
 }
 .user_posted_message p{
-  margin: 5px 0 15px 0;
-  align-self: flex-start;
+  margin: 25px 0 20px 0;
+  padding: 15px 0 15px 0;
+  border-bottom: 1px lightgray solid;
+  border-top: 1px lightgray solid;
+  transition: transform 600ms;
+  animation: opacityAnim 800ms ease-in-out;
+  animation-fill-mode: forwards;
 }
-.user_posted_message_img{
-  width: 100%;
+.img_container{
   display: flex;
   justify-content: center;
+  width: 100%;
 }
-.user_posted_message_img img{
-  width: 70%;
+.img_container img{
   object-fit: contain;
+  overflow: hidden;
   border-radius: 10px;
+  box-shadow: 0px 10px 13px -7px #000000;
+  margin-bottom: 20px;
 }
-.user_posted_message button{
-    font-size: 15px;
-    margin: 5px;
-    padding: 5px;
-    border-radius: 15px;
-    background-color: white;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-}
-.user_posted_message input {
-    border: 1px solid rgba(0,0,0,0.35);
-    box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
-    border-radius: 13px;
-    padding: 10px;
-}
-.button_post{
+.user_timer{
   display: flex;
-  align-self: center;
+  justify-content: center;
+  font-style: italic;
+  transition: transform 600ms;
+  animation: opacityAnim 800ms ease-in-out;
+  animation-fill-mode: forwards;
+  margin-top: 15px;
+}
+.user_timer > p{
+  background-color: rgb(237, 237, 237);
+  padding: 10px;
+  border-radius: 15px;
+  border-top: solid lightgrey;
+  border-bottom: solid lightgrey;
+  margin: 0;
+}
+
+/* Likes + bouton pour commenter */
+.button_like_comment{
+  display: flex;
+  align-items: center;
   flex-direction: column-reverse;
-  width: 35%;
+  width: 100%;
   overflow: hidden;
   animation-delay: 10s;
   animation: opacityAnim 800ms ease-in-out;
   animation-fill-mode: forwards;
 }
-.button_post > button{
+.button_like_comment > button{
+  width: 30%;
   font-size: 20px;
   margin: 5px;
   padding: 10px;
@@ -407,7 +408,7 @@ li {
   animation: opacityAnim 400ms ease-in-out;
   animation-fill-mode: forwards;
 }
-.button_post > i {
+.button_like_comment > i {
   margin: 5px;
   color: darkred;
   animation: opacityAnim 400ms ease-in-out;
@@ -422,7 +423,6 @@ li {
 }
 .dislike > button {
   font-size: 25px;
-  font-size: 25px;
   border-radius: 15px;
   background-color: white;
   font-weight: bold;
@@ -431,64 +431,82 @@ li {
   animation: opacityAnim 400ms ease-in-out;
   animation-fill-mode: forwards;
 }
-.user_comment{
-  display: flex;
-  flex-direction: column;
-  border-bottom: 1px lightgray solid;
-  margin: 15px;
-  animation-delay: 10s;
-  animation: opacityAnim 900ms ease-in-out;
+
+/* Contenu commentaire */
+#user_infos_comment{
+  border-top: 1px lightgray solid;
+  margin: 20px 0 0 0;
+  padding-top: 15px;
+}
+.comment_container{
+  box-sizing: border-box;
+  width: 100%;
+}
+#comment_message{
+  width: fit-content;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  background-color: lightgray;
+  padding: 15px;
+  border-radius: 25px 45px 25px 45px;
+  margin: 25px 0 10px 0;
+  box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
+  transition: transform 600ms;
+  animation: opacityAnim 800ms ease-in-out;
   animation-fill-mode: forwards;
 }
-.user_comment_info_img {
-  margin-right: 10px;
-}
-.user_comment_info_img img{
-  width: 50px;
-  height: 50px;
-  border-radius: 30px;
-}
-.user_comment_info_name_timer{
+
+/* Formulaire de modification de post et commentaire */
+.container_modify_delete{
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.user_comment_info_name_timer p{
-  margin: 0 0 0 15px;
-}
-.user_comment_name{
-  font-weight: bold;
-}
-.user_comment_timer{
-  font-style: italic;
-}
-.user_comment_message{
-  margin: 15px;
-  padding-bottom: 15px;
-}
-.user_comment_message p{
+.form_modify_content{
+  border: 1px solid rgba(0,0,0,0.35);
+  box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
+  border-radius: 13px;
+  width: 80%;
   padding: 10px;
-  margin: 0;
-  border-radius: 15px;
-  background-color: lightgrey;
-  width: fit-content;
+  margin: 10px 0 20px 0;
 }
-@media (max-width: 992px){
-    .user_post{
-      width: 100%;
-    }
-    .button_post{
-      width: 100%;
-    }
-  }
+.container_form_modify_button{
+  display: flex;
+  justify-content: center;
+}
+.form_modify_button{
+  font-size: 15px;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: white;
+  font-weight: bold;
+  box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
+  cursor: pointer;
+}
+
+/* Responsive */
 @media (max-width: 768px){
-  .user_post_info{
-    flex-direction: column;
+  .post{
+    width: 100%;
   }
-  .user_comment{
-    flex-direction: column;
+  .user_post{
+    width: 90%;
+    margin: 20px 0 20px 0;
   }
-  .user_comment_message{
-    margin: 15px;
+  .user_infos_menu{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .user_comment_container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .button_like_comment > button{
+    width: 40%;
   }
 }
 </style>

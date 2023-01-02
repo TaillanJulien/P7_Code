@@ -30,9 +30,10 @@
                 </label>
             </div>
             <div class="form_inscription_input">
-                <label for="picture"> Veuillez choisir une photo de profil :
-                    <input tabindex="0" type="image" name="avatar">
-                </label>
+                <form @submit.prevent="submit" enctype="multipart/form-data">
+                    <label for="file">Veuillez sélectionner une photo !</label>
+                        <input ref="image" type="file" name="uploaded_file" id="file">                    
+                </form>
             </div>
             <div class="signup_button">
                 <button tabindex="0" class="user_signup" @click="userSignup">Cliquez ici pour vous enregistrer</button>
@@ -58,18 +59,20 @@
                 firstName: '',
                 email: '',
                 password: '',
+                imageUrl: null || '',
+                image: null
             }
         },
         methods: {
             userSignup(){
-                let newUser = {
-                    lastName: this.lastName,
-                    firstName: this.firstName,
-                    email: this.email,
-                    password: this.password,
-                    url: this.url
-                }
-                axios.post ('http://localhost:3000/api/user/signup', newUser, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
+                this.image = this.$refs.image.files[0];
+                const formData = new FormData();
+                formData.append('lastName', this.lastName)
+                formData.append('firstName', this.firstName)
+                formData.append('email', this.email)
+                formData.append('password', this.password)
+                formData.append('image', this.image, this.image.filename)
+                axios.post ('http://localhost:3000/api/user/signup', formData, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
                 .then(this.$router.push('/login'), err => {console.log(err.response)})
             },
             loginPage(){
@@ -80,6 +83,17 @@
 </script>
 
 <style scoped>
+@keyframes opacityAnim{
+    0% {
+        opacity: 0;
+    }
+    50%{
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 .signup{
     width: auto;
     border-radius: 30px;
@@ -89,6 +103,8 @@
     transform: scale(1);
     transition: transform 500ms;
     margin: 50px 30px 15px 30px;
+    animation: opacityAnim 400ms ease-in-out;
+    animation-fill-mode: forwards;
 }
 .signup:hover{
     transform: scale(1.01);

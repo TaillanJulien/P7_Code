@@ -26,6 +26,17 @@
 </script>
 
 <style scoped>
+@keyframes opacityAnim{
+    0% {
+        opacity: 0;
+    }
+    50%{
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
     .homepage{
         width: 50%;
         border-radius: 30px;
@@ -39,6 +50,8 @@
         justify-content: center;
         align-items: center;
         flex-direction: column;
+        animation: opacityAnim 400ms ease-in-out;
+        animation-fill-mode: forwards;
     }
     
     .homepage:hover{

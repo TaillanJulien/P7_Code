@@ -4,9 +4,9 @@
             <img src="../assets/groupomania_logo.png" alt="main logo groupomania">
         </div>
         <nav>
-            <a href="" class="initials" @click="modifyProfil">{{ user.firstName.charAt(0) + user.lastName.charAt(0)}}</a>
-            <a href="" @click="allPostPage">Accueil</a>
-            <a href="" @click="logout">Logout</a>
+            <p v-if="$route.path != '/modify-profil'" class="initials" @click="modifyProfil">{{ user.firstName.charAt(0) + user.lastName.charAt(0)}}</p>
+            <p v-if="$route.path != '/all-posts'" @click="allPostPage">Accueil</p>
+            <p @click="logout">Logout</p>
         </nav>
     </header>
 </template>
@@ -57,7 +57,7 @@
     nav{
         display: flex; 
     }
-    nav a{
+    nav p{
         color: white;
         text-decoration: none;
         margin: 10px;
@@ -65,8 +65,9 @@
         font-size: 20px;
         transform: scale(1);
         transition: transform 300ms ease-out;
+        cursor: pointer;
     }
-    nav a:hover{
+    nav p:hover{
         transform: scale(1.08);
     }
     .initials{
@@ -82,7 +83,7 @@
     }
     @media (max-width: 768px){
         nav{
-            margin-left: 20px;
+            justify-content: center;
         }
         nav a {
             margin: 5px;

@@ -6,18 +6,15 @@
         </div>
         <div v-if="open" class="new_post">
                 <p>Que souhaitez-vous partager ?</p>
-                <input tabindex="0" id="postText" type="text" v-model="message" placeholder="Veuillez saisir le contenu de votre post">
-                
-                
+                <input tabindex="0" id="postText" type="text" v-model="message" placeholder="Veuillez saisir le contenu de votre post">         
                     <div class="new_post_img">
                         <form @submit.prevent="submit" enctype="multipart/form-data">
                             <label for="file">Veuillez sélectionner une photo !</label>
                             <input ref="image" type="file" name="uploaded_file" id="file">
                         </form>
-                    </div>
-                
-
-                <button tabindex="0" v-if="this.message != ''" @click="newUserPost" class="valid_create_post" type="submit">Partager <i class="fa-regular fa-circle-check"></i></button>
+                    </div>  
+                <button tabindex="0" v-if="this.message != '' || this.image != null" @click="newUserPost" class="valid_create_post" type="submit">Partager <i class="fa-regular fa-circle-check"></i></button>
+                <button tabindex="0" v-else class="valid_create_post" disabled>Partager</button>
         </div>
     </section>
 </template>
@@ -56,7 +53,6 @@
                     this.$emit('getPosts')
                     this.open = false
                     this.message = ''
-                    this.imageUrl = ''
                 } else {
                     err => {console.log(err.response)}
                 }
@@ -67,6 +63,14 @@
 </script>
 
 <style scoped>
+    @keyframes opacityAnim{
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
 .buttons{
     display: flex;
     justify-content: center;
@@ -88,15 +92,7 @@
     transform: scale(1.04);
 }
 .create_new_post{
-    width: 50%;
-}
-@keyframes opacityAnim{
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
+    width: 35%;
 }
 .new_post{
     background-color: white;
@@ -124,12 +120,19 @@
     margin: 10px 0 5px 0;
 }
 .new_post_img{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     border-top: 1px lightgray solid;
     border-bottom: 1px lightgray solid;
-    padding-bottom: 25px;
+    padding-bottom: 15px;
+}
+label{
+    margin: 5px;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
 }
 .valid_create_post{
     font-size: 15px;
@@ -157,7 +160,7 @@
 }
 @media(max-width: 768px){
     .create_new_post{
-        width: auto;
+        width: 75%;
     }
 }
 </style>

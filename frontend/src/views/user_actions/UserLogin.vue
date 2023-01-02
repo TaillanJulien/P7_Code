@@ -7,23 +7,23 @@
         </div>
         <p class="information_login">Veuillez compléter les informations pour vous connecter :</p>
         <div class="form_login">
-            <form>
+            <form action="post">
                 <div class="form_login_mail">
                     <label for="email">Adresse email :
-                        <input tabindex="0" type="email" name="email" v-model="login.email" placeholder="Veuillez saisir votre adresse mail">
+                        <input @keyup.enter="userLogin" tabindex="0" type="email" name="email" v-model="login.email" placeholder="Veuillez saisir votre adresse mail">
                     </label>
                 </div>
                 <p class="regexMail"></p>
                 <div class="form_login_password">
                     <label for="password">Mot de passe :
-                        <input tabindex="0" type="password" name="password" :submit="userLogin"  v-model="login.password" placeholder="Veuillez saisir un mot de passe">
+                        <input @keyup.enter="userLogin" tabindex="0" type="password" name="password" :submit="userLogin"  v-model="login.password" placeholder="Veuillez saisir un mot de passe">
                     </label>
                 </div>
                 <p class="regexPassword"></p>
             </form>
         </div>
         <div class="button_login">
-            <button tabindex="0" class="button_connect" type="submit" @click="userLogin">Se connecter</button>
+            <button tabindex="0" class="button_connect" type="submit" @click="userLogin" >Se connecter</button>
             <button tabindex="0" class="button_create_account" @click="signupPage">Créer un nouveau compte</button>
         </div>
         <div class="logo_end_login">
@@ -51,6 +51,13 @@ export default {
                 email: this.login.email,
                 password: this.login.password,
             }
+            if(this.login.email === ''){
+                alert('Veuillez renseigner votre adresse email')
+            }
+            else if(this.login.password === ''){
+                alert('Veuillez renseigner votre mot de passe')
+            }
+            else {
                 axios.post('http://localhost:3000/api/user/login', user)
                 .then(res => {
                 if (res.status === 200) {
@@ -61,6 +68,7 @@ export default {
                     err => {console.log("Impossible de se connecter" + err)}
                 }
             })
+            }
         },
         signupPage(){
             this.$router.push('/signup')
@@ -70,6 +78,17 @@ export default {
 </script>
 
 <style scoped>
+@keyframes opacityAnim{
+    0% {
+        opacity: 0;
+    }
+    50%{
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
 .login{
     width: auto;
     border-radius: 30px;
@@ -82,6 +101,8 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+    animation: opacityAnim 400ms ease-in-out;
+    animation-fill-mode: forwards;
 }
 .login:hover{
     transform: scale(1.01);
