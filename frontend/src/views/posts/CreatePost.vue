@@ -10,7 +10,7 @@
                     <div class="new_post_img">
                         <form @submit.prevent="submit" enctype="multipart/form-data">
                             <label for="file">Veuillez sélectionner une photo !</label>
-                            <input ref="image" type="file" name="uploaded_file" id="file">
+                            <input ref="image" type="file" id="file">
                         </form>
                     </div>  
                 <button tabindex="0" v-if="this.message != '' || this.image != null" @click="newUserPost" class="valid_create_post" type="submit">Partager <i class="fa-regular fa-circle-check"></i></button>
@@ -29,8 +29,7 @@
         return {
             image: null,
             message: '',
-            open: false,
-            imageUrl: null || '',   
+            open: false,  
         }
     },
     computed: {
@@ -47,6 +46,7 @@
             if(this.image != null) {
                 formData.append('image', this.image, this.image.filename)
             }
+            console.log(formData);
             axios.post('http://localhost:3000/api/post/', formData, {headers: {Authorization: localStorage.getItem('token')}})
             .then(res => {
                 if(res.status === 201){
@@ -92,7 +92,7 @@
     transform: scale(1.04);
 }
 .create_new_post{
-    width: 35%;
+    width: 50%;
 }
 .new_post{
     background-color: white;
@@ -160,7 +160,7 @@ form{
 }
 @media(max-width: 768px){
     .create_new_post{
-        width: 75%;
+        width: 85%;
     }
 }
 </style>

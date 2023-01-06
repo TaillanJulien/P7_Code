@@ -4,19 +4,16 @@ const express = require('express');
 // Utilisation méthode ROUTER
 const router = express.Router();
 
-// // Importation middlewares : auth (pour authentification) & multer (pour les fichiers)
-// const auth = require('../middleware/auth');
-// const multer = require('../middleware/multer-config');
+// Importation middlewares : auth (pour authentification)
+const auth = require('../middleware/auth');
 
 // Controleur comment
 const commentCtrl = require ('../controllers/comment.controller');
 
 // Routes pour les COMMENTS
 router.get('/', commentCtrl.getAllComment);
-router.get('/:id', commentCtrl.getOneComment);
-router.post('/:postId', commentCtrl.createComment);
-router.put('/:id', commentCtrl.modifyComment);
-router.delete('/:id', commentCtrl.deleteComment);
-router.delete('/admin/:id', commentCtrl.deleteCommentAdmin);
+router.post('/:postId',  auth,commentCtrl.createComment);
+router.put('/:id',  auth,commentCtrl.modifyComment);
+router.delete('/:id', auth,commentCtrl.deleteComment);
 
 module.exports = router;

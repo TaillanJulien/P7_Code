@@ -26,11 +26,14 @@
         <div class="container_modify_delete" v-if="modifyPost.id === post._id">
           <input type="text" v-model="modifyPost.message" class="form_modify_content">
           <div class="container_form_modify_button">
-            <button class="form_modify_button" @click="modifyPostCall(post)">Modifier</button>
+            <button class="form_modify_button" type="submit" @click="modifyPostCall(post)">Modifier</button>
             <button class="form_modify_button" @click="modifyPost.id = '', modifyPost.message = ''">Annuler</button>
           </div>
-          <div v-if="post.imageUrl != ''" class="img_container">
-            <button>Supprimer l'image</button>
+          <div v-if="post.imageUrl != ''" class="modify_img_container">
+            <p>Souhaitez-vous modifier votre image ?</p>
+            <form @submit.prevent="submit" enctype="multipart/form-data">
+              <input v-on:change="changeImg" ref="image" type="file" name="uploaded_file" id="image" value="Choisir une nouvelle image">
+            </form>
             <img :src="`${post.imageUrl}`" alt="">
           </div>
         </div>
@@ -115,6 +118,7 @@ export default {
     components: {CreatePost, NewComment, UserInfos},
     data() {
         return {
+            image: "",
             posts: "",
             users: "",
             comments: "",
@@ -193,23 +197,30 @@ export default {
           })
         }
       },
+      changeImg(){
+        this.image = this.$refs.image[0].files[0];
+      },
       modifyPostCall(post){
         if(this.modifyPost.message.length <= 0){
           this.deletePost(post._id, post.userId)
         }
-        if(post.message != this.modifyPost.message){
-          post.message = this.modifyPost.message
-          axios.put(`http://localhost:3000/api/post/${post._id}`, post, {headers: {Authorization: localStorage.getItem('token')}})
+          const formData = new FormData();
+          formData.append('message', this.modifyPost.message)
+          formData.append('userId', this.user.userId)
+          if(this.image != '') {
+            formData.append('image', this.image, this.image.filename)
+          } 
+          axios.put(`http://localhost:3000/api/post/${post._id}`, formData, {headers: {Authorization: localStorage.getItem('token')}})
           .then(res => {
             if(res.status === 201){
               this.getPosts()
               this.modifyPost.id = ''
               this.modifyPost.message = ''
+              this.image = ''
             } else {
               err => {console.log(err.res)}
             }
-          })
-        }
+          })  
       },
       likePost(post){
           if(!post.likes.includes(this.user.userId)){
@@ -366,6 +377,18 @@ li {
   border-radius: 10px;
   box-shadow: 0px 10px 13px -7px #000000;
   margin-bottom: 20px;
+}
+.modify_img_container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+.modify_img_container > p{
+  align-self: center;
+}
+#image{
+  margin: 15px;
 }
 .user_timer{
   display: flex;

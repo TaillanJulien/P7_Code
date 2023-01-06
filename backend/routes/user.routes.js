@@ -18,10 +18,9 @@ router.post('/login', userCtrl.login);
 
 // Récupération des users
 router.get('/getAllUsers', userCtrl.getAllUsers);
-router.get('/getOneUser/:id', userCtrl.getOneUser);
 
 // Modification user
-router.put('/modifyUser/:id', userCtrl.modifyUser);
+router.put('/modifyUser/:id', multer, userCtrl.modifyUser);
 
 // Exportation router
 module.exports = router;

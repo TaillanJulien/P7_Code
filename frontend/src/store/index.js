@@ -16,6 +16,7 @@ const store = new Vuex.Store({
             email: "",
             firstName: "",
             lastName: "",
+            imageUrl: "",
             token: ""
         },
     },
@@ -39,6 +40,9 @@ const store = new Vuex.Store({
         },
         SET_USER_EMAIL(state, user){
             state.user.email = user
+        },
+        SET_USER_IMAGEURL(state, user){
+            state.user.imageUrl = user
         },
     },
     plugins: [createPersistedState()],

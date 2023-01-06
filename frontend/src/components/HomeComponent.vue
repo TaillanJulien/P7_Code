@@ -1,12 +1,14 @@
 <template>
-    <section class="homepage">
-        <h1>Bienvenue sur ...</h1>
-        <div class="homepage__img">
-            <img src="../assets/groupomania_logo_4.png" alt="logo groupomania">
-        </div>
-        <div class="homepage__buttons">
-            <button tabindex="0" @click="loginPage">Cliquez ici pour vous identifier.</button>
-            <button tabindex="0" @click="signupPage">Cliquez ici pour créer un nouveau compte.</button>
+    <section>
+        <div class="homepage">
+            <h1>Bienvenue sur ...</h1>
+            <div class="homepage__img">
+                <img src="../assets/groupomania_logo_4.png" alt="logo groupomania">
+            </div>
+            <div class="homepage__buttons">
+                <button tabindex="0" @click="loginPage">Cliquez ici pour vous identifier.</button>
+                <button tabindex="0" @click="signupPage">Cliquez ici pour créer un nouveau compte.</button>
+            </div> 
         </div>
     </section>
 </template>
@@ -37,6 +39,13 @@
         opacity: 1;
     }
 }
+    section{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     .homepage{
         width: 50%;
         border-radius: 30px;
@@ -45,7 +54,6 @@
         box-shadow: 7px 9px 7px 1px rgba(0,0,0,0.76);
         transform: scale(1);
         transition: transform 500ms;
-        margin: 150px 100px 100px 100px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -86,26 +94,15 @@
     }
     @media (max-width: 992px){
         .homepage{
-            margin: 90px;
-        }
-        h1{
-            font-size: 21px;
+            width: 80%;
         }
         .homepage__img{
-        width: 75%;
-    }
+            width: 50%;
+        }
     }
     @media (max-width: 768px){
-        .homepage{
-            width: 80%;
-            margin: 100px;
-        }
         .homepage__img{
-        width: 65%;
-    }
-        h1{
-            font-size: 20px;
-            white-space: normal;
+            width: 65%;
         }
     }
 </style>

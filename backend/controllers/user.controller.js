@@ -42,7 +42,8 @@ exports.login = (req, res, next) => {
                             userId: user._id,
                             firstName: user.firstName,
                             lastName: user.lastName,
-                            email: user.email
+                            email: user.email,
+                            imageUrl: user.imageUrl
                         },
                         token: jwt.sign(
                             {userId: user._id},
@@ -66,24 +67,19 @@ exports.getAllUsers = (req, res, next) =>{
     .catch(error => res.status(400).json({error})); 
 };
 
-// Récupération d'une seul user
-exports.getOneUser = (req, res, next) => {
-    console.log("Récupération d'un seul user");
-    User.findOne({_id: req.params.id})
-    .then((post) => {res.status(200).json(post)})
-    .catch((error) => {res.status(404).json({error: error})})
-};
-
-// Modifier user
-
 // Modifier un User
 exports.modifyUser = (req, res, next) => {
-    const user = {
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email
+    User.findOne({_id: req.params.id})
+    .then(user => {
+        const userModified = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        imageUrl: req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : user.imageUrl,
     };
-    User.updateOne({_id: req.params.id}, user)
-    .then(() => res.status(201).json({ message: 'User modifié. '}))
+    console.log(userModified);
+    User.updateOne({_id: req.params.id}, userModified)
+    .then((user) => res.status(201).json(user))
     .catch(error => res.status(400).json({message: "Impossible de modifier le profil", error }))
+})
 };

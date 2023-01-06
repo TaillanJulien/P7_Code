@@ -80,11 +80,11 @@
             flex-direction: column;
             align-content: center;
         }
-    }
-    @media (max-width: 768px){
         nav{
             justify-content: center;
         }
+    }
+    @media (max-width: 768px){
         nav a {
             margin: 5px;
         }

@@ -13,10 +13,8 @@ const postCtrl = require('../controllers/post.controller');
 
 // Routes pour les POST
 router.get('/', postCtrl.getAllPost);
-router.get('/:id', postCtrl.getOnePost);
 router.post('/', auth, multer, postCtrl.createPost);
-router.put('/:id', auth, postCtrl.modifyPost);
+router.put('/:id', auth, multer, postCtrl.modifyPost);
 router.delete('/:id', auth, postCtrl.deletePost);
-router.delete('/admin/:id', postCtrl.deletePostAdmin);
 
 module.exports = router;

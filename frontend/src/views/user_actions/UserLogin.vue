@@ -1,33 +1,35 @@
 <template>
-    <section class="login">
-        <div class="login_logo_title">
-            <div class="login_logo">
-                <img src="../../assets/groupomania_logo_2.png" alt="logo groupomania">
+    <section>
+        <div class="login">
+            <div class="login_logo_title">
+                <div class="login_logo">
+                    <img src="../../assets/groupomania_logo_2.png" alt="logo groupomania">
+                </div>
             </div>
-        </div>
-        <p class="information_login">Veuillez compléter les informations pour vous connecter :</p>
-        <div class="form_login">
-            <form action="post">
-                <div class="form_login_mail">
-                    <label for="email">Adresse email :
-                        <input @keyup.enter="userLogin" tabindex="0" type="email" name="email" v-model="login.email" placeholder="Veuillez saisir votre adresse mail">
-                    </label>
-                </div>
-                <p class="regexMail"></p>
-                <div class="form_login_password">
-                    <label for="password">Mot de passe :
-                        <input @keyup.enter="userLogin" tabindex="0" type="password" name="password" :submit="userLogin"  v-model="login.password" placeholder="Veuillez saisir un mot de passe">
-                    </label>
-                </div>
-                <p class="regexPassword"></p>
-            </form>
-        </div>
-        <div class="button_login">
-            <button tabindex="0" class="button_connect" type="submit" @click="userLogin" >Se connecter</button>
-            <button tabindex="0" class="button_create_account" @click="signupPage">Créer un nouveau compte</button>
-        </div>
-        <div class="logo_end_login">
-            <img src="../../assets/groupomania_graphic_logo.png" alt="logo">
+            <p class="information_login">Veuillez compléter les informations pour vous connecter :</p>
+            <div class="form_login">
+                <form action="post">
+                    <div class="form_login_mail">
+                        <label for="email">Adresse email :
+                            <input @keyup.enter="userLogin" tabindex="0" type="email" name="email" v-model="login.email" placeholder="Veuillez saisir votre adresse mail">
+                        </label>
+                    </div>
+                    <p class="regexMail"></p>
+                    <div class="form_login_password">
+                        <label for="password">Mot de passe :
+                            <input @keyup.enter="userLogin" tabindex="0" type="password" name="password" :submit="userLogin"  v-model="login.password" placeholder="Veuillez saisir un mot de passe">
+                        </label>
+                    </div>
+                    <p class="regexPassword"></p>
+                </form>
+            </div>
+            <div class="button_login">
+                <button tabindex="0" class="button_connect" type="submit" @click="userLogin" >Se connecter</button>
+                <button tabindex="0" class="button_create_account" @click="signupPage">Créer un nouveau compte</button>
+            </div>
+            <div class="logo_end_login">
+                <img src="../../assets/groupomania_graphic_logo.png" alt="logo">
+            </div>
         </div>
     </section>
 </template>
@@ -89,6 +91,13 @@ export default {
         opacity: 1;
     }
 }
+section{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .login{
     width: auto;
     border-radius: 30px;
@@ -97,9 +106,9 @@ export default {
     box-shadow: 7px 9px 7px 1px rgba(0,0,0,0.76);
     transform: scale(1);
     transition: transform 500ms;
-    margin: 100px 50px 50px 50px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     animation: opacityAnim 400ms ease-in-out;
     animation-fill-mode: forwards;
@@ -160,9 +169,12 @@ export default {
     width: auto;
 }
 @media (max-width: 768px){
+    .login{
+    width: 100%;
+    margin: 15px;
+    }
     .information_login{
     white-space: normal;
 }
-
 }
 </style>

@@ -27,14 +27,6 @@ exports.modifyComment = (req, res, next) =>{
         .catch(error => res.status(400).json({message: "Impossible de modifier le commentaire", error }))
 }
 
-//Récupérer un commentaire
-exports.getOneComment = (req, res, next) =>{
-    console.log("Récupération d'un seul commentaire");
-    Comment.findOne({postId: req.params.postId})
-        .then((post) => {res.status(200).json({post})})
-        .catch((error) => {res.status(404).json({message: "Impossible de récupérer le commentaire ciblé", error})})
-}
-
 //Récupérer tous les commentaires
 exports.getAllComment = (req, res, next) =>{
     console.log("Récupération de tous les commentaires");
@@ -47,12 +39,5 @@ exports.getAllComment = (req, res, next) =>{
 exports.deleteComment = (req, res, next) =>{
     Comment.deleteOne({_id: req.params.id})
         .then(() => res.status(201).json({message: 'Commentaire supprimé.'}))
-        .catch(error => res.status(401).json({message: "Impossible de supprimer le commentaire", error}));
-}
-
-//Supprimer un commentaire ADMIN
-exports.deleteCommentAdmin = (req, res, next) =>{
-    Comment.deleteOne({postId: req.params.postId})
-        .then(() => res.status(200).json({message: 'Commentaire supprimé.'}))
         .catch(error => res.status(401).json({message: "Impossible de supprimer le commentaire", error}));
 }
