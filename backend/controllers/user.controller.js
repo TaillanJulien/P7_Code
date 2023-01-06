@@ -70,14 +70,13 @@ exports.getAllUsers = (req, res, next) =>{
 // Modifier un User
 exports.modifyUser = (req, res, next) => {
     User.findOne({_id: req.params.id})
-    .then(user => {
+    .then((user) => {
         const userModified = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         imageUrl: req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : user.imageUrl,
     };
-    console.log(userModified);
     User.updateOne({_id: req.params.id}, userModified)
     .then((user) => res.status(201).json(user))
     .catch(error => res.status(400).json({message: "Impossible de modifier le profil", error }))

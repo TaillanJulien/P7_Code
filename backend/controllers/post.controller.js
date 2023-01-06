@@ -25,7 +25,6 @@ exports.createPost = (req, res, next) => {
 exports.modifyPost = (req, res, next) => {
   Post.findOne({_id: req.params.id})
   .then((post) => {
-    console.log(post);
     const updatePost = {
       _id: req.params.id,
       message: req.body.message,

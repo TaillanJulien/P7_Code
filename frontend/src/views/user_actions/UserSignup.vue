@@ -26,7 +26,9 @@
             </div>
             <div class="form_inscription_input">
                 <label for="mail">Adresse email :
-                    <input tabindex="0" type="email" name="email" v-model="email" placeholder="Veuillez saisir votre email" id="email">
+                    <input tabindex="0" type="email" name="email" v-model="email" placeholder="Veuillez saisir votre email" id="email">          
+                    <p id="errorFormat"></p>
+                    <p id="validFormat"></p>
                 </label>
             </div>
             <div class="form_inscription_input">
@@ -66,21 +68,6 @@
         methods: {
             userSignup(){
                 this.image = this.$refs.image.files[0];
-                if(this.lastName === ''){
-                    alert('Veuillez saisir votre nom de famille')
-                }
-                else if(this.firstName === ''){
-                    alert('Veuillez saisir votre prénom')
-                }
-                else if(this.email === ''){
-                    alert('Veuillez saisir une adresse email')
-                }
-                else if(this.password === ''){
-                    alert('Veuillez saisir un mot de passe')
-                }
-                else if(this.image === undefined){
-                    alert('Veuillez ajouter une photo de profil')
-                } else {
                     const formData = new FormData();
                     formData.append('lastName', this.lastName)
                     formData.append('firstName', this.firstName)
@@ -89,50 +76,53 @@
                     formData.append('image', this.image, this.image.filename)
                     axios.post ('http://localhost:3000/api/user/signup', formData, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
                     .then(this.$router.push('/login'), err => {console.log(err.response)})
-                }
             },
-            lastNameValidator(){
-            let nameRegEx = /^[a-zA-Z\-çñàéèêëïîôüù ]{2,}$/;  
-            const lastName = document.querySelector('#firstName');
-            lastName.addEventListener("input", (event) => {
-                event.preventDefault();
-                if (nameRegEx.test(lastName.value) == false || lastName.value == ""){
-                    alert('Nom incorrect')
-                return false;
-                } else {
-                    document.querySelector("#firstNameErrorMsg").innerHTML = "";
-                return true;
-                }
-            })
-            },
-            firstNameValidator(){
-            let nameRegEx = /^[a-zA-Z\-çñàéèêëïîôüù ]{2,}$/;  
-            const firstName = document.querySelector('#firstName');
-            firstName.addEventListener("input", (event) => {
-                event.preventDefault();
-                if (nameRegEx.test(firstName.value) == false || firstName.value == ""){
-                    alert('Prénom incorrect')
-                return false;
-                } else {
-                    document.querySelector("#firstNameErrorMsg").innerHTML = "";
-                return true;
-                }
-            })
-            },
-            emailValidator(){
-            let emailRegEx = /^[A-Za-z0-9\-\]+@([A-Za-z0-9-]+\)+[A-Za-z0-9-]{2,}$/;
-            const email = document.querySelector('#email');
-            email.addEventListener("input", (event) => {
-                event.preventDefault();
-                if (emailRegEx.test(email.value) == false || email.value == ""){
-                    alert('Email incorrect')
-                return false;
-                } else {
-                    document.querySelector("#emailErrorMsg").innerHTML = "";
-                return true;
-            }
-    });
-            },
+            // lastNameValidator(){
+            // let nameRegEx = /^[a-zA-Z\-çñàéèêëïîôüù ]{2,}$/;  
+            // const lastName = document.querySelector('#firstName');
+            // lastName.addEventListener("input", (event) => {
+            //     event.preventDefault();
+            //     if (nameRegEx.test(lastName.value) == false || lastName.value == ""){
+            //         alert('Nom incorrect')
+            //     return false;
+            //     } else {
+            //         document.querySelector("#firstNameErrorMsg").innerHTML = "";
+            //     return true;
+            //     }
+            // })
+            // },
+            // firstNameValidator(){
+            // let nameRegEx = /^[a-zA-Z\-çñàéèêëïîôüù ]{2,}$/;  
+            // const firstName = document.querySelector('#firstName');
+            // firstName.addEventListener("input", (event) => {
+            //     event.preventDefault();
+            //     if (nameRegEx.test(firstName.value) == false || firstName.value == ""){
+            //         alert('Prénom incorrect')
+            //     return false;
+            //     } else {
+            //         document.querySelector("#firstNameErrorMsg").innerHTML = "";
+            //     return true;
+            //     }
+            // })
+            // },
+            // emailValidator(){
+            // let emailRegEx = /^[A-Za-z0-9\-\]+@([A-Za-z0-9-]+\)+[A-Za-z0-9-]{2,}$/;
+            // let email = document.getElementById('email');
+            // email.addEventListener("input", (event) => {
+            //     event.preventDefault();
+            //     if (emailRegEx.test(email.value) == false || email.value == ""){
+            //         console.log('pas bien');
+            //         document.querySelector('#errorFormat').innerHTML = "Format incorrect"
+            //         return false
+            //     } else {
+            //         alert('bien')
+            //         console.log('bien');
+            //         document.querySelector("#validFormat").innerHTML = "Format correct";
+            //         return true
+                
+            // }
+            // });
+            // },
             loginPage(){
                 this.$router.push('/login')
             }
