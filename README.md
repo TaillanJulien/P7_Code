@@ -29,3 +29,7 @@ Now you have the frontend active.
 3. Run : ```npm install```
 
 4. Run : ```npm run serve ```
+
+#### Step four :
+
+- Now, you can acces to the site at this adress : http://localhost:8080/ 
