@@ -4,6 +4,7 @@ const User = require('../models/user.model');
 const bcrypt = require('bcrypt');
 // Importation de json web token pour authentifier un utilisateur
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 
 // Controleurs utilisateur
 
@@ -77,6 +78,10 @@ exports.modifyUser = (req, res, next) => {
         email: req.body.email,
         imageUrl: req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : user.imageUrl,
     };
+    if(user.imageUrl && req.file){
+        const filename = user.imageUrl.split('images')[1];
+        fs.unlink(`images/${filename}`, () => {})
+    }
     User.updateOne({_id: req.params.id}, userModified)
     .then((user) => res.status(201).json(user))
     .catch(error => res.status(400).json({message: "Impossible de modifier le profil", error }))

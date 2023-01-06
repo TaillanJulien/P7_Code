@@ -42,7 +42,8 @@ export default {
                 let userModified = {
                     lastName: this.lastName.length ? this.lastName : this.user.lastName,
                     firstName: this.firstName ? this.firstName : this.user.firstName,
-                    email: this.email ? this.email : this.user.email
+                    email: this.email ? this.email : this.user.email,
+                    imageUrl: this.image ? this.iamge : this.user.imageUrl
                 }
                 const formData = new FormData();
                 formData.append('lastName', userModified.lastName)
