@@ -32,4 +32,4 @@ Now you have the frontend active.
 
 #### Step four :
 
-- Now, you can acces to the site at this adress : http://localhost:8080/ 
+- Now, you can access to the site at this adress : http://localhost:8080/ 
