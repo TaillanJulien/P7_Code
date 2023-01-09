@@ -12,6 +12,7 @@
                     <div class="form_login_mail">
                         <label for="email">Adresse email :
                             <input @keyup.enter="userLogin" tabindex="0" type="email" name="email" v-model="login.email" placeholder="Veuillez saisir votre adresse mail">
+                            <p id="invalidFormat"></p>
                         </label>
                     </div>
                     <p class="regexMail"></p>
@@ -47,19 +48,16 @@ export default {
                 }
             };
         },
-    methods: {      
+    methods: {   
         userLogin(){
             let user = {
                 email: this.login.email,
                 password: this.login.password,
             }
-            if(this.login.email === ''){
-                alert('Veuillez renseigner votre adresse email')
-            }
-            else if(this.login.password === ''){
-                alert('Veuillez renseigner votre mot de passe')
-            }
-            else {
+            let emailRegEx = /^[A-Za-z0-9\-.]+@([A-Za-z0-9-]+.)+[A-Za-z0-9-]{2,}$/;
+            if(emailRegEx.test(this.login.email) === false){
+                document.querySelector('#invalidFormat').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Email incorrect'     
+            } else {
                 axios.post('http://localhost:3000/api/user/login', user)
                 .then(res => {
                 if (res.status === 200) {
@@ -145,6 +143,11 @@ section{
     width: 80%;
     margin: 10px;
     padding: 5px;
+}
+#invalidFormat{
+    font-weight: 500;
+    font-style: italic;
+    color: #9c941f
 }
 .button_login{
     padding: 15px;

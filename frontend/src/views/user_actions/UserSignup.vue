@@ -12,11 +12,13 @@
             <div class="form_inscription_input">
                 <label for="lastName">Nom :
                     <input tabindex="0" type="text" name="lastName" v-model="lastName" placeholder="Veuillez saisir votre nom" id="lastName">
+                    <p id="invalidLastName"></p>
                 </label>
             </div>
             <div class="form_inscription_input">
                 <label for="firstName">Prénom :
                     <input tabindex="0" type="text" name="firstName" v-model="firstName" placeholder="Veuillez saisir votre prénom" id="firstName">
+                    <p id="invalidFirstName"></p>
                 </label>
             </div>
             <div class="form_inscription_input">
@@ -27,14 +29,14 @@
             <div class="form_inscription_input">
                 <label for="mail">Adresse email :
                     <input tabindex="0" type="email" name="email" v-model="email" placeholder="Veuillez saisir votre email" id="email">          
-                    <p id="errorFormat"></p>
-                    <p id="validFormat"></p>
+                    <p id="invalidEmail"></p>
                 </label>
             </div>
             <div class="form_inscription_input">
                 <form @submit.prevent="submit" enctype="multipart/form-data">
                     <label for="file">Veuillez sélectionner une photo !</label>
-                        <input ref="image" type="file" name="uploaded_file" id="file">                    
+                        <input ref="image" type="file" name="uploaded_file" id="file">
+                        <p id="emptyFile"></p>                    
                 </form>
             </div>
             <div class="signup_button">
@@ -67,62 +69,28 @@
         },
         methods: {
             userSignup(){
-                this.image = this.$refs.image.files[0];
-                    const formData = new FormData();
-                    formData.append('lastName', this.lastName)
-                    formData.append('firstName', this.firstName)
-                    formData.append('email', this.email)
-                    formData.append('password', this.password)
-                    formData.append('image', this.image, this.image.filename)
-                    axios.post ('http://localhost:3000/api/user/signup', formData, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
-                    .then(this.$router.push('/login'), err => {console.log(err.response)})
-            },
-            // lastNameValidator(){
-            // let nameRegEx = /^[a-zA-Z\-çñàéèêëïîôüù ]{2,}$/;  
-            // const lastName = document.querySelector('#firstName');
-            // lastName.addEventListener("input", (event) => {
-            //     event.preventDefault();
-            //     if (nameRegEx.test(lastName.value) == false || lastName.value == ""){
-            //         alert('Nom incorrect')
-            //     return false;
-            //     } else {
-            //         document.querySelector("#firstNameErrorMsg").innerHTML = "";
-            //     return true;
-            //     }
-            // })
-            // },
-            // firstNameValidator(){
-            // let nameRegEx = /^[a-zA-Z\-çñàéèêëïîôüù ]{2,}$/;  
-            // const firstName = document.querySelector('#firstName');
-            // firstName.addEventListener("input", (event) => {
-            //     event.preventDefault();
-            //     if (nameRegEx.test(firstName.value) == false || firstName.value == ""){
-            //         alert('Prénom incorrect')
-            //     return false;
-            //     } else {
-            //         document.querySelector("#firstNameErrorMsg").innerHTML = "";
-            //     return true;
-            //     }
-            // })
-            // },
-            // emailValidator(){
-            // let emailRegEx = /^[A-Za-z0-9\-\]+@([A-Za-z0-9-]+\)+[A-Za-z0-9-]{2,}$/;
-            // let email = document.getElementById('email');
-            // email.addEventListener("input", (event) => {
-            //     event.preventDefault();
-            //     if (emailRegEx.test(email.value) == false || email.value == ""){
-            //         console.log('pas bien');
-            //         document.querySelector('#errorFormat').innerHTML = "Format incorrect"
-            //         return false
-            //     } else {
-            //         alert('bien')
-            //         console.log('bien');
-            //         document.querySelector("#validFormat").innerHTML = "Format correct";
-            //         return true
-                
-            // }
-            // });
-            // },
+                let emailRegEx = /^[A-Za-z0-9\-.]+@([A-Za-z0-9-]+.)+[A-Za-z0-9-]{2,}$/;
+                let nameRegEx = /^[a-zA-Z\-çñàéèêëïîôüù ]{2,}$/;
+                if(emailRegEx.test(this.email) === false){
+                    document.querySelector('#invalidEmail').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Email incorrect'
+                } else if (nameRegEx.test(this.firstName) === false){
+                    document.querySelector('#invalidFirstName').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Nom incorrect'
+                } else if (nameRegEx.test(this.lastName) === false){
+                    document.querySelector('#invalidLastName').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Prénom incorrect'
+                } else if(this.$refs.image.files[0] === ''){
+                    document.querySelector('#emptyFile').innerHTML = 'Merci de choisir une photo de profil'
+                } else {
+                    this.image = this.$refs.image.files[0];
+                        const formData = new FormData();
+                        formData.append('lastName', this.lastName)
+                        formData.append('firstName', this.firstName)
+                        formData.append('email', this.email)
+                        formData.append('password', this.password)
+                        formData.append('image', this.image, this.image.filename)
+                        axios.post ('http://localhost:3000/api/user/signup', formData, {headers: {'Authorization': `${localStorage.getItem('token')}`}})
+                        .then(this.$router.push('/login'), err => {console.log(err.response)})
+                }
+                },
             loginPage(){
                 this.$router.push('/login')
             }
@@ -190,6 +158,11 @@
     border-radius: 10px;
     padding: 8px;
     cursor: pointer;
+}
+#invalidEmail, #invalidFirstName, #invalidLastName, #emptyFile{
+    font-weight: 500;
+    font-style: italic;
+    color: #9c941f
 }
 .signup_button{
     width: 100%;
