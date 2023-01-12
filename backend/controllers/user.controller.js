@@ -1,9 +1,13 @@
 // Importation modèle user
 const User = require('../models/user.model');
+
 // Importation bcrypt pour hasher le mot de passe
 const bcrypt = require('bcrypt');
+
 // Importation de json web token pour authentifier un utilisateur
 const jwt = require('jsonwebtoken');
+
+// Importation FS pour supprimer les images
 const fs = require('fs');
 
 // Controleurs utilisateur
@@ -31,12 +35,12 @@ exports.login = (req, res, next) => {
     User.findOne({email: req.body.email})
     .then(user => {
         if(!user){
-            res.status(401).json({message: 'Utilisateur non trouvé.'})
+            res.status(403).json({message: 'Utilisateur non trouvé.'})
         } else {
             bcrypt.compare(req.body.password, user.password)
             .then(valid => {
                 if(!valid){
-                    return res.status(401).json({message: 'Mot de passe incorrect'})
+                    return res.status(403).json({message: 'Mot de passe incorrect'})
                 } else {
                     res.status(200).json({
                         user: {

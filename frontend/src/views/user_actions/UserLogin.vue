@@ -54,9 +54,9 @@ export default {
                 email: this.login.email,
                 password: this.login.password,
             }
-            let emailRegEx = /^[A-Za-z0-9\-.]+@([A-Za-z0-9-]+.)+[A-Za-z0-9-]{2,}$/;
+            let emailRegEx = /^[A-Za-z0-9\-.]+@([A-Za-z0-9-]+\.)+[A-Za-z0-9-]{2,}$/;
             if(emailRegEx.test(this.login.email) === false){
-                document.querySelector('#invalidFormat').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Email incorrect'     
+                document.querySelector('#invalidFormat').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Email incorrect'    
             } else {
                 axios.post('http://localhost:3000/api/user/login', user)
                 .then(res => {
@@ -64,10 +64,12 @@ export default {
                     localStorage.setItem('token', res.data.token);
                     this.$store.commit('SET_USER', res.data.user)
                     this.$router.push('/all-posts');
-                } else {
-                    err => {console.log("Impossible de se connecter" + err)}
+                    return
+                } else if (res.status != 200){
+                    alert('Email ou mot de passe incorrect')
                 }
             })
+                .catch(err => console.log('Impossible de se connecter : ' + err))
             }
         },
         signupPage(){

@@ -44,8 +44,6 @@ exports.modifyPost = (req, res, next) => {
 
 // Supprimer un post
 exports.deletePost = (req, res, next) => {
-  Comment.deleteOne({postId: req.params.id})
-  .catch(error => res.status(401).json({message: "Impossible de supprimer les commentaires du post", error}));
   Post.findOne({_id: req.params.id})
   .then(post => {
     const filename = post.imageUrl.split('/images/')[1];

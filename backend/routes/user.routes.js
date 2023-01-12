@@ -12,7 +12,7 @@ const multer = require('../middleware/multer-config');
 
 // Routes
 
-// Inscription - Connexion - Déconnexion
+// Inscription - Connexion
 router.post('/signup', multer, userCtrl.signup);
 router.post('/login', userCtrl.login);
 

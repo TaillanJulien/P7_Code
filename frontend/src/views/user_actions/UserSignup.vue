@@ -34,7 +34,7 @@
             </div>
             <div class="form_inscription_input">
                 <form @submit.prevent="submit" enctype="multipart/form-data">
-                    <label for="file">Veuillez sélectionner une photo !</label>
+                    <label for="file">Veuillez sélectionner une photo de profil :</label>
                         <input ref="image" type="file" name="uploaded_file" id="file">
                         <p id="emptyFile"></p>                    
                 </form>
@@ -69,7 +69,7 @@
         },
         methods: {
             userSignup(){
-                let emailRegEx = /^[A-Za-z0-9\-.]+@([A-Za-z0-9-]+.)+[A-Za-z0-9-]{2,}$/;
+                let emailRegEx = /^[A-Za-z0-9\-.]+@([A-Za-z0-9-]+\.)+[A-Za-z0-9-]{2,}$/;
                 let nameRegEx = /^[a-zA-Z\-çñàéèêëïîôüù ]{2,}$/;
                 if(emailRegEx.test(this.email) === false){
                     document.querySelector('#invalidEmail').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Email incorrect'
@@ -77,8 +77,8 @@
                     document.querySelector('#invalidFirstName').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Nom incorrect'
                 } else if (nameRegEx.test(this.lastName) === false){
                     document.querySelector('#invalidLastName').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Prénom incorrect'
-                } else if(this.$refs.image.files[0] === ''){
-                    document.querySelector('#emptyFile').innerHTML = 'Merci de choisir une photo de profil'
+                } else if(this.$refs.image.files[0] === undefined){
+                    document.querySelector('#emptyFile').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Merci de choisir une photo de profil'
                 } else {
                     this.image = this.$refs.image.files[0];
                         const formData = new FormData();

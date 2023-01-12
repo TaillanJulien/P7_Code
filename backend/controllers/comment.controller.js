@@ -29,7 +29,6 @@ exports.modifyComment = (req, res, next) =>{
 
 //Récupérer tous les commentaires
 exports.getAllComment = (req, res, next) =>{
-    console.log("Récupération de tous les commentaires");
     Comment.find()
         .then((comment) => {res.status(200).json(comment)})
         .catch(error => res.status(400).json({message: "Impossible de récupérer tous les commentaires", error}));

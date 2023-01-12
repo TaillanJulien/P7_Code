@@ -10,7 +10,7 @@
             <div class="user_infos_menu" v-if="post.userId === user.userId || user.email === 'admin@gmail.com'">
               <ul>
                 <li>
-                  <a href="" tabindex="0"><i class="fa-solid fa-ellipsis"></i></a>
+                  <a tabindex="0"><i class="fa-solid fa-ellipsis"></i></a>
                   <ul class="sous" tabindex="0">
                     <li class="user_infos_menu_buttons" @click="modifyPost.id = post._id, modifyPost.message = post.message" tabindex="0">Modifier</li>
                     <li class="user_infos_menu_buttons" @click="deletePost(post._id, post.userId)" tabindex="0">Supression</li>
@@ -72,7 +72,7 @@
                 <div  class="user_infos_menu" v-if="comment.userId === user.userId || user.email === 'admin@gmail.com'">
                   <ul>
                     <li>
-                      <a href=""><i class="fa-solid fa-ellipsis"></i></a>
+                      <a><i class="fa-solid fa-ellipsis"></i></a>
                       <ul class="sous">
                         <li class="user_infos_menu_buttons" @click="modifyComment.id = comment._id, modifyComment.message = comment.message">Modifier</li>
                         <li class="user_infos_menu_buttons" v-if="user.userId === comment.userId" @click="deleteComment(comment._id, comment.userId)">Supression</li>
@@ -510,6 +510,14 @@ li {
 }
 
 /* Responsive */
+@media (max-width: 992px){
+  .user_infos_menu ul li:active ul { 
+    display: list-item;
+    position: absolute;
+    margin-top: -34px;
+    margin-left: 35px;
+}
+}
 @media (max-width: 768px){
   .post{
     width: 100%;

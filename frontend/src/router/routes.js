@@ -109,7 +109,3 @@ router.beforeEach((to, from, next) => {
 
 // Exportation des routes vers main.js
 export default router
-
-
-
-
