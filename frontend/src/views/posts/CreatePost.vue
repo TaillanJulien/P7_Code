@@ -46,7 +46,6 @@
             if(this.image != null) {
                 formData.append('image', this.image, this.image.filename)
             }
-            console.log(formData);
             axios.post('http://localhost:3000/api/post/', formData, {headers: {Authorization: localStorage.getItem('token')}})
             .then(res => {
                 if(res.status === 201){

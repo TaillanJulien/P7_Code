@@ -101,6 +101,12 @@
         }
     }
     @media (max-width: 768px){
+        .homepage{
+            width: 90%;
+            height: 50%;
+            padding: 0;
+            
+        }
         .homepage__img{
             width: 65%;
         }

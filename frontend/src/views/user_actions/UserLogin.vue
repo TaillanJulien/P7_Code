@@ -15,13 +15,11 @@
                             <p id="invalidFormat"></p>
                         </label>
                     </div>
-                    <p class="regexMail"></p>
                     <div class="form_login_password">
                         <label for="password">Mot de passe :
                             <input @keyup.enter="userLogin" tabindex="0" type="password" name="password" :submit="userLogin"  v-model="login.password" placeholder="Veuillez saisir un mot de passe">
                         </label>
                     </div>
-                    <p class="regexPassword"></p>
                 </form>
             </div>
             <div class="button_login">
@@ -29,7 +27,7 @@
                 <button tabindex="0" class="button_create_account" @click="signupPage">Créer un nouveau compte</button>
             </div>
             <div class="logo_end_login">
-                <img src="../../assets/groupomania_graphic_logo.png" alt="logo">
+                <img src="../../assets/groupomania_graphic_logo.png" alt="logo groupomania">
             </div>
         </div>
     </section>
@@ -56,7 +54,7 @@ export default {
             }
             let emailRegEx = /^[A-Za-z0-9\-.]+@([A-Za-z0-9-]+\.)+[A-Za-z0-9-]{2,}$/;
             if(emailRegEx.test(this.login.email) === false){
-                document.querySelector('#invalidFormat').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Email incorrect'    
+                document.querySelector('#invalidFormat').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Format incorrect'    
             } else {
                 axios.post('http://localhost:3000/api/user/login', user)
                 .then(res => {
@@ -65,11 +63,12 @@ export default {
                     this.$store.commit('SET_USER', res.data.user)
                     this.$router.push('/all-posts');
                     return
-                } else if (res.status != 200){
-                    alert('Email ou mot de passe incorrect')
                 }
             })
-                .catch(err => console.log('Impossible de se connecter : ' + err))
+                .catch(err => {
+                    console.log('Impossible de se connecter : ' + err), 
+                    alert('Email ou mot de passe incorrect')
+                })
             }
         },
         signupPage(){
@@ -149,7 +148,8 @@ section{
 #invalidFormat{
     font-weight: 500;
     font-style: italic;
-    color: #9c941f
+    color: #9c941f;
+    width: auto;
 }
 .button_login{
     padding: 15px;
@@ -175,8 +175,8 @@ section{
 }
 @media (max-width: 768px){
     .login{
-    width: 100%;
-    margin: 15px;
+    margin: 10px;
+    height: auto;
     }
     .information_login{
     white-space: normal;

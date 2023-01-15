@@ -1,6 +1,6 @@
 <template>
     <div class="user_infos_container">
-        <img :src="`${user.imageUrl}`" alt="">
+        <img :src="`${user.imageUrl}`" alt="image profil utilisateur">
         <p>{{ user.firstName + ' ' + user.lastName }}</p>
     </div>
 </template>

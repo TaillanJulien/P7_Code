@@ -2,9 +2,9 @@
     <section>
         <div>
             <p class="title">Que souhaitez-vous modifier ? <i class="fa-solid fa-pencil"></i></p>
-            <p class="field">Prénom : {{ user.firstName }}</p><input v-model="firstName" type="text" name="firstName" placeholder="">
-            <p class="field">Nom : {{ user.lastName }}</p><input v-model="lastName" type="text" name="lastName" placeholder="">
-            <p class="field">Email : {{ user.email }}</p><input v-model="email" type="email" name="email" placeholder="">
+            <p class="field">Prénom : {{ user.firstName }}</p><input v-model="firstName" type="text" name="firstName">
+            <p class="field">Nom : {{ user.lastName }}</p><input v-model="lastName" type="text" name="lastName">
+            <p class="field">Email : {{ user.email }}</p><input v-model="email" type="email" name="email">
             <form @submit.prevent="submit" enctype="multipart/form-data">
                 <label for="file">Si vous le souhaitez, choisissez une nouvelle photo de profil !</label>
                 <input ref="image" type="file" id="file" v-on:change="changeImg">

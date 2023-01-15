@@ -36,7 +36,7 @@ mongoose.connect(`mongodb+srv://Julien_admin:${mongo_pass}@${mongo_name}.mongodb
     .then(() => console.log('Connexion à MongoDB réussie.'))
     .catch(() => console.log('Connexion à MongoDB échouée.'));
 
-    // Ajout headers pour éviter erreurs CORS
+// Ajout headers pour éviter erreurs CORS
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');

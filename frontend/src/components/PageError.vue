@@ -1,5 +1,4 @@
 <template>
-
         <div class="container">
             <p>Oups... <i class="fa-solid fa-bomb"></i></p>
             <p>La page que vous recherchez n'existe pas ! </p>
@@ -28,7 +27,7 @@ export default {
     background-color: white;
     border-radius: 50px;
     padding: 50px;
-    margin: 20px;
+    margin: 50px 30px 50px 30px;
     box-shadow: 7px 9px 7px 1px rgba(0,0,0,0.76);
 }
 p{

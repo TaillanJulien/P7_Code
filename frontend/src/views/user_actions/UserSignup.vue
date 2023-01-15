@@ -11,24 +11,24 @@
         <div class="form_inscription">
             <div class="form_inscription_input">
                 <label for="lastName">Nom :
-                    <input tabindex="0" type="text" name="lastName" v-model="lastName" placeholder="Veuillez saisir votre nom" id="lastName">
+                    <input tabindex="0" type="text" name="lastName" v-model="lastName" placeholder="Veuillez saisir votre nom" id="lastName" required>
                     <p id="invalidLastName"></p>
                 </label>
             </div>
             <div class="form_inscription_input">
                 <label for="firstName">Prénom :
-                    <input tabindex="0" type="text" name="firstName" v-model="firstName" placeholder="Veuillez saisir votre prénom" id="firstName">
+                    <input tabindex="0" type="text" name="firstName" v-model="firstName" placeholder="Veuillez saisir votre prénom" id="firstName" required>
                     <p id="invalidFirstName"></p>
                 </label>
             </div>
             <div class="form_inscription_input">
                 <label for="password">Mot de passe :
-                    <input tabindex="0" type="password" name="password" v-model="password" placeholder="Veuillez saisir un mot de passe">
+                    <input tabindex="0" type="password" name="password" v-model="password" placeholder="Veuillez saisir un mot de passe" id="password" required>
                 </label>
             </div>
             <div class="form_inscription_input">
                 <label for="mail">Adresse email :
-                    <input tabindex="0" type="email" name="email" v-model="email" placeholder="Veuillez saisir votre email" id="email">          
+                    <input tabindex="0" type="email" name="email" v-model="email" placeholder="Veuillez saisir votre email" id="email" required>          
                     <p id="invalidEmail"></p>
                 </label>
             </div>
@@ -47,7 +47,7 @@
             <p>Vous avez déjà un compte ? <a href="" tabindex="0" @click="loginPage">Rendez-vous sur cette page.</a></p>
         </div>
         <div class="logo_end">
-            <img src="../../assets/groupomania_graphic_logo.png" alt="logo">
+            <img src="../../assets/groupomania_graphic_logo.png" alt="logo groupomania">
         </div>
     </section>
 </template>
@@ -71,15 +71,20 @@
             userSignup(){
                 let emailRegEx = /^[A-Za-z0-9\-.]+@([A-Za-z0-9-]+\.)+[A-Za-z0-9-]{2,}$/;
                 let nameRegEx = /^[a-zA-Z\-çñàéèêëïîôüù ]{2,}$/;
-                if(emailRegEx.test(this.email) === false){
-                    document.querySelector('#invalidEmail').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Email incorrect'
-                } else if (nameRegEx.test(this.firstName) === false){
-                    document.querySelector('#invalidFirstName').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Nom incorrect'
-                } else if (nameRegEx.test(this.lastName) === false){
-                    document.querySelector('#invalidLastName').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Prénom incorrect'
-                } else if(this.$refs.image.files[0] === undefined){
+                let valid = true;
+                if(emailRegEx.test(this.email) === false || this.email === ''){
+                    valid = false
+                    document.querySelector('#invalidEmail').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Format incorrect'
+                } if (nameRegEx.test(this.firstName) === false || this.firstName === ''){
+                    valid = false
+                    document.querySelector('#invalidFirstName').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Format incorrect'
+                } if (nameRegEx.test(this.lastName) === false || this.lastName === ''){
+                    valid = false
+                    document.querySelector('#invalidLastName').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Format incorrect'
+                } if (this.$refs.image.files[0] === undefined){
+                    valid = false
                     document.querySelector('#emptyFile').innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Merci de choisir une photo de profil'
-                } else {
+                } if(valid) {
                     this.image = this.$refs.image.files[0];
                         const formData = new FormData();
                         formData.append('lastName', this.lastName)
@@ -149,6 +154,10 @@
     width: 70%;
     margin: 10px;
     padding: 5px;
+    outline: none;
+}
+#lastName:invalid, #firstName:invalid, #password:invalid, #email:invalid{
+    border-color: crimson;
 }
 .user_signup{
     width: 50%;
@@ -194,6 +203,10 @@
     object-fit: contain;
 }
 @media (max-width: 768px){
+    .signup{
+        margin: 10px;
+        height: auto;
+    }
     .redirection_link p{
         white-space: normal;
     }

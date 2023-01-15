@@ -17,6 +17,10 @@
                   </ul>
                 </li>
               </ul>
+            </div>
+            <div class="user_infos_menu_responsive" v-if="post.userId === user.userId || user.email === 'admin@gmail.com'">
+              <button class="user_infos_menu_buttons" @click="modifyPost.id = post._id, modifyPost.message = post.message" tabindex="0">Modifier</button>
+              <button class="user_infos_menu_buttons" @click="deletePost(post._id, post.userId)" tabindex="0">Supprimer</button>
             </div>  
         </div>
       
@@ -32,15 +36,15 @@
           <div v-if="post.imageUrl != ''" class="modify_img_container">
             <p>Souhaitez-vous modifier votre image ?</p>
             <form @submit.prevent="submit" enctype="multipart/form-data">
-              <input v-on:change="changeImg" ref="image" type="file" name="uploaded_file" id="image" value="Choisir une nouvelle image">
+              <input v-on:change="changeImg" ref="image" type="file" name="uploaded_file" id="inputImage" value="Choisir une nouvelle image">
             </form>
-            <img :src="`${post.imageUrl}`" alt="">
+            <img :src="`${post.imageUrl}`" alt="image post utilisateur">
           </div>
         </div>
         <div v-else>
           <p>{{ post.message }}</p>
           <div v-if="post.imageUrl != ''" class="img_container">
-            <img :src="`${post.imageUrl}`" alt="">
+            <img :src="`${post.imageUrl}`" alt="image post utilisateur">
           </div>
         </div>
         <div class="user_timer">
@@ -68,18 +72,22 @@
             <!-- Informations user + menu -->
             
             <div class="user_infos" id="user_infos_comment">
-                <UserInfos :users = users :userId = comment.userId></UserInfos>
-                <div  class="user_infos_menu" v-if="comment.userId === user.userId || user.email === 'admin@gmail.com'">
-                  <ul>
-                    <li>
-                      <a><i class="fa-solid fa-ellipsis"></i></a>
-                      <ul class="sous">
-                        <li class="user_infos_menu_buttons" @click="modifyComment.id = comment._id, modifyComment.message = comment.message">Modifier</li>
-                        <li class="user_infos_menu_buttons" v-if="user.userId === comment.userId" @click="deleteComment(comment._id, comment.userId)">Supression</li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
+              <UserInfos :users = users :userId = comment.userId></UserInfos>
+              <div  class="user_infos_menu" v-if="comment.userId === user.userId || user.email === 'admin@gmail.com'">
+                <ul>
+                  <li>
+                    <a><i class="fa-solid fa-ellipsis"></i></a>
+                    <ul class="sous">
+                      <li class="user_infos_menu_buttons" @click="modifyComment.id = comment._id, modifyComment.message = comment.message">Modifier</li>
+                      <li class="user_infos_menu_buttons" v-if="user.userId === comment.userId" @click="deleteComment(comment._id, comment.userId)">Supression</li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="user_infos_menu_responsive" v-if="comment.userId === user.userId || user.email === 'admin@gmail.com'">
+                <button class="user_infos_menu_buttons" @click="modifyComment.id = comment._id, modifyComment.message = comment.message" tabindex="0">Modifier</button>
+                <button class="user_infos_menu_buttons" v-if="user.userId === comment.userId" @click="deleteComment(comment._id, comment.userId)">Supprimer</button>
+              </div> 
             </div>
 
               <!-- Contenu du commentaire + modifier + supprimer -->
@@ -314,6 +322,9 @@ export default {
 }
 
 /* Menu déroulant */
+.user_infos_menu_responsive{
+  display: none;
+}
 li {
   list-style:none;
   color:black;
@@ -387,8 +398,12 @@ li {
 .modify_img_container > p{
   align-self: center;
 }
-#image{
-  margin: 15px;
+.modify_img_container > form > img {
+  object-fit: contain;
+}
+#inputImage{
+  width: 100%;
+  margin: 15px 0 15px 0;
 }
 .user_timer{
   display: flex;
@@ -511,12 +526,27 @@ li {
 
 /* Responsive */
 @media (max-width: 992px){
-  .user_infos_menu ul li:active ul { 
-    display: list-item;
-    position: absolute;
-    margin-top: -34px;
-    margin-left: 35px;
+  .user_infos_menu{
+    display: none;
 }
+  .user_infos_menu_responsive{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+}
+  .user_infos_menu_responsive > button{
+    width: 40%;
+    font-size: 12px;
+    margin: 5px;
+    padding: 7px;
+    border-radius: 15px;
+    background-color: white;
+    font-weight: bold;
+    box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
+  }
 }
 @media (max-width: 768px){
   .post{
@@ -527,9 +557,25 @@ li {
     margin: 20px 0 20px 0;
   }
   .user_infos_menu{
-    width: 100%;
+    display: none;
+}
+  .user_infos_menu_responsive{
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+}
+  .user_infos_menu_responsive > button{
+    width: 40%;
+    font-size: 12px;
+    margin: 5px;
+    padding: 7px;
+    border-radius: 15px;
+    background-color: white;
+    font-weight: bold;
+    box-shadow: 5px 5px 5px -2px rgba(0,0,0,0.35);
   }
   .user_comment_container{
     display: flex;

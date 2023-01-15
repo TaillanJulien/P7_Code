@@ -1,6 +1,5 @@
 // Importation schema post
 const Post = require('../models/post.model');
-const Comment = require('../models/comment.model')
 
 // Importation de fs (permet de supprimer des fichiers)
 const fs = require('fs');
