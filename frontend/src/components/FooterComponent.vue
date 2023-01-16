@@ -1,5 +1,6 @@
 <template>
-    <footer v-if="user != null">
+    <div v-if="user === null || user.email == ''"></div>
+    <footer v-else>
         <ul>
             <li><i class="fa-solid fa-ban"></i> Un problème lié à un utilisateur (contenu offensant ou inaproprié) ?</li>
             <li><i class="fa-solid fa-screwdriver-wrench"></i> Un problème lié au site ?</li>

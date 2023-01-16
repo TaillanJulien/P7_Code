@@ -30,7 +30,7 @@ const routes = [
     component: HomeComponent,
     beforeEnter: (to, from, next) => {
       if(store.getters.isAuth){
-      next('/all-posts');
+      next();
       } else {
         next()
       }
@@ -42,7 +42,13 @@ const routes = [
     path: '/all-posts', 
     name: 'AllPosts', 
     component: AllPosts,
-    meta: {isAuth: true}
+    beforeEnter: (to, from, next) => {
+      if(store.getters.isAuth){
+      next();
+      } else {
+        next('/')
+      }
+    }
   },
 
   // Users routes
@@ -52,7 +58,7 @@ const routes = [
     component: UserLogin,
     beforeEnter: (to, from, next) => {
       if(store.getters.isAuth){
-      next('/all-posts');
+      next();
       } else {
         next()
       }
@@ -65,7 +71,7 @@ const routes = [
     component: UserSignup,
     beforeEnter: (to, from, next) => {
       if(store.getters.isAuth){
-      next('/all-posts');
+      next();
       } else {
         next()
       }

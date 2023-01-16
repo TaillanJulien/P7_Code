@@ -8,4 +8,4 @@
 8°) Install dotenv
 
 - "npm run serve" : frontend
-- "nodemon server" : backend
+- "npm run serve" : backend

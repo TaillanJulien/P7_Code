@@ -376,6 +376,8 @@ li {
   transition: transform 600ms;
   animation: opacityAnim 800ms ease-in-out;
   animation-fill-mode: forwards;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 .img_container{
   display: flex;

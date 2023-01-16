@@ -1,14 +1,15 @@
 <template>
-    <header v-if="user != null">
-        <div class="img">
-            <img src="../assets/groupomania_logo.png" alt="main logo groupomania">
-        </div>
-        <nav>
-            <p v-if="$route.path != '/modify-profil' && user.email != 'admin@gmail.com'" class="initials" @click="modifyProfil" tabindex="0">{{ user.firstName.charAt(0) + user.lastName.charAt(0)}}</p>
-            <p v-if="$route.path != '/all-posts'" @click="allPostPage" tabindex="0">Accueil</p>
-            <p @click="logout" tabindex="0">Logout</p>
-        </nav>
-    </header>
+        <div v-if="user === null || user.email == ''"></div>
+        <header v-else>
+            <div class="img">
+                <img src="../assets/groupomania_logo.png" alt="main logo groupomania">
+            </div>
+            <nav>
+                <p v-if="$route.path != '/modify-profil' && user.email != 'admin@gmail.com'" class="initials" @click="modifyProfil" tabindex="0">{{ user.firstName.charAt(0) + user.lastName.charAt(0)}}</p>
+                <p v-if="$route.path != '/all-posts'" @click="allPostPage" tabindex="0">Accueil</p>
+                <p @click="logout" tabindex="0">Logout</p>
+            </nav>
+        </header>
 </template>
 
 <script>
@@ -23,7 +24,6 @@
         },
         methods: {
             logout(){
-                
                 if(window.confirm('Voulez-vous vraiment vous déconnecter ?')) {
                     localStorage.removeItem("token")
                     this.$store.commit("SET_USER", null) 

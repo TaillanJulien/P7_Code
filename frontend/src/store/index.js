@@ -17,7 +17,6 @@ const store = new Vuex.Store({
             firstName: "",
             lastName: "",
             imageUrl: "",
-            token: ""
         },
     },
     getters: {
