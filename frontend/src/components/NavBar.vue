@@ -4,9 +4,9 @@
             <img src="../assets/groupomania_logo.png" alt="main logo groupomania">
         </div>
         <nav>
-            <p v-if="$route.path != '/modify-profil' && user.email != 'admin@gmail.com'" class="initials" @click="modifyProfil">{{ user.firstName.charAt(0) + user.lastName.charAt(0)}}</p>
-            <p v-if="$route.path != '/all-posts'" @click="allPostPage">Accueil</p>
-            <p @click="logout">Logout</p>
+            <p v-if="$route.path != '/modify-profil' && user.email != 'admin@gmail.com'" class="initials" @click="modifyProfil" tabindex="0">{{ user.firstName.charAt(0) + user.lastName.charAt(0)}}</p>
+            <p v-if="$route.path != '/all-posts'" @click="allPostPage" tabindex="0">Accueil</p>
+            <p @click="logout" tabindex="0">Logout</p>
         </nav>
     </header>
 </template>

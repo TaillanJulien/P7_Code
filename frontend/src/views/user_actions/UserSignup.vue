@@ -69,7 +69,7 @@
         },
         methods: {
             userSignup(){
-                let emailRegEx = /^[A-Za-z0-9\-.]+@([A-Za-z0-9-]+\.)+[A-Za-z0-9-]{2,}$/;
+                let emailRegEx = /^[A-Za-z0-9\-._]+@([A-Za-z0-9-]+\.)+[A-Za-z0-9-]{2,}$/;
                 let nameRegEx = /^[a-zA-Z\-çñàéèêëïîôüù ]{2,}$/;
                 let valid = true;
                 if(emailRegEx.test(this.email) === false || this.email === ''){

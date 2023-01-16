@@ -2,19 +2,19 @@
   <main id="app">
     <NavBar />
     <router-view></router-view>
-    <FooterCredits />
+    <FooterComponent />
   </main>
 </template>
 
 <script>
 import NavBar from './components/NavBar.vue';
-import FooterCredits from './components/FooterCredits.vue';
+import FooterComponent from './components/FooterComponent.vue';
 
 export default {
   name: 'App',
   components: {
     NavBar,
-    FooterCredits,
+    FooterComponent,
   }
 }
 </script>

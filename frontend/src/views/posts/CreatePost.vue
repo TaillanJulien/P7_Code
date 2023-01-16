@@ -10,7 +10,7 @@
                     <div class="new_post_img">
                         <form @submit.prevent="submit" enctype="multipart/form-data">
                             <label for="file">Veuillez sélectionner une photo !</label>
-                            <input ref="image" type="file" id="file">
+                            <input ref="image" type="file" id="file" tabindex="0">
                         </form>
                     </div>  
                 <button tabindex="0" v-if="this.message != '' || this.image != null" @click="newUserPost" class="valid_create_post" type="submit">Partager <i class="fa-regular fa-circle-check"></i></button>

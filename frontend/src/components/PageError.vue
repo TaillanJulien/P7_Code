@@ -2,7 +2,7 @@
         <div class="container">
             <p>Oups... <i class="fa-solid fa-bomb"></i></p>
             <p>La page que vous recherchez n'existe pas ! </p>
-            <button @click="allPost">Cliquez ici pour retourner à la page principale !</button>
+            <button @click="allPost" tabindex="0">Cliquez ici pour retourner à la page principale !</button>
         </div>
 </template>
 

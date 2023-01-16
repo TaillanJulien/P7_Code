@@ -3,14 +3,14 @@
         <ul>
             <li><i class="fa-solid fa-ban"></i> Un problème lié à un utilisateur (contenu offensant ou inaproprié) ?</li>
             <li><i class="fa-solid fa-screwdriver-wrench"></i> Un problème lié au site ?</li>
-            <li><i class="fa-solid fa-arrow-right"></i> Merci de contacter l'administrateur à cette <a href="mailto:#">adresse</a>.</li>
+            <li><i class="fa-solid fa-arrow-right"></i> Merci de contacter l'administrateur à cette <a href="mailto:#" tabindex="0">adresse</a>.</li>
         </ul>
         <div class="external_link">
-            <a href="https://twitter.com/?lang=fr" target="_blank"><i class="fa-brands fa-twitter"></i></a>
-            <a href="https://www.instagram.com/?hl=fr" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-            <a href="https://fr.linkedin.com/" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-            <a href="https://www.youtube.com/" target="_blank"><i class="fa-brands fa-youtube"></i></a>
-            <a href="https://www.facebook.com/" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://twitter.com/?lang=fr" target="_blank" tabindex="0"><i class="fa-brands fa-twitter"></i></a>
+            <a href="https://www.instagram.com/?hl=fr" target="_blank" tabindex="0"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://fr.linkedin.com/" target="_blank" tabindex="0"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="https://www.youtube.com/" target="_blank" tabindex="0"><i class="fa-brands fa-youtube"></i></a>
+            <a href="https://www.facebook.com/" target="_blank" tabindex="0"><i class="fa-brands fa-facebook"></i></a>
         </div>
     </footer>
 </template>
@@ -19,7 +19,7 @@
     import {mapGetters} from 'vuex'
 
     export default {
-        name: 'FooterCredits',
+        name: 'FooterComponent',
         computed: {
             ...mapGetters({
                 user: 'getUser'

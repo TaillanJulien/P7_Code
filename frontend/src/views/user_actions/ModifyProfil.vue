@@ -7,9 +7,9 @@
             <p class="field">Email : {{ user.email }}</p><input v-model="email" type="email" name="email">
             <form @submit.prevent="submit" enctype="multipart/form-data">
                 <label for="file">Si vous le souhaitez, choisissez une nouvelle photo de profil !</label>
-                <input ref="image" type="file" id="file" v-on:change="changeImg">
+                <input ref="image" type="file" id="file" v-on:change="changeImg" tabindex="0">
             </form>
-            <button @click="modifyProfil" type="submit">Valider</button>
+            <button @click="modifyProfil" type="submit" tabindex="0">Valider</button>
         </div>
     </section>
 </template>
@@ -94,6 +94,7 @@ export default {
         border-radius: 13px;
         padding: 5px;
         width: 80%;
+        outline: none;
     }
     form{
         font-weight: bold;
