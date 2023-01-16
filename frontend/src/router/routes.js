@@ -28,13 +28,6 @@ const routes = [
     path: '/', 
     name: 'HomeComponent', 
     component: HomeComponent,
-    beforeEnter: (to, from, next) => {
-      if(store.getters.isAuth){
-      next();
-      } else {
-        next()
-      }
-    }
   },
 
   // Post routes
@@ -56,26 +49,12 @@ const routes = [
     path: '/login', 
     name: 'UserLogin', 
     component: UserLogin,
-    beforeEnter: (to, from, next) => {
-      if(store.getters.isAuth){
-      next();
-      } else {
-        next()
-      }
-    }
   },
   
   {
     path: '/signup', 
     name: 'UserSignup', 
     component: UserSignup,
-    beforeEnter: (to, from, next) => {
-      if(store.getters.isAuth){
-      next();
-      } else {
-        next()
-      }
-    }
   },
 
   {
