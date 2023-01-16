@@ -2,11 +2,11 @@
 
 In this repository you have the frontend & the backend for the project n°7 : **Groupomania**
 
-Clone this repository, and follow the steps to make it work.
+Clone this repository, and follow the steps to make it works.
 
 #### Step one :
 
-- You need to have the latest version of [node.js](/https://nodejs.org/en/download/) installed
+- You need to have the latest version of [node.js](https://nodejs.org/en/) installed
 
 #### Step two (frontend) :
 

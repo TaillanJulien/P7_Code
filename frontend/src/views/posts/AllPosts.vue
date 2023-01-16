@@ -69,24 +69,23 @@
         <div v-for="comment in comments" :key="comment._id">
           <div class="user_comment" v-if="post._id === comment.postId">
             
-            <!-- Informations user + menu -->
-            
+            <!-- Informations user + menu -->   
             <div class="user_infos" id="user_infos_comment">
               <UserInfos :users = users :userId = comment.userId></UserInfos>
-              <div  class="user_infos_menu" v-if="comment.userId === user.userId || user.email === 'admin@gmail.com'">
+              <div class="user_infos_menu" v-if="comment.userId === user.userId || user.email === 'admin@gmail.com'">
                 <ul>
                   <li>
                     <a><i class="fa-solid fa-ellipsis"></i></a>
                     <ul class="sous">
                       <li class="user_infos_menu_buttons" @click="modifyComment.id = comment._id, modifyComment.message = comment.message">Modifier</li>
-                      <li class="user_infos_menu_buttons" v-if="user.userId === comment.userId" @click="deleteComment(comment._id, comment.userId)">Supression</li>
+                      <li class="user_infos_menu_buttons" @click="deleteComment(comment._id, comment.userId)">Supprimer</li>
                     </ul>
                   </li>
                 </ul>
               </div>
               <div class="user_infos_menu_responsive" v-if="comment.userId === user.userId || user.email === 'admin@gmail.com'">
                 <button class="user_infos_menu_buttons" @click="modifyComment.id = comment._id, modifyComment.message = comment.message" tabindex="0">Modifier</button>
-                <button class="user_infos_menu_buttons" v-if="user.userId === comment.userId" @click="deleteComment(comment._id, comment.userId)">Supprimer</button>
+                <button class="user_infos_menu_buttons" @click="deleteComment(comment._id, comment.userId)">Supprimer</button>
               </div> 
             </div>
 
